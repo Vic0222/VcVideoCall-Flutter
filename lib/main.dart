@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:vc_video_call/pages/chat_page.dart';
-import 'package:vc_video_call/pages/home_page.dart';
-import 'package:vc_video_call/pages/login_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:vc_video_call/blocs/login/login_bloc.dart';
+import 'package:vc_video_call/services/login_service.dart';
+import 'package:vc_video_call/app_routes.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,16 +37,44 @@ class MyApp extends StatelessWidget {
     );
     theme = theme.copyWith(colorScheme: colorScheme);
 
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: theme,
-      initialRoute: '/',
-      routes: {
-        // When navigating to the "/" route, build the FirstScreen widget.
-        '/': (context) => LoginPage(),
-        '/home': (context) => HomePage(),
-        '/chat_page': (context) => ChatPage(),
-      },
+    return buildMaterialApp(theme);
+  }
+
+  Widget buildMaterialApp(ThemeData theme) {
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<FirebaseAuth>(
+          create: (context) => FirebaseAuth.instance,
+        ),
+        RepositoryProvider<GoogleSignIn>(
+          create: (context) => GoogleSignIn(),
+        ),
+        RepositoryProvider<LoginService>(
+          create: (context) => LoginService(),
+        ),
+      ],
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<LoginBloc>(
+            create: (BuildContext context) =>
+                LoginBloc(context.read<LoginService>()),
+          )
+        ],
+        child: FutureBuilder(
+            future: Firebase.initializeApp(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return MaterialApp(
+                  title: 'Vc Video Call',
+                  theme: theme,
+                  onGenerateRoute: AppRoutes.onGenerateRoute,
+                );
+              }
+              return Scaffold(
+                body: CircularProgressIndicator(),
+              );
+            }),
+      ),
     );
   }
 }

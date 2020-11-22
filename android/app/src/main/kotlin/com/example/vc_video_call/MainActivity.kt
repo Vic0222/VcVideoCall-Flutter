@@ -1,4 +1,4 @@
-package com.example.vc_video_call
+package com.vic.vc_video_call
 
 import io.flutter.embedding.android.FlutterActivity
 

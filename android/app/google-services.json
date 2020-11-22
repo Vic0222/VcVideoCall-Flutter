@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "347131041515",
+    "firebase_url": "https://vcvideocall-c4a0b.firebaseio.com",
+    "project_id": "vcvideocall-c4a0b",
+    "storage_bucket": "vcvideocall-c4a0b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:347131041515:android:6415f49d25c51e1518d0ae",
+        "android_client_info": {
+          "package_name": "com.vic.vc_video_call"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "347131041515-lmo1cro7d0ntfj96g58gurmaq6p3m896.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vic.vc_video_call",
+            "certificate_hash": "c24bf85654518edaee56f57a8fc4d6dd644bc50a"
+          }
+        },
+        {
+          "client_id": "347131041515-38429006i571b2beutdo9j25mmud0vse.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAAz-ngJFswJA7TpICNZkU75zzfC77S60M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "347131041515-38429006i571b2beutdo9j25mmud0vse.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
