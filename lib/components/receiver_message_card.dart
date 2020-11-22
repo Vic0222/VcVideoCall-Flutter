@@ -11,26 +11,22 @@ class ReceiverMessageCard extends StatelessWidget {
       alignment: Alignment.centerLeft,
       padding: EdgeInsets.only(right: 100),
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            bottomLeft: Radius.circular(0),
+            topLeft: Radius.circular(8),
+            topRight: Radius.circular(8),
+            bottomRight: Radius.circular(8),
+          ),
+        ),
         child: Container(
           constraints: BoxConstraints(
             minHeight: 34,
           ),
-          decoration: BoxDecoration(
-            color: Theme.of(context).colorScheme.surface,
-            borderRadius: BorderRadius.only(
-              bottomLeft: Radius.circular(8),
-              topLeft: Radius.circular(8),
-              topRight: Radius.circular(8),
-              bottomRight: Radius.circular(0),
-            ),
-          ),
           padding: EdgeInsets.all(8),
           child: Text(
-            "What??? Filler words ss aa d dd asdasdads dsadasdw 2dasdads.",
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1
-                .copyWith(color: Theme.of(context).colorScheme.onSurface),
+            "Op? SLong text for place holder? a b casd asd asdw a2 sasad",
+            style: Theme.of(context).textTheme.bodyText1,
           ),
         ),
       ),
