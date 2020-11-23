@@ -41,4 +41,8 @@ class AuthenticationService {
 
     return success;
   }
+
+  Future<String> getToken() async {
+    return await _firebaseAuth.currentUser.getIdToken();
+  }
 }
