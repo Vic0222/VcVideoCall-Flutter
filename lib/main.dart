@@ -3,8 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:vc_video_call/blocs/login/login_bloc.dart';
-import 'package:vc_video_call/services/login_service.dart';
+import 'package:vc_video_call/services/authentication_service.dart';
+import 'package:vc_video_call/blocs/authentication/authentication_bloc.dart';
 import 'package:vc_video_call/app_routes.dart';
 
 void main() {
@@ -49,15 +49,15 @@ class MyApp extends StatelessWidget {
         RepositoryProvider<GoogleSignIn>(
           create: (context) => GoogleSignIn(),
         ),
-        RepositoryProvider<LoginService>(
-          create: (context) => LoginService(),
+        RepositoryProvider<AuthenticationService>(
+          create: (context) => AuthenticationService(),
         ),
       ],
       child: MultiBlocProvider(
         providers: [
-          BlocProvider<LoginBloc>(
+          BlocProvider<AuthenticationBloc>(
             create: (BuildContext context) =>
-                LoginBloc(context.read<LoginService>()),
+                AuthenticationBloc(context.read<AuthenticationService>()),
           )
         ],
         child: FutureBuilder(
@@ -70,8 +70,8 @@ class MyApp extends StatelessWidget {
                   onGenerateRoute: AppRoutes.onGenerateRoute,
                 );
               }
-              return Scaffold(
-                body: CircularProgressIndicator(),
+              return Container(
+                child: CircularProgressIndicator(),
               );
             }),
       ),

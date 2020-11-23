@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
-import 'package:vc_video_call/blocs/login/login_bloc.dart';
-import 'package:vc_video_call/blocs/login/login_event.dart';
-import 'package:vc_video_call/blocs/login/login_state.dart';
+import 'package:vc_video_call/blocs/authentication/authentication_bloc.dart';
+import 'package:vc_video_call/blocs/authentication/authentication_event.dart';
+import 'package:vc_video_call/blocs/authentication/authentication_state.dart';
 import 'package:vc_video_call/components/logo.dart';
-import 'package:vc_video_call/services/login_service.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -15,16 +14,17 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<LoginBloc, LoginState>(listener: (context, state) {
-      if (state.status == LoginStatus.failure) {
+    return BlocConsumer<AuthenticationBloc, AuthenticationState>(
+        listener: (context, state) {
+      if (state.status == AuthenticationStatus.failure) {
         Scaffold.of(context)
             .showSnackBar(SnackBar(content: Text(state?.errorMessage)));
-      } else if (state.status == LoginStatus.success) {
+      } else if (state.status == AuthenticationStatus.success) {
         Navigator.pushReplacementNamed(context, "/home");
       }
     }, builder: (context, state) {
       return Scaffold(
-        body: state.status == LoginStatus.inProgress
+        body: state.status == AuthenticationStatus.inProgress
             ? buildLoading(context)
             : buildContent(context),
       );
@@ -72,6 +72,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void login(BuildContext context) {
-    context.read<LoginBloc>().add(LoginEvent.loginStarted);
+    context
+        .read<AuthenticationBloc>()
+        .add(AuthenticationEvent.authenticationStarted);
   }
 }
