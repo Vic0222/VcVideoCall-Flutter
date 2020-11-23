@@ -37,6 +37,13 @@ const RoomRequest$json = const {
   '1': 'RoomRequest',
 };
 
+const RoomListReply$json = const {
+  '1': 'RoomListReply',
+  '2': const [
+    const {'1': 'rooms', '3': 1, '4': 3, '5': 11, '6': '.chat.RoomReply', '10': 'rooms'},
+  ],
+};
+
 const RoomReply$json = const {
   '1': 'RoomReply',
   '2': const [

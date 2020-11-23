@@ -5,7 +5,10 @@ import 'package:vc_video_call/services/chat_service.dart';
 
 class ChatBloc extends Bloc<ChatEvent, ChatState> {
   ChatBloc(this._chatService) : super(ChatState.initial()) {
-    add(ChatEvent.chatStartJoin);
+    add(ChatEvent.chatJoinStarted);
+    _chatService.errorStreamController.stream.listen((event) {
+      add(ChatEvent.chatDisconnected);
+    });
   }
 
   final ChatService _chatService;
@@ -13,7 +16,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   @override
   Stream<ChatState> mapEventToState(ChatEvent event) async* {
     switch (event) {
-      case ChatEvent.chatStartJoin:
+      case ChatEvent.chatJoinStarted:
         yield ChatState.inProgress();
         try {
           await _chatService.tryJoin();
@@ -21,6 +24,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
         } catch (e) {
           yield ChatState.failure("Connection error");
         }
+        break;
+      case ChatEvent.chatDisconnected:
+        yield ChatState.failure("Connection error");
         break;
       default:
         yield ChatState.initial();

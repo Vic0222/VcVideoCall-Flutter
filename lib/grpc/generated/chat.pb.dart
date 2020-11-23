@@ -170,6 +170,39 @@ class RoomRequest extends $pb.GeneratedMessage {
   static RoomRequest _defaultInstance;
 }
 
+class RoomListReply extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RoomListReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..pc<RoomReply>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rooms', $pb.PbFieldType.PM, subBuilder: RoomReply.create)
+    ..hasRequiredFields = false
+  ;
+
+  RoomListReply._() : super();
+  factory RoomListReply() => create();
+  factory RoomListReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RoomListReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RoomListReply clone() => RoomListReply()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RoomListReply copyWith(void Function(RoomListReply) updates) => super.copyWith((message) => updates(message as RoomListReply)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RoomListReply create() => RoomListReply._();
+  RoomListReply createEmptyInstance() => create();
+  static $pb.PbList<RoomListReply> createRepeated() => $pb.PbList<RoomListReply>();
+  @$core.pragma('dart2js:noInline')
+  static RoomListReply getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RoomListReply>(create);
+  static RoomListReply _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<RoomReply> get rooms => $_getList(0);
+}
+
 class RoomReply extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RoomReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')

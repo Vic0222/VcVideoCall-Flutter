@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vc_video_call/blocs/chat/chat_bloc.dart';
 import 'package:vc_video_call/blocs/chat/chat_state.dart';
+import 'package:vc_video_call/blocs/getrooms/get_rooms_bloc.dart';
+import 'package:vc_video_call/blocs/getrooms/get_rooms_state.dart';
 import 'package:vc_video_call/components/contact_card.dart';
 
 class HomePage extends StatelessWidget {

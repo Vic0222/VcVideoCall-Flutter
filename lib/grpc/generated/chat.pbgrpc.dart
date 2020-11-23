@@ -18,10 +18,11 @@ class ChatClient extends $grpc.Client {
       '/chat.Chat/Join',
       ($0.MessageRequest value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Notification.fromBuffer(value));
-  static final _$getRooms = $grpc.ClientMethod<$0.RoomRequest, $0.RoomReply>(
-      '/chat.Chat/GetRooms',
-      ($0.RoomRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.RoomReply.fromBuffer(value));
+  static final _$getRooms =
+      $grpc.ClientMethod<$0.RoomRequest, $0.RoomListReply>(
+          '/chat.Chat/GetRooms',
+          ($0.RoomRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) => $0.RoomListReply.fromBuffer(value));
 
   ChatClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -34,11 +35,9 @@ class ChatClient extends $grpc.Client {
     return $createStreamingCall(_$join, request, options: options);
   }
 
-  $grpc.ResponseStream<$0.RoomReply> getRooms($0.RoomRequest request,
+  $grpc.ResponseFuture<$0.RoomListReply> getRooms($0.RoomRequest request,
       {$grpc.CallOptions options}) {
-    return $createStreamingCall(
-        _$getRooms, $async.Stream.fromIterable([request]),
-        options: options);
+    return $createUnaryCall(_$getRooms, request, options: options);
   }
 }
 
@@ -53,22 +52,22 @@ abstract class ChatServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $0.MessageRequest.fromBuffer(value),
         ($0.Notification value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.RoomRequest, $0.RoomReply>(
+    $addMethod($grpc.ServiceMethod<$0.RoomRequest, $0.RoomListReply>(
         'GetRooms',
         getRooms_Pre,
         false,
-        true,
+        false,
         ($core.List<$core.int> value) => $0.RoomRequest.fromBuffer(value),
-        ($0.RoomReply value) => value.writeToBuffer()));
+        ($0.RoomListReply value) => value.writeToBuffer()));
   }
 
-  $async.Stream<$0.RoomReply> getRooms_Pre(
-      $grpc.ServiceCall call, $async.Future<$0.RoomRequest> request) async* {
-    yield* getRooms(call, await request);
+  $async.Future<$0.RoomListReply> getRooms_Pre(
+      $grpc.ServiceCall call, $async.Future<$0.RoomRequest> request) async {
+    return getRooms(call, await request);
   }
 
   $async.Stream<$0.Notification> join(
       $grpc.ServiceCall call, $async.Stream<$0.MessageRequest> request);
-  $async.Stream<$0.RoomReply> getRooms(
+  $async.Future<$0.RoomListReply> getRooms(
       $grpc.ServiceCall call, $0.RoomRequest request);
 }

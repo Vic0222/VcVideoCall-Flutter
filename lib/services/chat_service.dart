@@ -26,17 +26,19 @@ class ChatService {
     final channel = ClientChannel(
       _host,
       port: _port,
-      options: const ChannelOptions(credentials: ChannelCredentials.insecure()),
+      options: const ChannelOptions(
+        credentials: ChannelCredentials.insecure(),
+      ),
     );
 
     _client = ChatClient(channel);
   }
 
   final StreamController<MessageRequest> messageRequestsController =
-      StreamController<MessageRequest>();
+      StreamController<MessageRequest>.broadcast();
 
   final StreamController<Notification> notificationStreamController =
-      StreamController<Notification>();
+      StreamController<Notification>.broadcast();
 
   Future tryJoin({int maxRetry = 5}) async {
     int retry = 0;
@@ -58,18 +60,42 @@ class ChatService {
     }
   }
 
+  final StreamController<String> errorStreamController =
+      StreamController<String>.broadcast();
+
   Future join() async {
-    _client.join(messageRequestsController.stream).listen(
+    String token = await authenticationService.getToken();
+
+    var metaData = {"Authorization": "Bearer " + token};
+    _client
+        .join(messageRequestsController.stream,
+            options: CallOptions(
+              metadata: metaData,
+            ))
+        .listen(
       (notification) {
         notificationStreamController.add(notification);
       },
       onError: (error) {
         _connected = false;
-        log(error);
+        errorStreamController.add(error.toString());
+        log(error.toString());
         tryJoin();
       },
       cancelOnError: true,
     );
+    Future.delayed(Duration(seconds: 2)).then((value) {
+      var messageRequest = MessageRequest();
+      messageRequest.roomId = "";
+      messageRequest.target = "wUnSd3SPUhWngjOsXK83EkPVFyW2";
+      messageRequest.type = RoomTypeReply.Private;
+      messageRequest.messageBody = "Test message body";
+      messageRequestsController.add(messageRequest);
+    });
+  }
+
+  ResponseFuture<RoomListReply> getRooms() {
+    return _client.getRooms(RoomRequest());
   }
 
   void disconnect() {
