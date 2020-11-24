@@ -7,6 +7,7 @@
 
 import 'dart:core' as $core;
 
+import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:protobuf/protobuf.dart' as $pb;
 
 import 'chat.pbenum.dart';
@@ -311,6 +312,7 @@ class RoomReply extends $pb.GeneratedMessage {
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'name')
     ..e<RoomTypeReply>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: RoomTypeReply.Unknown, valueOf: RoomTypeReply.valueOf, enumValues: RoomTypeReply.values)
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lastMessage')
+    ..aInt64(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lastMessageDatetime')
     ..hasRequiredFields = false
   ;
 
@@ -372,5 +374,14 @@ class RoomReply extends $pb.GeneratedMessage {
   $core.bool hasLastMessage() => $_has(3);
   @$pb.TagNumber(4)
   void clearLastMessage() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $fixnum.Int64 get lastMessageDatetime => $_getI64(4);
+  @$pb.TagNumber(5)
+  set lastMessageDatetime($fixnum.Int64 v) { $_setInt64(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasLastMessageDatetime() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearLastMessageDatetime() => clearField(5);
 }
 

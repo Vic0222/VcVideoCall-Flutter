@@ -47,6 +47,7 @@ message RoomReply{
   string name = 2;
   RoomTypeReply type = 3;
   string last_message = 4;
+  int64 last_message_datetime = 5;
 }
 
 enum RoomTypeReply {

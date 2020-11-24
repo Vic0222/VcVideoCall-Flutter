@@ -67,6 +67,7 @@ const RoomReply$json = const {
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
     const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.chat.RoomTypeReply', '10': 'type'},
     const {'1': 'last_message', '3': 4, '4': 1, '5': 9, '10': 'lastMessage'},
+    const {'1': 'last_message_datetime', '3': 5, '4': 1, '5': 3, '10': 'lastMessageDatetime'},
   ],
 };
 

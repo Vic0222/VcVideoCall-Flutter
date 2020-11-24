@@ -9,8 +9,7 @@ import 'package:vc_video_call/components/contact_card.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<ChatBloc, ChatState>(
-      listener: (context, state) {},
+    return BlocBuilder<ChatBloc, ChatState>(
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -31,10 +30,21 @@ class HomePage extends StatelessWidget {
             children: [
               checkAndDisplayError(context, state),
               Expanded(
-                child: ListView.builder(
-                  itemCount: 10,
-                  itemBuilder: (context, index) {
-                    return ContactCard();
+                child: BlocBuilder<GetRoomsBloc, GetRoomsState>(
+                  builder: (context, state) {
+                    switch (state.status) {
+                      case GetRoomsStatus.success:
+                        return ListView.builder(
+                          itemCount: state.roomListReply.rooms.length,
+                          itemBuilder: (context, index) {
+                            return ContactCard(
+                                state.roomListReply.rooms[index]);
+                          },
+                        );
+                        break;
+                      default:
+                        return Container();
+                    }
                   },
                 ),
               ),

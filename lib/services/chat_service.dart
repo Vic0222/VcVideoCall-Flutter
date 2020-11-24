@@ -91,8 +91,10 @@ class ChatService {
     }
   }
 
-  ResponseFuture<RoomListReply> getRooms() {
-    return _client.getRooms(RoomRequest());
+  Future<RoomListReply> getRooms() async {
+    return await _client
+        .getRooms(RoomRequest())
+        .then((roomListReply) => roomListReply);
   }
 
   void disconnect() {
