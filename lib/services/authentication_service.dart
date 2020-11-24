@@ -47,4 +47,8 @@ class AuthenticationService {
   Future<String> getToken() async {
     return await _firebaseAuth.currentUser.getIdToken();
   }
+
+  String getUserPhotoURL() {
+    return _firebaseAuth.currentUser.photoURL;
+  }
 }

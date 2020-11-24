@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:vc_video_call/blocs/chat/chat_bloc.dart';
 import 'package:vc_video_call/blocs/getrooms/get_rooms_bloc.dart';
+import 'package:vc_video_call/blocs/profilepic/profilepic_bloc.dart';
 import 'package:vc_video_call/services/authentication_service.dart';
 import 'package:vc_video_call/blocs/authentication/authentication_bloc.dart';
 import 'package:vc_video_call/app_routes.dart';
@@ -76,6 +77,10 @@ class MyApp extends StatelessWidget {
           BlocProvider<GetRoomsBloc>(
             create: (BuildContext context) =>
                 GetRoomsBloc(context.read<ChatService>()),
+          ),
+          BlocProvider<ProfilePicBloc>(
+            create: (BuildContext context) =>
+                ProfilePicBloc(context.read<AuthenticationService>()),
           ),
         ],
         child: FutureBuilder(

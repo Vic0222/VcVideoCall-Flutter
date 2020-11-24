@@ -25,4 +25,8 @@ class GetRoomsBloc extends Bloc<GetRoomsEvent, GetRoomsState> {
         yield GetRoomsState.initial();
     }
   }
+
+  void startGetRooms() {
+    add(GetRoomsEvent.GetRoomsStarted);
+  }
 }

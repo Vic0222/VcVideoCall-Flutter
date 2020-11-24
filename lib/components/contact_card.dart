@@ -10,9 +10,13 @@ class ContactCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    int miliseconds = room.lastMessageDatetime.toInt() * 1000;
-    var dateSent = DateTime.fromMillisecondsSinceEpoch(miliseconds);
-    var dateFormatted = DateFormat("dd/MM/yyyy").format(dateSent);
+    String dateFormatted = "";
+    if (room.lastMessageDatetime > 0) {
+      int miliseconds = room.lastMessageDatetime.toInt() * 1000;
+      var dateSent = DateTime.fromMillisecondsSinceEpoch(miliseconds);
+      dateFormatted = DateFormat("dd/MM/yyyy").format(dateSent);
+    }
+
     return InkWell(
       onTap: () {
         openChatPage(context);

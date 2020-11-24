@@ -4,29 +4,62 @@ import 'package:vc_video_call/blocs/chat/chat_bloc.dart';
 import 'package:vc_video_call/blocs/chat/chat_state.dart';
 import 'package:vc_video_call/blocs/getrooms/get_rooms_bloc.dart';
 import 'package:vc_video_call/blocs/getrooms/get_rooms_state.dart';
+import 'package:vc_video_call/blocs/profilepic/profilepic_bloc.dart';
+import 'package:vc_video_call/blocs/profilepic/profilepic_event.dart';
+import 'package:vc_video_call/blocs/profilepic/profilepic_state.dart';
 import 'package:vc_video_call/components/contact_card.dart';
 
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ChatBloc, ChatState>(
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            centerTitle: true,
-            title: Center(
-              child: Image(
-                image: AssetImage("assets/images/profile-pic-placeholder.png"),
-              ),
-            ),
-            actions: [
-              IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () {},
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        centerTitle: true,
+        title: ConstrainedBox(
+          constraints: BoxConstraints(maxHeight: 40, maxWidth: 200),
+          child: BlocBuilder<ProfilePicBloc, ProfilePicState>(
+              builder: (context, state) {
+            if (state.status == GetProfilePicStatus.initial) {
+              BlocProvider.of<ProfilePicBloc>(context)
+                  .add(ProfilePicEvent.GetProfilePicStarted);
+            }
+            switch (state.status) {
+              case GetProfilePicStatus.success:
+                return Container(
+                  height: 40,
+                  width: 40,
+                  decoration: new BoxDecoration(
+                    shape: BoxShape.circle,
+                    image: new DecorationImage(
+                      fit: BoxFit.fill,
+                      image: new NetworkImage(
+                        state.photoURL,
+                      ),
+                    ),
+                  ),
+                );
+                break;
+              default:
+                return Image(
+                  image:
+                      AssetImage("assets/images/profile-pic-placeholder.png"),
+                );
+            }
+          }),
+        ),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.search),
+            onPressed: () {},
           ),
-          body: Column(
+        ],
+      ),
+      body: BlocBuilder<ChatBloc, ChatState>(
+        builder: (context, state) {
+          if (state.status == JoinStatus.success) {
+            BlocProvider.of<GetRoomsBloc>(context).startGetRooms();
+          }
+          return Column(
             children: [
               checkAndDisplayError(context, state),
               Expanded(
@@ -49,9 +82,9 @@ class HomePage extends StatelessWidget {
                 ),
               ),
             ],
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 

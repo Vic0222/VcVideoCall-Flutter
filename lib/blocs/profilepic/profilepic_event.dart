@@ -1,0 +1,3 @@
+enum ProfilePicEvent {
+  GetProfilePicStarted,
+}
