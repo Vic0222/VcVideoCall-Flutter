@@ -14,10 +14,10 @@ import 'chat.pb.dart' as $0;
 export 'chat.pb.dart';
 
 class ChatClient extends $grpc.Client {
-  static final _$join = $grpc.ClientMethod<$0.MessageRequest, $0.Notification>(
+  static final _$join = $grpc.ClientMethod<$0.JoinRequest, $0.JoinReply>(
       '/chat.Chat/Join',
-      ($0.MessageRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Notification.fromBuffer(value));
+      ($0.JoinRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.JoinReply.fromBuffer(value));
   static final _$getRooms =
       $grpc.ClientMethod<$0.RoomRequest, $0.RoomListReply>(
           '/chat.Chat/GetRooms',
@@ -29,8 +29,7 @@ class ChatClient extends $grpc.Client {
       $core.Iterable<$grpc.ClientInterceptor> interceptors})
       : super(channel, options: options, interceptors: interceptors);
 
-  $grpc.ResponseStream<$0.Notification> join(
-      $async.Stream<$0.MessageRequest> request,
+  $grpc.ResponseStream<$0.JoinReply> join($async.Stream<$0.JoinRequest> request,
       {$grpc.CallOptions options}) {
     return $createStreamingCall(_$join, request, options: options);
   }
@@ -45,13 +44,13 @@ abstract class ChatServiceBase extends $grpc.Service {
   $core.String get $name => 'chat.Chat';
 
   ChatServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.MessageRequest, $0.Notification>(
+    $addMethod($grpc.ServiceMethod<$0.JoinRequest, $0.JoinReply>(
         'Join',
         join,
         true,
         true,
-        ($core.List<$core.int> value) => $0.MessageRequest.fromBuffer(value),
-        ($0.Notification value) => value.writeToBuffer()));
+        ($core.List<$core.int> value) => $0.JoinRequest.fromBuffer(value),
+        ($0.JoinReply value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.RoomRequest, $0.RoomListReply>(
         'GetRooms',
         getRooms_Pre,
@@ -66,8 +65,8 @@ abstract class ChatServiceBase extends $grpc.Service {
     return getRooms(call, await request);
   }
 
-  $async.Stream<$0.Notification> join(
-      $grpc.ServiceCall call, $async.Stream<$0.MessageRequest> request);
+  $async.Stream<$0.JoinReply> join(
+      $grpc.ServiceCall call, $async.Stream<$0.JoinRequest> request);
   $async.Future<$0.RoomListReply> getRooms(
       $grpc.ServiceCall call, $0.RoomRequest request);
 }

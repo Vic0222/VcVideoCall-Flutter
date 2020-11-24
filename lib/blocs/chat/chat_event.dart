@@ -1,1 +1,1 @@
-enum ChatEvent { chatJoinStarted, chatDisconnected }
+enum ChatEvent { chatJoinStarted, chatConnected, chatDisconnected }

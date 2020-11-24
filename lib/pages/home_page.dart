@@ -46,19 +46,36 @@ class HomePage extends StatelessWidget {
   }
 
   Widget checkAndDisplayError(BuildContext context, ChatState state) {
-    return state.status != JoinStatus.failure
-        ? Container()
-        : Container(
-            width: double.infinity,
-            color: Theme.of(context).errorColor,
-            child: Center(
-              child: Text(
-                state.errorMessage,
-                style: Theme.of(context).textTheme.bodyText1.copyWith(
-                      color: Theme.of(context).colorScheme.onError,
-                    ),
-              ),
+    switch (state.status) {
+      case JoinStatus.inProgress:
+        return Container(
+          width: double.infinity,
+          padding: EdgeInsets.all(4),
+          child: Center(
+            child: SizedBox(
+              height: 16,
+              width: 16,
+              child: CircularProgressIndicator(),
             ),
-          );
+          ),
+        );
+        break;
+      case JoinStatus.failure:
+        return Container(
+          width: double.infinity,
+          color: Theme.of(context).errorColor,
+          child: Center(
+            child: Text(
+              state.errorMessage,
+              style: Theme.of(context).textTheme.bodyText1.copyWith(
+                    color: Theme.of(context).colorScheme.onError,
+                  ),
+            ),
+          ),
+        );
+        break;
+      default:
+        return Container();
+    }
   }
 }

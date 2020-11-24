@@ -13,6 +13,108 @@ import 'chat.pbenum.dart';
 
 export 'chat.pbenum.dart';
 
+class JoinRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'JoinRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'initial')
+    ..aOM<MessageRequest>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'messageRequest', subBuilder: MessageRequest.create)
+    ..hasRequiredFields = false
+  ;
+
+  JoinRequest._() : super();
+  factory JoinRequest() => create();
+  factory JoinRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory JoinRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  JoinRequest clone() => JoinRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  JoinRequest copyWith(void Function(JoinRequest) updates) => super.copyWith((message) => updates(message as JoinRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static JoinRequest create() => JoinRequest._();
+  JoinRequest createEmptyInstance() => create();
+  static $pb.PbList<JoinRequest> createRepeated() => $pb.PbList<JoinRequest>();
+  @$core.pragma('dart2js:noInline')
+  static JoinRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<JoinRequest>(create);
+  static JoinRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get initial => $_getBF(0);
+  @$pb.TagNumber(1)
+  set initial($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasInitial() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearInitial() => clearField(1);
+
+  @$pb.TagNumber(2)
+  MessageRequest get messageRequest => $_getN(1);
+  @$pb.TagNumber(2)
+  set messageRequest(MessageRequest v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMessageRequest() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMessageRequest() => clearField(2);
+  @$pb.TagNumber(2)
+  MessageRequest ensureMessageRequest() => $_ensure(1);
+}
+
+class JoinReply extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'JoinReply', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'confirmation')
+    ..aOM<Notification>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'notification', subBuilder: Notification.create)
+    ..hasRequiredFields = false
+  ;
+
+  JoinReply._() : super();
+  factory JoinReply() => create();
+  factory JoinReply.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory JoinReply.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  JoinReply clone() => JoinReply()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  JoinReply copyWith(void Function(JoinReply) updates) => super.copyWith((message) => updates(message as JoinReply)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static JoinReply create() => JoinReply._();
+  JoinReply createEmptyInstance() => create();
+  static $pb.PbList<JoinReply> createRepeated() => $pb.PbList<JoinReply>();
+  @$core.pragma('dart2js:noInline')
+  static JoinReply getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<JoinReply>(create);
+  static JoinReply _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.bool get confirmation => $_getBF(0);
+  @$pb.TagNumber(1)
+  set confirmation($core.bool v) { $_setBool(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasConfirmation() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearConfirmation() => clearField(1);
+
+  @$pb.TagNumber(2)
+  Notification get notification => $_getN(1);
+  @$pb.TagNumber(2)
+  set notification(Notification v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasNotification() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearNotification() => clearField(2);
+  @$pb.TagNumber(2)
+  Notification ensureNotification() => $_ensure(1);
+}
+
 class Notification extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Notification', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')

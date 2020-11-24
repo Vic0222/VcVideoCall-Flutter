@@ -14,6 +14,22 @@ const RoomTypeReply$json = const {
   ],
 };
 
+const JoinRequest$json = const {
+  '1': 'JoinRequest',
+  '2': const [
+    const {'1': 'initial', '3': 1, '4': 1, '5': 8, '10': 'initial'},
+    const {'1': 'message_request', '3': 2, '4': 1, '5': 11, '6': '.chat.MessageRequest', '10': 'messageRequest'},
+  ],
+};
+
+const JoinReply$json = const {
+  '1': 'JoinReply',
+  '2': const [
+    const {'1': 'confirmation', '3': 1, '4': 1, '5': 8, '10': 'confirmation'},
+    const {'1': 'notification', '3': 2, '4': 1, '5': 11, '6': '.chat.Notification', '10': 'notification'},
+  ],
+};
+
 const Notification$json = const {
   '1': 'Notification',
   '2': const [

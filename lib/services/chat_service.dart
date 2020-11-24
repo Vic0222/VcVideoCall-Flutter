@@ -2,12 +2,16 @@ import 'dart:async';
 
 import 'package:grpc/grpc.dart';
 import 'package:vc_video_call/grpc/generated/chat.pbgrpc.dart';
+import 'package:vc_video_call/grpc/interceptors/auth_client_interceptor.dart';
 import 'package:vc_video_call/services/authentication_service.dart';
 import 'dart:developer';
 
 //should use resilience and transient-fault-handling like .net polly
 class ChatService {
   static ChatService _instance;
+
+  StreamSubscription<JoinReply> _responseStream;
+
   factory ChatService(
       AuthenticationService authenticationService, String host, int port) {
     if (_instance == null) {
@@ -27,71 +31,64 @@ class ChatService {
       _host,
       port: _port,
       options: const ChannelOptions(
-        credentials: ChannelCredentials.insecure(),
-      ),
+          credentials: ChannelCredentials.insecure(),
+          connectionTimeout: Duration(seconds: 5)),
     );
 
-    _client = ChatClient(channel);
+    _client = ChatClient(channel, interceptors: [
+      AuthClientInterceptor(authenticationService),
+    ]);
   }
 
-  final StreamController<MessageRequest> messageRequestsController =
-      StreamController<MessageRequest>.broadcast();
+  final StreamController<JoinRequest> joinRequestsController =
+      StreamController<JoinRequest>.broadcast();
 
-  final StreamController<Notification> notificationStreamController =
-      StreamController<Notification>.broadcast();
-
-  Future tryJoin({int maxRetry = 5}) async {
-    int retry = 0;
-
-    while (!_connected && retry <= maxRetry) {
-      try {
-        log("joining chat service");
-        await join();
-        log("join success");
-        _connected = true;
-      } catch (e) {
-        log(e.toString());
-        retry++;
-        log("joining chat service failed. retries :" + retry.toString());
-        if (retry > maxRetry) {
-          throw e;
-        }
-      }
-    }
-  }
+  final StreamController<JoinReply> joinReplyController =
+      StreamController<JoinReply>.broadcast();
 
   final StreamController<String> errorStreamController =
       StreamController<String>.broadcast();
 
-  Future join() async {
-    String token = await authenticationService.getToken();
+  Future join({
+    bool force = false,
+    Duration timeout = const Duration(seconds: 10),
+  }) async {
+    if (!_connected || force) {
+      _responseStream?.cancel();
 
-    var metaData = {"Authorization": "Bearer " + token};
-    _client
-        .join(messageRequestsController.stream,
-            options: CallOptions(
-              metadata: metaData,
-            ))
-        .listen(
-      (notification) {
-        notificationStreamController.add(notification);
-      },
-      onError: (error) {
-        _connected = false;
-        errorStreamController.add(error.toString());
-        log(error.toString());
-        tryJoin();
-      },
-      cancelOnError: true,
-    );
-    Future.delayed(Duration(seconds: 2)).then((value) {
-      var messageRequest = MessageRequest();
-      messageRequest.roomId = "";
-      messageRequest.target = "wUnSd3SPUhWngjOsXK83EkPVFyW2";
-      messageRequest.type = RoomTypeReply.Private;
-      messageRequest.messageBody = "Test message body";
-      messageRequestsController.add(messageRequest);
-    });
+      _responseStream = _client.join(joinRequestsController.stream).listen(
+        (joinReply) {
+          joinReplyController.add(joinReply);
+          _connected = true;
+        },
+        onDone: () {
+          log("join done");
+        },
+        onError: (error) {
+          _connected = false;
+          errorStreamController.add(error.toString());
+          log(error.toString(), error: error);
+        },
+        cancelOnError: true,
+      );
+      await Future.delayed(Duration(milliseconds: 500)).then((value) {
+        var joinRequest = JoinRequest();
+        joinRequest.initial = true;
+        joinRequestsController.add(joinRequest);
+      });
+
+      DateTime starTime = DateTime.now();
+
+      await Future.doWhile(() async {
+        await Future.delayed(Duration(seconds: 1));
+        DateTime currentTime = DateTime.now();
+        return !_connected && (currentTime.difference(starTime) < timeout);
+      });
+
+      if (!_connected) {
+        errorStreamController.add("Connection timedout");
+      }
+    }
   }
 
   ResponseFuture<RoomListReply> getRooms() {
@@ -99,6 +96,6 @@ class ChatService {
   }
 
   void disconnect() {
-    messageRequestsController.close();
+    joinRequestsController.close();
   }
 }
