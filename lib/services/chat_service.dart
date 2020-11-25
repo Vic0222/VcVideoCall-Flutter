@@ -10,7 +10,7 @@ import 'dart:developer';
 class ChatService {
   static ChatService _instance;
 
-  StreamSubscription<JoinReply> _responseStream;
+  StreamSubscription<JoinResponse> _responseStream;
 
   factory ChatService(
       AuthenticationService authenticationService, String host, int port) {
@@ -43,8 +43,8 @@ class ChatService {
   final StreamController<JoinRequest> joinRequestsController =
       StreamController<JoinRequest>.broadcast();
 
-  final StreamController<JoinReply> joinReplyController =
-      StreamController<JoinReply>.broadcast();
+  final StreamController<JoinResponse> joinResponseController =
+      StreamController<JoinResponse>.broadcast();
 
   final StreamController<String> errorStreamController =
       StreamController<String>.broadcast();
@@ -58,7 +58,7 @@ class ChatService {
 
       _responseStream = _client.join(joinRequestsController.stream).listen(
         (joinReply) {
-          joinReplyController.add(joinReply);
+          joinResponseController.add(joinReply);
           _connected = true;
         },
         onDone: () {
@@ -91,9 +91,9 @@ class ChatService {
     }
   }
 
-  Future<RoomListReply> getRooms() async {
+  Future<GetRoomsResponse> getRooms() async {
     return await _client
-        .getRooms(RoomRequest())
+        .getRooms(GetRoomsRequest())
         .then((roomListReply) => roomListReply);
   }
 
@@ -105,11 +105,11 @@ class ChatService {
     String roomId,
     String message,
     String target,
-    RoomTypeReply type,
+    RoomType type,
   ) async {
     var joinRequest = JoinRequest();
 
-    var messageRequest = MessageRequest();
+    var messageRequest = Message();
     messageRequest.roomId = roomId;
     messageRequest.messageBody = message;
     messageRequest.target = target;

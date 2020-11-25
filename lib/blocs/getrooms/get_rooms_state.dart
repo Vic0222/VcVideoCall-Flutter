@@ -6,20 +6,21 @@ enum GetRoomsStatus { initial, inProgress, success, failure }
 class GetRoomsState extends Equatable {
   final GetRoomsStatus status;
   final String errorMessage;
-  final RoomListReply roomListReply;
+  final GetRoomsResponse getRoomsResponse;
 
   const GetRoomsState._({
     this.status = GetRoomsStatus.initial,
     this.errorMessage = "",
-    this.roomListReply,
+    this.getRoomsResponse,
   });
 
   GetRoomsState.initial() : this._();
 
   GetRoomsState.inProgress() : this._(status: GetRoomsStatus.inProgress);
 
-  GetRoomsState.success(RoomListReply roomListReply)
-      : this._(status: GetRoomsStatus.success, roomListReply: roomListReply);
+  GetRoomsState.success(GetRoomsResponse getRoomsResponse)
+      : this._(
+            status: GetRoomsStatus.success, getRoomsResponse: getRoomsResponse);
 
   GetRoomsState.failure(String errorMessage)
       : this._(status: GetRoomsStatus.failure, errorMessage: errorMessage);

@@ -5,8 +5,8 @@
 // @dart = 2.3
 // ignore_for_file: annotate_overrides,camel_case_types,unnecessary_const,non_constant_identifier_names,library_prefixes,unused_import,unused_shown_name,return_of_invalid_type,unnecessary_this,prefer_final_fields
 
-const RoomTypeReply$json = const {
-  '1': 'RoomTypeReply',
+const RoomType$json = const {
+  '1': 'RoomType',
   '2': const [
     const {'1': 'Unknown', '2': 0},
     const {'1': 'Private', '2': 1},
@@ -18,12 +18,12 @@ const JoinRequest$json = const {
   '1': 'JoinRequest',
   '2': const [
     const {'1': 'initial', '3': 1, '4': 1, '5': 8, '10': 'initial'},
-    const {'1': 'message_request', '3': 2, '4': 1, '5': 11, '6': '.chat.MessageRequest', '10': 'messageRequest'},
+    const {'1': 'message', '3': 2, '4': 1, '5': 11, '6': '.chat.Message', '10': 'message'},
   ],
 };
 
-const JoinReply$json = const {
-  '1': 'JoinReply',
+const JoinResponse$json = const {
+  '1': 'JoinResponse',
   '2': const [
     const {'1': 'confirmation', '3': 1, '4': 1, '5': 8, '10': 'confirmation'},
     const {'1': 'notification', '3': 2, '4': 1, '5': 11, '6': '.chat.Notification', '10': 'notification'},
@@ -39,33 +39,55 @@ const Notification$json = const {
   ],
 };
 
-const MessageRequest$json = const {
-  '1': 'MessageRequest',
+const Message$json = const {
+  '1': 'Message',
   '2': const [
     const {'1': 'target', '3': 1, '4': 1, '5': 9, '10': 'target'},
     const {'1': 'room_id', '3': 2, '4': 1, '5': 9, '10': 'roomId'},
-    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.chat.RoomTypeReply', '10': 'type'},
+    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.chat.RoomType', '10': 'type'},
     const {'1': 'message_body', '3': 4, '4': 1, '5': 9, '10': 'messageBody'},
   ],
 };
 
-const RoomRequest$json = const {
-  '1': 'RoomRequest',
+const GetRoomsRequest$json = const {
+  '1': 'GetRoomsRequest',
 };
 
-const RoomListReply$json = const {
-  '1': 'RoomListReply',
+const GetRoomsResponse$json = const {
+  '1': 'GetRoomsResponse',
   '2': const [
-    const {'1': 'rooms', '3': 1, '4': 3, '5': 11, '6': '.chat.RoomReply', '10': 'rooms'},
+    const {'1': 'rooms', '3': 1, '4': 3, '5': 11, '6': '.chat.Room', '10': 'rooms'},
   ],
 };
 
-const RoomReply$json = const {
-  '1': 'RoomReply',
+const Room$json = const {
+  '1': 'Room',
   '2': const [
     const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.chat.RoomTypeReply', '10': 'type'},
+    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.chat.RoomType', '10': 'type'},
+    const {'1': 'last_message', '3': 4, '4': 1, '5': 9, '10': 'lastMessage'},
+    const {'1': 'last_message_datetime', '3': 5, '4': 1, '5': 3, '10': 'lastMessageDatetime'},
+  ],
+};
+
+const GetMessagesRequest$json = const {
+  '1': 'GetMessagesRequest',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.chat.RoomType', '10': 'type'},
+    const {'1': 'last_message', '3': 4, '4': 1, '5': 9, '10': 'lastMessage'},
+    const {'1': 'last_message_datetime', '3': 5, '4': 1, '5': 3, '10': 'lastMessageDatetime'},
+  ],
+};
+
+const GetMessagesResponse$json = const {
+  '1': 'GetMessagesResponse',
+  '2': const [
+    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
+    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.chat.RoomType', '10': 'type'},
     const {'1': 'last_message', '3': 4, '4': 1, '5': 9, '10': 'lastMessage'},
     const {'1': 'last_message_datetime', '3': 5, '4': 1, '5': 3, '10': 'lastMessageDatetime'},
   ],

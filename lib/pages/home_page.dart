@@ -70,10 +70,10 @@ class HomePage extends StatelessWidget {
                     switch (state.status) {
                       case GetRoomsStatus.success:
                         return ListView.builder(
-                          itemCount: state.roomListReply.rooms.length,
+                          itemCount: state.getRoomsResponse.rooms.length,
                           itemBuilder: (context, index) {
                             return ContactCard(
-                                state.roomListReply.rooms[index]);
+                                state.getRoomsResponse.rooms[index]);
                           },
                         );
                         break;

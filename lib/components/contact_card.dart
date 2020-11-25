@@ -6,7 +6,7 @@ import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 class ContactCard extends StatelessWidget {
   ContactCard(this.room);
 
-  final RoomReply room;
+  final Room room;
 
   @override
   Widget build(BuildContext context) {

@@ -9,20 +9,20 @@
 import 'dart:core' as $core;
 import 'package:protobuf/protobuf.dart' as $pb;
 
-class RoomTypeReply extends $pb.ProtobufEnum {
-  static const RoomTypeReply Unknown = RoomTypeReply._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Unknown');
-  static const RoomTypeReply Private = RoomTypeReply._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Private');
-  static const RoomTypeReply Group = RoomTypeReply._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Group');
+class RoomType extends $pb.ProtobufEnum {
+  static const RoomType Unknown = RoomType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Unknown');
+  static const RoomType Private = RoomType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Private');
+  static const RoomType Group = RoomType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Group');
 
-  static const $core.List<RoomTypeReply> values = <RoomTypeReply> [
+  static const $core.List<RoomType> values = <RoomType> [
     Unknown,
     Private,
     Group,
   ];
 
-  static final $core.Map<$core.int, RoomTypeReply> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static RoomTypeReply valueOf($core.int value) => _byValue[value];
+  static final $core.Map<$core.int, RoomType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static RoomType valueOf($core.int value) => _byValue[value];
 
-  const RoomTypeReply._($core.int v, $core.String n) : super(v, n);
+  const RoomType._($core.int v, $core.String n) : super(v, n);
 }
 

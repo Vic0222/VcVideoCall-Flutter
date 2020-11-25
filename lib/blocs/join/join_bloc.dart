@@ -8,7 +8,7 @@ import 'package:vc_video_call/services/chat_service.dart';
 
 class JoinBloc extends Bloc<JoinEvent, JoinState> {
   StreamSubscription<String> _errorStreamSubscription;
-  StreamSubscription<JoinReply> _joinReplyStreamSubscription;
+  StreamSubscription<JoinResponse> _joinResponseStreamSubscription;
 
   JoinBloc(this._chatService) : super(JoinState.initial()) {
     add(JoinEvent.joinStarted);
@@ -16,8 +16,8 @@ class JoinBloc extends Bloc<JoinEvent, JoinState> {
         _chatService.errorStreamController.stream.listen((event) {
       add(JoinEvent.joinDisconnected);
     });
-    _joinReplyStreamSubscription =
-        _chatService.joinReplyController.stream.listen((event) {
+    _joinResponseStreamSubscription =
+        _chatService.joinResponseController.stream.listen((event) {
       if (event.confirmation) {
         add(JoinEvent.joinSuccess);
       }
@@ -50,7 +50,7 @@ class JoinBloc extends Bloc<JoinEvent, JoinState> {
   @override
   Future<void> close() {
     _errorStreamSubscription.cancel();
-    _joinReplyStreamSubscription.cancel();
+    _joinResponseStreamSubscription.cancel();
     return super.close();
   }
 }
