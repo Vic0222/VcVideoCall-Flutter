@@ -18,7 +18,7 @@ const JoinRequest$json = const {
   '1': 'JoinRequest',
   '2': const [
     const {'1': 'initial', '3': 1, '4': 1, '5': 8, '10': 'initial'},
-    const {'1': 'message', '3': 2, '4': 1, '5': 11, '6': '.chat.Message', '10': 'message'},
+    const {'1': 'message_request', '3': 2, '4': 1, '5': 11, '6': '.chat.MessageRequest', '10': 'messageRequest'},
   ],
 };
 
@@ -26,12 +26,12 @@ const JoinResponse$json = const {
   '1': 'JoinResponse',
   '2': const [
     const {'1': 'confirmation', '3': 1, '4': 1, '5': 8, '10': 'confirmation'},
-    const {'1': 'notification', '3': 2, '4': 1, '5': 11, '6': '.chat.Notification', '10': 'notification'},
+    const {'1': 'message_notification', '3': 2, '4': 1, '5': 11, '6': '.chat.MessageNotification', '10': 'messageNotification'},
   ],
 };
 
-const Notification$json = const {
-  '1': 'Notification',
+const MessageNotification$json = const {
+  '1': 'MessageNotification',
   '2': const [
     const {'1': 'room_id', '3': 1, '4': 1, '5': 9, '10': 'roomId'},
     const {'1': 'sender', '3': 2, '4': 1, '5': 9, '10': 'sender'},
@@ -39,8 +39,8 @@ const Notification$json = const {
   ],
 };
 
-const Message$json = const {
-  '1': 'Message',
+const MessageRequest$json = const {
+  '1': 'MessageRequest',
   '2': const [
     const {'1': 'target', '3': 1, '4': 1, '5': 9, '10': 'target'},
     const {'1': 'room_id', '3': 2, '4': 1, '5': 9, '10': 'roomId'},
@@ -74,22 +74,23 @@ const Room$json = const {
 const GetMessagesRequest$json = const {
   '1': 'GetMessagesRequest',
   '2': const [
-    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
-    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.chat.RoomType', '10': 'type'},
-    const {'1': 'last_message', '3': 4, '4': 1, '5': 9, '10': 'lastMessage'},
-    const {'1': 'last_message_datetime', '3': 5, '4': 1, '5': 3, '10': 'lastMessageDatetime'},
+    const {'1': 'room_id', '3': 1, '4': 1, '5': 9, '10': 'roomId'},
   ],
 };
 
 const GetMessagesResponse$json = const {
   '1': 'GetMessagesResponse',
   '2': const [
-    const {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
-    const {'1': 'name', '3': 2, '4': 1, '5': 9, '10': 'name'},
-    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.chat.RoomType', '10': 'type'},
-    const {'1': 'last_message', '3': 4, '4': 1, '5': 9, '10': 'lastMessage'},
-    const {'1': 'last_message_datetime', '3': 5, '4': 1, '5': 3, '10': 'lastMessageDatetime'},
+    const {'1': 'messages', '3': 1, '4': 3, '5': 11, '6': '.chat.Message', '10': 'messages'},
+  ],
+};
+
+const Message$json = const {
+  '1': 'Message',
+  '2': const [
+    const {'1': 'room_id', '3': 1, '4': 1, '5': 9, '10': 'roomId'},
+    const {'1': 'message_body', '3': 2, '4': 1, '5': 9, '10': 'messageBody'},
+    const {'1': 'sender_id', '3': 3, '4': 1, '5': 9, '10': 'senderId'},
   ],
 };
 

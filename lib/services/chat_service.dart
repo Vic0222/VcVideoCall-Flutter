@@ -109,7 +109,7 @@ class ChatService {
   ) async {
     var joinRequest = JoinRequest();
 
-    var messageRequest = Message();
+    var messageRequest = MessageRequest();
     messageRequest.roomId = roomId;
     messageRequest.messageBody = message;
     messageRequest.target = target;
