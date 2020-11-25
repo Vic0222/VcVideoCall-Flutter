@@ -33,7 +33,9 @@ class _LoginPageState extends State<LoginPage> {
       body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
           listener: authenticationBlocListen,
           builder: (context, authenticationState) {
-            return authenticationState.status == AuthenticationStatus.inProgress
+            return authenticationState.status ==
+                        AuthenticationStatus.inProgress ||
+                    authenticationState.status == AuthenticationStatus.success
                 ? buildLoading(context)
                 : buildContent(context);
           }),

@@ -1,25 +1,25 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vc_video_call/blocs/chat/chat_event.dart';
-import 'package:vc_video_call/blocs/chat/chat_state.dart';
+import 'package:vc_video_call/blocs/join/join_event.dart';
+import 'package:vc_video_call/blocs/join/join_state.dart';
 import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 import 'package:vc_video_call/services/chat_service.dart';
 
-class ChatBloc extends Bloc<ChatEvent, ChatState> {
+class JoinBloc extends Bloc<JoinEvent, JoinState> {
   StreamSubscription<String> _errorStreamSubscription;
   StreamSubscription<JoinReply> _joinReplyStreamSubscription;
 
-  ChatBloc(this._chatService) : super(ChatState.initial()) {
-    add(ChatEvent.chatJoinStarted);
+  JoinBloc(this._chatService) : super(JoinState.initial()) {
+    add(JoinEvent.joinStarted);
     _errorStreamSubscription =
         _chatService.errorStreamController.stream.listen((event) {
-      add(ChatEvent.chatDisconnected);
+      add(JoinEvent.joinDisconnected);
     });
     _joinReplyStreamSubscription =
         _chatService.joinReplyController.stream.listen((event) {
       if (event.confirmation) {
-        add(ChatEvent.chatConnected);
+        add(JoinEvent.joinSuccess);
       }
     });
   }
@@ -27,23 +27,23 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   final ChatService _chatService;
 
   @override
-  Stream<ChatState> mapEventToState(ChatEvent event) async* {
+  Stream<JoinState> mapEventToState(JoinEvent event) async* {
     switch (event) {
-      case ChatEvent.chatJoinStarted:
-        yield ChatState.inProgress();
+      case JoinEvent.joinStarted:
+        yield JoinState.inProgress();
         await _chatService.join();
         break;
-      case ChatEvent.chatConnected:
-        yield ChatState.success();
+      case JoinEvent.joinSuccess:
+        yield JoinState.success();
         break;
-      case ChatEvent.chatDisconnected:
-        yield ChatState.failure("Connection error");
+      case JoinEvent.joinFailure:
+        yield JoinState.failure("Connection error");
         await Future.delayed(Duration(seconds: 2));
-        yield ChatState.inProgress();
+        yield JoinState.inProgress();
         await _chatService.join();
         break;
       default:
-        yield ChatState.initial();
+        yield JoinState.initial();
     }
   }
 

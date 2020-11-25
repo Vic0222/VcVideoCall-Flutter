@@ -2,22 +2,22 @@ import 'package:equatable/equatable.dart';
 
 enum JoinStatus { initial, inProgress, success, failure }
 
-class ChatState extends Equatable {
+class JoinState extends Equatable {
   final JoinStatus status;
   final String errorMessage;
 
-  const ChatState._({
+  const JoinState._({
     this.status = JoinStatus.initial,
     this.errorMessage = "",
   });
 
-  ChatState.initial() : this._();
+  JoinState.initial() : this._();
 
-  ChatState.inProgress() : this._(status: JoinStatus.inProgress);
+  JoinState.inProgress() : this._(status: JoinStatus.inProgress);
 
-  ChatState.success() : this._(status: JoinStatus.success);
+  JoinState.success() : this._(status: JoinStatus.success);
 
-  ChatState.failure(String errorMessage)
+  JoinState.failure(String errorMessage)
       : this._(status: JoinStatus.failure, errorMessage: errorMessage);
 
   @override

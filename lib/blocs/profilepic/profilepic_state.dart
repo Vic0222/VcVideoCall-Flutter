@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 
 enum GetProfilePicStatus { initial, inProgress, success, failure }
 

@@ -1,11 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:vc_video_call/blocs/chat/chat_bloc.dart';
 import 'package:vc_video_call/blocs/firebase_initialize/firebase_initialize_bloc.dart';
 import 'package:vc_video_call/blocs/getrooms/get_rooms_bloc.dart';
+import 'package:vc_video_call/blocs/join/join_bloc.dart';
 import 'package:vc_video_call/blocs/profilepic/profilepic_bloc.dart';
 import 'package:vc_video_call/services/authentication_service.dart';
 import 'package:vc_video_call/blocs/authentication/authentication_bloc.dart';
@@ -76,9 +75,9 @@ class _MyAppState extends State<MyApp> {
             create: (BuildContext context) =>
                 AuthenticationBloc(context.read<AuthenticationService>()),
           ),
-          BlocProvider<ChatBloc>(
+          BlocProvider<JoinBloc>(
             create: (BuildContext context) =>
-                ChatBloc(context.read<ChatService>()),
+                JoinBloc(context.read<ChatService>()),
           ),
           BlocProvider<GetRoomsBloc>(
             create: (BuildContext context) =>

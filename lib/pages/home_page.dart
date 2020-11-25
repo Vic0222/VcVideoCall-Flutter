@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:vc_video_call/blocs/chat/chat_bloc.dart';
-import 'package:vc_video_call/blocs/chat/chat_state.dart';
 import 'package:vc_video_call/blocs/getrooms/get_rooms_bloc.dart';
 import 'package:vc_video_call/blocs/getrooms/get_rooms_state.dart';
+import 'package:vc_video_call/blocs/join/join_bloc.dart';
+import 'package:vc_video_call/blocs/join/join_state.dart';
 import 'package:vc_video_call/blocs/profilepic/profilepic_bloc.dart';
 import 'package:vc_video_call/blocs/profilepic/profilepic_event.dart';
 import 'package:vc_video_call/blocs/profilepic/profilepic_state.dart';
@@ -54,11 +54,13 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
-      body: BlocBuilder<ChatBloc, ChatState>(
-        builder: (context, state) {
+      body: BlocConsumer<JoinBloc, JoinState>(
+        listener: (context, state) {
           if (state.status == JoinStatus.success) {
             BlocProvider.of<GetRoomsBloc>(context).startGetRooms();
           }
+        },
+        builder: (context, state) {
           return Column(
             children: [
               checkAndDisplayError(context, state),
@@ -88,7 +90,7 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  Widget checkAndDisplayError(BuildContext context, ChatState state) {
+  Widget checkAndDisplayError(BuildContext context, JoinState state) {
     switch (state.status) {
       case JoinStatus.inProgress:
         return Container(
