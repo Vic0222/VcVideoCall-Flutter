@@ -4,6 +4,8 @@ import 'package:vc_video_call/pages/login_page.dart';
 import 'package:vc_video_call/pages/chat_page.dart';
 
 class AppRoutes {
+  static final GlobalKey<NavigatorState> navigatorKey =
+      new GlobalKey<NavigatorState>();
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
@@ -12,7 +14,8 @@ class AppRoutes {
       case '/home':
         return MaterialPageRoute(builder: (context) => HomePage());
       case '/chat_page':
-        return MaterialPageRoute(builder: (context) => ChatPage());
+        return MaterialPageRoute(
+            builder: (context) => ChatPage(settings.arguments));
       default:
         return null;
     }

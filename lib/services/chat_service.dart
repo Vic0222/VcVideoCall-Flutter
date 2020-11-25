@@ -97,7 +97,24 @@ class ChatService {
         .then((roomListReply) => roomListReply);
   }
 
-  void disconnect() {
-    joinRequestsController.close();
+  Future disconnect() async {
+    await joinRequestsController.close();
+  }
+
+  void sendMessage(
+    String roomId,
+    String message,
+    String target,
+    RoomTypeReply type,
+  ) async {
+    var joinRequest = JoinRequest();
+
+    var messageRequest = MessageRequest();
+    messageRequest.roomId = roomId;
+    messageRequest.messageBody = message;
+    messageRequest.target = target;
+    messageRequest.type = type;
+
+    joinRequestsController.add(joinRequest);
   }
 }

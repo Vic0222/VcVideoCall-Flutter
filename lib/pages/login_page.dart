@@ -4,6 +4,8 @@ import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:vc_video_call/blocs/authentication/authentication_bloc.dart';
 import 'package:vc_video_call/blocs/authentication/authentication_event.dart';
 import 'package:vc_video_call/blocs/authentication/authentication_state.dart';
+import 'package:vc_video_call/blocs/firebase_initialize/firebase_initialize_bloc.dart';
+import 'package:vc_video_call/blocs/firebase_initialize/firebase_initialize_state.dart';
 import 'package:vc_video_call/components/logo.dart';
 
 class LoginPage extends StatefulWidget {
@@ -14,21 +16,37 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<AuthenticationBloc, AuthenticationState>(
-        listener: (context, state) {
-      if (state.status == AuthenticationStatus.failure) {
-        Scaffold.of(context)
-            .showSnackBar(SnackBar(content: Text(state?.errorMessage)));
-      } else if (state.status == AuthenticationStatus.success) {
-        Navigator.pushReplacementNamed(context, "/home");
+    return BlocBuilder<FirebaseInitializeBloc, FirebaseInitializeState>(
+        builder: (context, firebaseInitializeState) {
+      if (firebaseInitializeState.status == FirebaseInitializeStatus.success) {
+        return loginBuild();
+      } else {
+        return Scaffold(
+          body: buildLoading(context),
+        );
       }
-    }, builder: (context, state) {
-      return Scaffold(
-        body: state.status == AuthenticationStatus.inProgress
-            ? buildLoading(context)
-            : buildContent(context),
-      );
     });
+  }
+
+  Widget loginBuild() {
+    return Scaffold(
+      body: BlocConsumer<AuthenticationBloc, AuthenticationState>(
+          listener: authenticationBlocListen,
+          builder: (context, authenticationState) {
+            return authenticationState.status == AuthenticationStatus.inProgress
+                ? buildLoading(context)
+                : buildContent(context);
+          }),
+    );
+  }
+
+  void authenticationBlocListen(context, state) {
+    if (state.status == AuthenticationStatus.failure) {
+      Scaffold.of(context)
+          .showSnackBar(SnackBar(content: Text(state?.errorMessage)));
+    } else if (state.status == AuthenticationStatus.success) {
+      Navigator.pushReplacementNamed(context, "/home");
+    }
   }
 
   Stack buildContent(BuildContext context) {

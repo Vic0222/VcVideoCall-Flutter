@@ -2,8 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:vc_video_call/components/receiver_message_card.dart';
 import 'package:vc_video_call/components/sender_message_card.dart';
 import 'package:vc_video_call/custom_classes/custom_color_scheme.dart';
+import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 
 class ChatPage extends StatefulWidget {
+  final RoomReply room;
+
+  ChatPage(this.room);
+
   @override
   _ChatPageState createState() => _ChatPageState();
 }
@@ -39,7 +44,8 @@ class _ChatPageState extends State<ChatPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "Juan Dela Cruz",
+                    widget.room.name,
+                    overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.headline6.copyWith(
                           color: Theme.of(context).colorScheme.onPrimary,
                         ),

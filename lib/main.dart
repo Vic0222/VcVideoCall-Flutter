@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:vc_video_call/blocs/chat/chat_bloc.dart';
+import 'package:vc_video_call/blocs/firebase_initialize/firebase_initialize_bloc.dart';
 import 'package:vc_video_call/blocs/getrooms/get_rooms_bloc.dart';
 import 'package:vc_video_call/blocs/profilepic/profilepic_bloc.dart';
 import 'package:vc_video_call/services/authentication_service.dart';
@@ -15,8 +16,13 @@ void main() {
   runApp(MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   // This widget is the root of your application.
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     ThemeData theme = ThemeData(
@@ -60,7 +66,7 @@ class MyApp extends StatelessWidget {
           create: (context) => ChatService(
             context.read<AuthenticationService>(),
             "10.0.2.2",
-            5000,
+            80,
           ),
         ),
       ],
@@ -82,21 +88,18 @@ class MyApp extends StatelessWidget {
             create: (BuildContext context) =>
                 ProfilePicBloc(context.read<AuthenticationService>()),
           ),
+          BlocProvider<FirebaseInitializeBloc>(
+            create: (BuildContext context) =>
+                FirebaseInitializeBloc(context.read<AuthenticationService>()),
+          ),
         ],
-        child: FutureBuilder(
-            future: Firebase.initializeApp(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return MaterialApp(
-                  title: 'Vc Video Call',
-                  theme: theme,
-                  onGenerateRoute: AppRoutes.onGenerateRoute,
-                );
-              }
-              return Container(
-                child: CircularProgressIndicator(),
-              );
-            }),
+        child: MaterialApp(
+          title: 'Vc Video Call',
+          theme: theme,
+          initialRoute: '/',
+          navigatorKey: AppRoutes.navigatorKey,
+          onGenerateRoute: AppRoutes.onGenerateRoute,
+        ),
       ),
     );
   }
