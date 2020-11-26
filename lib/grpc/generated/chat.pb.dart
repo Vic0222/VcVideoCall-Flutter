@@ -16,8 +16,6 @@ export 'chat.pbenum.dart';
 
 class JoinRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'JoinRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
-    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'initial')
-    ..aOM<MessageRequest>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'messageRequest', subBuilder: MessageRequest.create)
     ..hasRequiredFields = false
   ;
 
@@ -43,26 +41,6 @@ class JoinRequest extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static JoinRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<JoinRequest>(create);
   static JoinRequest _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.bool get initial => $_getBF(0);
-  @$pb.TagNumber(1)
-  set initial($core.bool v) { $_setBool(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasInitial() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearInitial() => clearField(1);
-
-  @$pb.TagNumber(2)
-  MessageRequest get messageRequest => $_getN(1);
-  @$pb.TagNumber(2)
-  set messageRequest(MessageRequest v) { setField(2, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasMessageRequest() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearMessageRequest() => clearField(2);
-  @$pb.TagNumber(2)
-  MessageRequest ensureMessageRequest() => $_ensure(1);
 }
 
 class JoinResponse extends $pb.GeneratedMessage {
@@ -177,9 +155,7 @@ class MessageNotification extends $pb.GeneratedMessage {
 
 class MessageRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MessageRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'target')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
-    ..e<RoomType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: RoomType.Unknown, valueOf: RoomType.valueOf, enumValues: RoomType.values)
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'messageBody')
     ..hasRequiredFields = false
   ;
@@ -207,41 +183,52 @@ class MessageRequest extends $pb.GeneratedMessage {
   static MessageRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MessageRequest>(create);
   static MessageRequest _defaultInstance;
 
-  @$pb.TagNumber(1)
-  $core.String get target => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set target($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasTarget() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearTarget() => clearField(1);
-
   @$pb.TagNumber(2)
-  $core.String get roomId => $_getSZ(1);
+  $core.String get roomId => $_getSZ(0);
   @$pb.TagNumber(2)
-  set roomId($core.String v) { $_setString(1, v); }
+  set roomId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(2)
-  $core.bool hasRoomId() => $_has(1);
+  $core.bool hasRoomId() => $_has(0);
   @$pb.TagNumber(2)
   void clearRoomId() => clearField(2);
 
-  @$pb.TagNumber(3)
-  RoomType get type => $_getN(2);
-  @$pb.TagNumber(3)
-  set type(RoomType v) { setField(3, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasType() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearType() => clearField(3);
-
   @$pb.TagNumber(4)
-  $core.String get messageBody => $_getSZ(3);
+  $core.String get messageBody => $_getSZ(1);
   @$pb.TagNumber(4)
-  set messageBody($core.String v) { $_setString(3, v); }
+  set messageBody($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(4)
-  $core.bool hasMessageBody() => $_has(3);
+  $core.bool hasMessageBody() => $_has(1);
   @$pb.TagNumber(4)
   void clearMessageBody() => clearField(4);
+}
+
+class MessageResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MessageResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  MessageResponse._() : super();
+  factory MessageResponse() => create();
+  factory MessageResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory MessageResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  MessageResponse clone() => MessageResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  MessageResponse copyWith(void Function(MessageResponse) updates) => super.copyWith((message) => updates(message as MessageResponse)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static MessageResponse create() => MessageResponse._();
+  MessageResponse createEmptyInstance() => create();
+  static $pb.PbList<MessageResponse> createRepeated() => $pb.PbList<MessageResponse>();
+  @$core.pragma('dart2js:noInline')
+  static MessageResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<MessageResponse>(create);
+  static MessageResponse _defaultInstance;
 }
 
 class GetRoomsRequest extends $pb.GeneratedMessage {

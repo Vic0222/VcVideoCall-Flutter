@@ -16,10 +16,6 @@ const RoomType$json = const {
 
 const JoinRequest$json = const {
   '1': 'JoinRequest',
-  '2': const [
-    const {'1': 'initial', '3': 1, '4': 1, '5': 8, '10': 'initial'},
-    const {'1': 'message_request', '3': 2, '4': 1, '5': 11, '6': '.chat.MessageRequest', '10': 'messageRequest'},
-  ],
 };
 
 const JoinResponse$json = const {
@@ -42,11 +38,13 @@ const MessageNotification$json = const {
 const MessageRequest$json = const {
   '1': 'MessageRequest',
   '2': const [
-    const {'1': 'target', '3': 1, '4': 1, '5': 9, '10': 'target'},
     const {'1': 'room_id', '3': 2, '4': 1, '5': 9, '10': 'roomId'},
-    const {'1': 'type', '3': 3, '4': 1, '5': 14, '6': '.chat.RoomType', '10': 'type'},
     const {'1': 'message_body', '3': 4, '4': 1, '5': 9, '10': 'messageBody'},
   ],
+};
+
+const MessageResponse$json = const {
+  '1': 'MessageResponse',
 };
 
 const GetRoomsRequest$json = const {

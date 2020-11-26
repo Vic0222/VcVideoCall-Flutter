@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vc_video_call/blocs/get_messages/get_messages_bloc.dart';
 import 'package:vc_video_call/blocs/get_messages/get_messages_state.dart';
+import 'package:vc_video_call/blocs/send_message_bloc/send_message_bloc.dart';
+import 'package:vc_video_call/blocs/send_message_bloc/send_message_state.dart';
 import 'package:vc_video_call/components/receiver_message_card.dart';
 import 'package:vc_video_call/components/sender_message_card.dart';
 import 'package:vc_video_call/custom_classes/custom_color_scheme.dart';
@@ -93,9 +95,9 @@ class _ChatPageState extends State<ChatPage> {
 
                   Message message = state.getMessagesResponse.messages[i];
                   if (message.senderId == state.userId) {
-                    widget = SenderMessageCard();
+                    widget = SenderMessageCard(message);
                   } else {
-                    widget = ReceiverMessageCard();
+                    widget = ReceiverMessageCard(message);
                   }
                   return widget;
                 },
@@ -137,11 +139,24 @@ class _ChatPageState extends State<ChatPage> {
                   ),
                 ),
                 Container(
-                  child: IconButton(
-                    icon: Icon(Icons.send),
-                    color: Theme.of(context).colorScheme.onPrimary,
-                    onPressed: () {},
-                  ),
+                  child: BlocConsumer<SendMessageBloc, SendMessageState>(
+                      listener: (context, state) {},
+                      builder: (context, state) {
+                        return state.status != SendMessageStatus.inProgress
+                            ? IconButton(
+                                icon: Icon(Icons.send),
+                                color: Theme.of(context).colorScheme.onPrimary,
+                                onPressed: () {
+                                  context
+                                      .read<SendMessageBloc>()
+                                      .startSendMessage(
+                                        widget.room.id,
+                                        _chatTextEditingController.text,
+                                      );
+                                },
+                              )
+                            : CircularProgressIndicator();
+                      }),
                 )
               ],
             ),

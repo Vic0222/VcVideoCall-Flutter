@@ -40,9 +40,6 @@ class ChatService {
     ]);
   }
 
-  final StreamController<JoinRequest> joinRequestsController =
-      StreamController<JoinRequest>.broadcast();
-
   final StreamController<JoinResponse> joinResponseController =
       StreamController<JoinResponse>.broadcast();
 
@@ -56,7 +53,9 @@ class ChatService {
     if (!_connected || force) {
       _responseStream?.cancel();
 
-      _responseStream = _client.join(joinRequestsController.stream).listen(
+      var joinRequest = JoinRequest();
+
+      _responseStream = _client.join(joinRequest).listen(
         (joinReply) {
           joinResponseController.add(joinReply);
           _connected = true;
@@ -71,12 +70,8 @@ class ChatService {
         },
         cancelOnError: true,
       );
-      await Future.delayed(Duration(milliseconds: 500)).then((value) {
-        var joinRequest = JoinRequest();
-        joinRequest.initial = true;
-        joinRequestsController.add(joinRequest);
-      });
 
+      //manual timout checker
       DateTime starTime = DateTime.now();
 
       await Future.doWhile(() async {
@@ -104,23 +99,14 @@ class ChatService {
   }
 
   Future disconnect() async {
-    await joinRequestsController.close();
+    await _responseStream.cancel();
   }
 
-  void sendMessage(
-    String roomId,
-    String message,
-    String target,
-    RoomType type,
-  ) async {
-    var joinRequest = JoinRequest();
-
+  Future sendMessage(String roomId, String message) async {
     var messageRequest = MessageRequest();
     messageRequest.roomId = roomId;
     messageRequest.messageBody = message;
-    messageRequest.target = target;
-    messageRequest.type = type;
 
-    joinRequestsController.add(joinRequest);
+    await _client.sendMessageRequest(messageRequest);
   }
 }

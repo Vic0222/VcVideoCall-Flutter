@@ -7,6 +7,7 @@ import 'package:vc_video_call/blocs/get_messages/get_messages_bloc.dart';
 import 'package:vc_video_call/blocs/getrooms/get_rooms_bloc.dart';
 import 'package:vc_video_call/blocs/join/join_bloc.dart';
 import 'package:vc_video_call/blocs/profilepic/profilepic_bloc.dart';
+import 'package:vc_video_call/blocs/send_message_bloc/send_message_bloc.dart';
 import 'package:vc_video_call/services/authentication_service.dart';
 import 'package:vc_video_call/blocs/authentication/authentication_bloc.dart';
 import 'package:vc_video_call/app_routes.dart';
@@ -96,6 +97,11 @@ class _MyAppState extends State<MyApp> {
             create: (BuildContext context) => GetMessagesBloc(
               context.read<ChatService>(),
               context.read<AuthenticationService>(),
+            ),
+          ),
+          BlocProvider<SendMessageBloc>(
+            create: (BuildContext context) => SendMessageBloc(
+              context.read<ChatService>(),
             ),
           ),
         ],

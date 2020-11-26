@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 
 class ReceiverMessageCard extends StatelessWidget {
-  const ReceiverMessageCard({
+  const ReceiverMessageCard(
+    this.message, {
     Key key,
   }) : super(key: key);
+
+  final Message message;
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +29,7 @@ class ReceiverMessageCard extends StatelessWidget {
           ),
           padding: EdgeInsets.all(8),
           child: Text(
-            "Op? SLong text for place holder? a b casd asd asdw a2 sasad",
+            message.messageBody,
             style: Theme.of(context).textTheme.bodyText1,
           ),
         ),

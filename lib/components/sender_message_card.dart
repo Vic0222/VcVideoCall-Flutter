@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 
 class SenderMessageCard extends StatelessWidget {
-  const SenderMessageCard({
+  const SenderMessageCard(
+    this.message, {
     Key key,
   }) : super(key: key);
+
+  final Message message;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +30,7 @@ class SenderMessageCard extends StatelessWidget {
           ),
           padding: EdgeInsets.all(8),
           child: Text(
-            "Hey",
+            message.messageBody,
             style: Theme.of(context)
                 .textTheme
                 .bodyText1
