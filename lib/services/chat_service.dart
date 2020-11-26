@@ -5,6 +5,7 @@ import 'package:vc_video_call/grpc/generated/chat.pbgrpc.dart';
 import 'package:vc_video_call/grpc/interceptors/auth_client_interceptor.dart';
 import 'package:vc_video_call/services/authentication_service.dart';
 import 'dart:developer';
+import 'package:fixnum/fixnum.dart';
 
 //should use resilience and transient-fault-handling like .net polly
 class ChatService {
@@ -92,9 +93,12 @@ class ChatService {
         .then((roomListReply) => roomListReply);
   }
 
-  Future<GetMessagesResponse> getMessages(String roomId) async {
+  Future<GetMessagesResponse> getMessages(
+      String roomId, Int64 timestamp) async {
     var getMessageRequest = GetMessagesRequest();
     getMessageRequest.roomId = roomId;
+    getMessageRequest.lastMessageDatetime = timestamp;
+
     return await _client.getMessages(getMessageRequest);
   }
 

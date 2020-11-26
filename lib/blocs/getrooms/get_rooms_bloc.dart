@@ -4,9 +4,7 @@ import 'package:vc_video_call/blocs/getrooms/get_rooms_state.dart';
 import 'package:vc_video_call/services/chat_service.dart';
 
 class GetRoomsBloc extends Bloc<GetRoomsEvent, GetRoomsState> {
-  GetRoomsBloc(this._chatService) : super(GetRoomsState.initial()) {
-    add(GetRoomsEvent.GetRoomsStarted);
-  }
+  GetRoomsBloc(this._chatService) : super(GetRoomsState.initial());
   final ChatService _chatService;
 
   @override

@@ -375,6 +375,7 @@ class Room extends $pb.GeneratedMessage {
 class GetMessagesRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetMessagesRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lastMessageDatetime')
     ..hasRequiredFields = false
   ;
 
@@ -409,6 +410,15 @@ class GetMessagesRequest extends $pb.GeneratedMessage {
   $core.bool hasRoomId() => $_has(0);
   @$pb.TagNumber(1)
   void clearRoomId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get lastMessageDatetime => $_getI64(1);
+  @$pb.TagNumber(2)
+  set lastMessageDatetime($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasLastMessageDatetime() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLastMessageDatetime() => clearField(2);
 }
 
 class GetMessagesResponse extends $pb.GeneratedMessage {
@@ -446,9 +456,10 @@ class GetMessagesResponse extends $pb.GeneratedMessage {
 
 class Message extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'Message', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'messageBody')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'senderId')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'id')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'messageBody')
+    ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'senderId')
     ..hasRequiredFields = false
   ;
 
@@ -476,30 +487,39 @@ class Message extends $pb.GeneratedMessage {
   static Message _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get roomId => $_getSZ(0);
+  $core.String get id => $_getSZ(0);
   @$pb.TagNumber(1)
-  set roomId($core.String v) { $_setString(0, v); }
+  set id($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasRoomId() => $_has(0);
+  $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearRoomId() => clearField(1);
+  void clearId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get messageBody => $_getSZ(1);
+  $core.String get roomId => $_getSZ(1);
   @$pb.TagNumber(2)
-  set messageBody($core.String v) { $_setString(1, v); }
+  set roomId($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasMessageBody() => $_has(1);
+  $core.bool hasRoomId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearMessageBody() => clearField(2);
+  void clearRoomId() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get senderId => $_getSZ(2);
+  $core.String get messageBody => $_getSZ(2);
   @$pb.TagNumber(3)
-  set senderId($core.String v) { $_setString(2, v); }
+  set messageBody($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(3)
-  $core.bool hasSenderId() => $_has(2);
+  $core.bool hasMessageBody() => $_has(2);
   @$pb.TagNumber(3)
-  void clearSenderId() => clearField(3);
+  void clearMessageBody() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get senderId => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set senderId($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasSenderId() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearSenderId() => clearField(4);
 }
 

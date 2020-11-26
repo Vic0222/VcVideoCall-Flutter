@@ -8,7 +8,6 @@ import 'package:vc_video_call/components/receiver_message_card.dart';
 import 'package:vc_video_call/components/sender_message_card.dart';
 import 'package:vc_video_call/custom_classes/custom_color_scheme.dart';
 import 'package:vc_video_call/grpc/generated/chat.pb.dart';
-import 'package:vc_video_call/services/chat_service.dart';
 
 class ChatPage extends StatefulWidget {
   final Room room;
@@ -21,10 +20,18 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   TextEditingController _chatTextEditingController;
+  ScrollController _scrollController;
+  bool textfieldEnabled = true;
+
+  final List<Message> _messages = List<Message>();
+
   @override
   void initState() {
     super.initState();
     _chatTextEditingController = TextEditingController();
+
+    _scrollController = ScrollController();
+
     context.read<GetMessagesBloc>().startGetMessages(widget.room.id);
   }
 
@@ -79,30 +86,49 @@ class _ChatPageState extends State<ChatPage> {
       body: Column(
         children: [
           Expanded(
-            child: BlocBuilder<GetMessagesBloc, GetMessagesState>(
-                builder: (context, state) {
-              if (state.status != GetMessagesStatus.success) {
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-              return ListView.builder(
+            child: BlocListener<GetMessagesBloc, GetMessagesState>(
+              listener: (context, state) {
+                if (state.status == GetMessagesStatus.success) {
+                  setState(() {
+                    if (_messages.isEmpty) {
+                      for (var message in state.getMessagesResponse.messages) {
+                        _messages.add(message);
+                      }
+                    } else {
+                      for (var message in state.getMessagesResponse.messages) {
+                        if (!_messages
+                            .any((element) => element.id == message.id)) {
+                          _messages.insert(0, message);
+                          _scrollController.animateTo(
+                            0.0,
+                            curve: Curves.easeOut,
+                            duration: const Duration(milliseconds: 300),
+                          );
+                        }
+                      }
+                    }
+                  });
+                }
+              },
+              child: ListView.builder(
+                controller: _scrollController,
                 shrinkWrap: true,
-                itemCount: state.getMessagesResponse.messages?.length ?? 0,
+                itemCount: _messages.length ?? 0,
                 reverse: true,
                 itemBuilder: (context, i) {
                   Widget widget;
 
-                  Message message = state.getMessagesResponse.messages[i];
-                  if (message.senderId == state.userId) {
+                  Message message = _messages[i];
+                  if (message.senderId ==
+                      BlocProvider.of<GetMessagesBloc>(context).state.userId) {
                     widget = SenderMessageCard(message);
                   } else {
                     widget = ReceiverMessageCard(message);
                   }
                   return widget;
                 },
-              );
-            }),
+              ),
+            ),
           ),
           Container(
             height: 56,
@@ -122,6 +148,11 @@ class _ChatPageState extends State<ChatPage> {
                     padding: EdgeInsets.all(8),
                     child: Center(
                       child: TextField(
+                        onChanged: (text) {
+                          setState(() {
+                            textfieldEnabled = text?.isNotEmpty ?? false;
+                          });
+                        },
                         decoration: InputDecoration(
                           border: InputBorder.none,
                           hintText: "Aa",
@@ -146,14 +177,19 @@ class _ChatPageState extends State<ChatPage> {
                             ? IconButton(
                                 icon: Icon(Icons.send),
                                 color: Theme.of(context).colorScheme.onPrimary,
-                                onPressed: () {
-                                  context
-                                      .read<SendMessageBloc>()
-                                      .startSendMessage(
-                                        widget.room.id,
-                                        _chatTextEditingController.text,
-                                      );
-                                },
+                                onPressed: !textfieldEnabled
+                                    ? null
+                                    : () {
+                                        context
+                                            .read<SendMessageBloc>()
+                                            .startSendMessage(
+                                              widget.room.id,
+                                              _chatTextEditingController.text,
+                                            );
+                                        setState(() {
+                                          _chatTextEditingController.clear();
+                                        });
+                                      },
                               )
                             : CircularProgressIndicator();
                       }),
