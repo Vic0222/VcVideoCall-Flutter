@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:vc_video_call/blocs/firebase_initialize/firebase_initialize_bloc.dart';
+import 'package:vc_video_call/blocs/get_messages/get_messages_bloc.dart';
 import 'package:vc_video_call/blocs/getrooms/get_rooms_bloc.dart';
 import 'package:vc_video_call/blocs/join/join_bloc.dart';
 import 'package:vc_video_call/blocs/profilepic/profilepic_bloc.dart';
@@ -90,6 +91,12 @@ class _MyAppState extends State<MyApp> {
           BlocProvider<FirebaseInitializeBloc>(
             create: (BuildContext context) =>
                 FirebaseInitializeBloc(context.read<AuthenticationService>()),
+          ),
+          BlocProvider<GetMessagesBloc>(
+            create: (BuildContext context) => GetMessagesBloc(
+              context.read<ChatService>(),
+              context.read<AuthenticationService>(),
+            ),
           ),
         ],
         child: MaterialApp(

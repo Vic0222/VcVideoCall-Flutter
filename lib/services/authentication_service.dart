@@ -56,4 +56,8 @@ class AuthenticationService {
   String getUserPhotoURL() {
     return _firebaseAuth.currentUser.photoURL;
   }
+
+  String getUserId() {
+    return _firebaseAuth.currentUser.uid;
+  }
 }

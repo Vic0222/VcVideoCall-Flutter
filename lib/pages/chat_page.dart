@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vc_video_call/blocs/get_messages/get_messages_bloc.dart';
+import 'package:vc_video_call/blocs/get_messages/get_messages_state.dart';
 import 'package:vc_video_call/components/receiver_message_card.dart';
 import 'package:vc_video_call/components/sender_message_card.dart';
 import 'package:vc_video_call/custom_classes/custom_color_scheme.dart';
 import 'package:vc_video_call/grpc/generated/chat.pb.dart';
+import 'package:vc_video_call/services/chat_service.dart';
 
 class ChatPage extends StatefulWidget {
   final Room room;
@@ -19,6 +23,7 @@ class _ChatPageState extends State<ChatPage> {
   void initState() {
     super.initState();
     _chatTextEditingController = TextEditingController();
+    context.read<GetMessagesBloc>().startGetMessages(widget.room.id);
   }
 
   @override
@@ -72,20 +77,30 @@ class _ChatPageState extends State<ChatPage> {
       body: Column(
         children: [
           Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              itemCount: 5,
-              reverse: true,
-              itemBuilder: (context, i) {
-                Widget widget;
-                if (i % 2 == 0) {
-                  widget = SenderMessageCard();
-                } else {
-                  widget = ReceiverMessageCard();
-                }
-                return widget;
-              },
-            ),
+            child: BlocBuilder<GetMessagesBloc, GetMessagesState>(
+                builder: (context, state) {
+              if (state.status != GetMessagesStatus.success) {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+              return ListView.builder(
+                shrinkWrap: true,
+                itemCount: state.getMessagesResponse.messages?.length ?? 0,
+                reverse: true,
+                itemBuilder: (context, i) {
+                  Widget widget;
+
+                  Message message = state.getMessagesResponse.messages[i];
+                  if (message.senderId == state.userId) {
+                    widget = SenderMessageCard();
+                  } else {
+                    widget = ReceiverMessageCard();
+                  }
+                  return widget;
+                },
+              );
+            }),
           ),
           Container(
             height: 56,

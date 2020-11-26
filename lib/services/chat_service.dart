@@ -97,6 +97,12 @@ class ChatService {
         .then((roomListReply) => roomListReply);
   }
 
+  Future<GetMessagesResponse> getMessages(String roomId) async {
+    var getMessageRequest = GetMessagesRequest();
+    getMessageRequest.roomId = roomId;
+    return await _client.getMessages(getMessageRequest);
+  }
+
   Future disconnect() async {
     await joinRequestsController.close();
   }
