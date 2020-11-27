@@ -98,7 +98,6 @@ class MessageNotification extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MessageNotification', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sender')
-    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'messageBody')
     ..hasRequiredFields = false
   ;
 
@@ -142,15 +141,6 @@ class MessageNotification extends $pb.GeneratedMessage {
   $core.bool hasSender() => $_has(1);
   @$pb.TagNumber(2)
   void clearSender() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.String get messageBody => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set messageBody($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasMessageBody() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearMessageBody() => clearField(3);
 }
 
 class MessageRequest extends $pb.GeneratedMessage {
@@ -424,6 +414,7 @@ class GetMessagesRequest extends $pb.GeneratedMessage {
 class GetMessagesResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'GetMessagesResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
     ..pc<Message>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'messages', $pb.PbFieldType.PM, subBuilder: Message.create)
+    ..aInt64(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lastMessageDatetime')
     ..hasRequiredFields = false
   ;
 
@@ -452,6 +443,15 @@ class GetMessagesResponse extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(1)
   $core.List<Message> get messages => $_getList(0);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get lastMessageDatetime => $_getI64(1);
+  @$pb.TagNumber(2)
+  set lastMessageDatetime($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasLastMessageDatetime() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLastMessageDatetime() => clearField(2);
 }
 
 class Message extends $pb.GeneratedMessage {
@@ -460,6 +460,7 @@ class Message extends $pb.GeneratedMessage {
     ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'messageBody')
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'senderId')
+    ..aInt64(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'dateSent')
     ..hasRequiredFields = false
   ;
 
@@ -521,5 +522,14 @@ class Message extends $pb.GeneratedMessage {
   $core.bool hasSenderId() => $_has(3);
   @$pb.TagNumber(4)
   void clearSenderId() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $fixnum.Int64 get dateSent => $_getI64(4);
+  @$pb.TagNumber(5)
+  set dateSent($fixnum.Int64 v) { $_setInt64(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasDateSent() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearDateSent() => clearField(5);
 }
 

@@ -14,7 +14,7 @@ class JoinBloc extends Bloc<JoinEvent, JoinState> {
     add(JoinEvent.joinStarted);
     _errorStreamSubscription =
         _chatService.errorStreamController.stream.listen((event) {
-      add(JoinEvent.joinDisconnected);
+      add(JoinEvent.joinFailure);
     });
     _joinResponseStreamSubscription =
         _chatService.joinResponseController.stream.listen((event) {

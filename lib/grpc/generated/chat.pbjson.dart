@@ -31,7 +31,6 @@ const MessageNotification$json = const {
   '2': const [
     const {'1': 'room_id', '3': 1, '4': 1, '5': 9, '10': 'roomId'},
     const {'1': 'sender', '3': 2, '4': 1, '5': 9, '10': 'sender'},
-    const {'1': 'message_body', '3': 3, '4': 1, '5': 9, '10': 'messageBody'},
   ],
 };
 
@@ -81,6 +80,7 @@ const GetMessagesResponse$json = const {
   '1': 'GetMessagesResponse',
   '2': const [
     const {'1': 'messages', '3': 1, '4': 3, '5': 11, '6': '.chat.Message', '10': 'messages'},
+    const {'1': 'last_message_datetime', '3': 2, '4': 1, '5': 3, '10': 'lastMessageDatetime'},
   ],
 };
 
@@ -91,6 +91,7 @@ const Message$json = const {
     const {'1': 'room_id', '3': 2, '4': 1, '5': 9, '10': 'roomId'},
     const {'1': 'message_body', '3': 3, '4': 1, '5': 9, '10': 'messageBody'},
     const {'1': 'sender_id', '3': 4, '4': 1, '5': 9, '10': 'senderId'},
+    const {'1': 'date_sent', '3': 5, '4': 1, '5': 3, '10': 'dateSent'},
   ],
 };
 

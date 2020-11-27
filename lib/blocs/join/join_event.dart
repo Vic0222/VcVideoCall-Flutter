@@ -1,1 +1,1 @@
-enum JoinEvent { joinStarted, joinSuccess, joinFailure, joinDisconnected }
+enum JoinEvent { joinStarted, joinSuccess, joinFailure }

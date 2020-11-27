@@ -7,6 +7,7 @@ import 'package:vc_video_call/blocs/join/join_state.dart';
 import 'package:vc_video_call/blocs/profilepic/profilepic_bloc.dart';
 import 'package:vc_video_call/blocs/profilepic/profilepic_event.dart';
 import 'package:vc_video_call/blocs/profilepic/profilepic_state.dart';
+import 'package:vc_video_call/components/connection_status_indicator.dart';
 import 'package:vc_video_call/components/contact_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -63,7 +64,7 @@ class HomePage extends StatelessWidget {
         builder: (context, state) {
           return Column(
             children: [
-              checkAndDisplayError(context, state),
+              ConnectionStatusIndicator(),
               Expanded(
                 child: BlocBuilder<GetRoomsBloc, GetRoomsState>(
                   builder: (context, state) {
@@ -78,7 +79,9 @@ class HomePage extends StatelessWidget {
                         );
                         break;
                       default:
-                        return Container();
+                        return Container(
+                          child: Center(child: CircularProgressIndicator()),
+                        );
                     }
                   },
                 ),
@@ -88,39 +91,5 @@ class HomePage extends StatelessWidget {
         },
       ),
     );
-  }
-
-  Widget checkAndDisplayError(BuildContext context, JoinState state) {
-    switch (state.status) {
-      case JoinStatus.inProgress:
-        return Container(
-          width: double.infinity,
-          padding: EdgeInsets.all(4),
-          child: Center(
-            child: SizedBox(
-              height: 16,
-              width: 16,
-              child: CircularProgressIndicator(),
-            ),
-          ),
-        );
-        break;
-      case JoinStatus.failure:
-        return Container(
-          width: double.infinity,
-          color: Theme.of(context).errorColor,
-          child: Center(
-            child: Text(
-              state.errorMessage,
-              style: Theme.of(context).textTheme.bodyText1.copyWith(
-                    color: Theme.of(context).colorScheme.onError,
-                  ),
-            ),
-          ),
-        );
-        break;
-      default:
-        return Container();
-    }
   }
 }

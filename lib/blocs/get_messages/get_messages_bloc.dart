@@ -12,12 +12,14 @@ class GetMessagesBloc extends Bloc<GetMessagesEvent, GetMessagesState> {
   final ChatService _chatService;
   final AuthenticationService _authenticationService;
   StreamSubscription<JoinResponse> _joinSubscription;
+  Int64 lastTimestamp = Int64.ONE;
 
   GetMessagesBloc(this._chatService, this._authenticationService)
       : super(GetMessagesState.initial()) {
     _joinSubscription =
         _chatService.joinResponseController.stream.listen((response) {
-      add(GetMessagesStarted(response.messageNotification.roomId, Int64.ONE));
+      add(GetMessagesStarted(
+          response.messageNotification.roomId, lastTimestamp));
     });
   }
 
@@ -27,6 +29,7 @@ class GetMessagesBloc extends Bloc<GetMessagesEvent, GetMessagesState> {
       try {
         yield GetMessagesState.inProgress();
         var response = await _onStartGetMessages(event);
+        lastTimestamp = response.lastMessageDatetime;
         var userId = _authenticationService.getUserId();
         yield GetMessagesState.success(response, userId);
       } catch (e) {

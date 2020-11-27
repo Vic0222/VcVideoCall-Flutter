@@ -4,6 +4,7 @@ import 'package:vc_video_call/blocs/get_messages/get_messages_bloc.dart';
 import 'package:vc_video_call/blocs/get_messages/get_messages_state.dart';
 import 'package:vc_video_call/blocs/send_message_bloc/send_message_bloc.dart';
 import 'package:vc_video_call/blocs/send_message_bloc/send_message_state.dart';
+import 'package:vc_video_call/components/connection_status_indicator.dart';
 import 'package:vc_video_call/components/receiver_message_card.dart';
 import 'package:vc_video_call/components/sender_message_card.dart';
 import 'package:vc_video_call/custom_classes/custom_color_scheme.dart';
@@ -85,6 +86,7 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
+          ConnectionStatusIndicator(),
           Expanded(
             child: BlocListener<GetMessagesBloc, GetMessagesState>(
               listener: (context, state) {
