@@ -9,7 +9,16 @@ typedef PeerConnectionConnectionChangeCallback = void Function(
 
 //Single peer connection for now
 class WebRtcManager {
-  WebRtcManager(this._chatService);
+  static WebRtcManager _instance;
+
+  factory WebRtcManager(ChatService chatService) {
+    if (_instance == null) {
+      _instance = WebRtcManager._(chatService);
+    }
+    return _instance;
+  }
+
+  WebRtcManager._(this._chatService);
 
   final ChatService _chatService;
 
