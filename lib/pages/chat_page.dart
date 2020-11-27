@@ -43,7 +43,9 @@ class _ChatPageState extends State<ChatPage> {
         actions: [
           IconButton(
             icon: Icon(Icons.call),
-            onPressed: () {},
+            onPressed: () {
+              Navigator.of(context).pushNamed("/call_page");
+            },
           ),
           IconButton(
             icon: Icon(Icons.more_vert),

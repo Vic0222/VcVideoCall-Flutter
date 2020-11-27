@@ -45,8 +45,10 @@ class JoinRequest extends $pb.GeneratedMessage {
 
 class JoinResponse extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'JoinResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
-    ..aOB(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'confirmation')
+    ..e<JoinResponseType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: JoinResponseType.Confirmation, valueOf: JoinResponseType.valueOf, enumValues: JoinResponseType.values)
     ..aOM<MessageNotification>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'messageNotification', subBuilder: MessageNotification.create)
+    ..aOM<CallOfferNotification>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'callOfferNotification', subBuilder: CallOfferNotification.create)
+    ..aOM<IceCandidateNotification>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'iceCandidateNotification', subBuilder: IceCandidateNotification.create)
     ..hasRequiredFields = false
   ;
 
@@ -74,13 +76,13 @@ class JoinResponse extends $pb.GeneratedMessage {
   static JoinResponse _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.bool get confirmation => $_getBF(0);
+  JoinResponseType get type => $_getN(0);
   @$pb.TagNumber(1)
-  set confirmation($core.bool v) { $_setBool(0, v); }
+  set type(JoinResponseType v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasConfirmation() => $_has(0);
+  $core.bool hasType() => $_has(0);
   @$pb.TagNumber(1)
-  void clearConfirmation() => clearField(1);
+  void clearType() => clearField(1);
 
   @$pb.TagNumber(2)
   MessageNotification get messageNotification => $_getN(1);
@@ -92,12 +94,577 @@ class JoinResponse extends $pb.GeneratedMessage {
   void clearMessageNotification() => clearField(2);
   @$pb.TagNumber(2)
   MessageNotification ensureMessageNotification() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  CallOfferNotification get callOfferNotification => $_getN(2);
+  @$pb.TagNumber(3)
+  set callOfferNotification(CallOfferNotification v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasCallOfferNotification() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearCallOfferNotification() => clearField(3);
+  @$pb.TagNumber(3)
+  CallOfferNotification ensureCallOfferNotification() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  IceCandidateNotification get iceCandidateNotification => $_getN(3);
+  @$pb.TagNumber(4)
+  set iceCandidateNotification(IceCandidateNotification v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasIceCandidateNotification() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearIceCandidateNotification() => clearField(4);
+  @$pb.TagNumber(4)
+  IceCandidateNotification ensureIceCandidateNotification() => $_ensure(3);
+}
+
+class IceCandidateRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'IceCandidateRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sendToUserId')
+    ..aOM<RtcIceCandidate>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rtcIceCandidate', subBuilder: RtcIceCandidate.create)
+    ..hasRequiredFields = false
+  ;
+
+  IceCandidateRequest._() : super();
+  factory IceCandidateRequest() => create();
+  factory IceCandidateRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory IceCandidateRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  IceCandidateRequest clone() => IceCandidateRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  IceCandidateRequest copyWith(void Function(IceCandidateRequest) updates) => super.copyWith((message) => updates(message as IceCandidateRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static IceCandidateRequest create() => IceCandidateRequest._();
+  IceCandidateRequest createEmptyInstance() => create();
+  static $pb.PbList<IceCandidateRequest> createRepeated() => $pb.PbList<IceCandidateRequest>();
+  @$core.pragma('dart2js:noInline')
+  static IceCandidateRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<IceCandidateRequest>(create);
+  static IceCandidateRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get sendToUserId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set sendToUserId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSendToUserId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSendToUserId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  RtcIceCandidate get rtcIceCandidate => $_getN(1);
+  @$pb.TagNumber(2)
+  set rtcIceCandidate(RtcIceCandidate v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRtcIceCandidate() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRtcIceCandidate() => clearField(2);
+  @$pb.TagNumber(2)
+  RtcIceCandidate ensureRtcIceCandidate() => $_ensure(1);
+}
+
+class IceCandidateResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'IceCandidateResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  IceCandidateResponse._() : super();
+  factory IceCandidateResponse() => create();
+  factory IceCandidateResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory IceCandidateResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  IceCandidateResponse clone() => IceCandidateResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  IceCandidateResponse copyWith(void Function(IceCandidateResponse) updates) => super.copyWith((message) => updates(message as IceCandidateResponse)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static IceCandidateResponse create() => IceCandidateResponse._();
+  IceCandidateResponse createEmptyInstance() => create();
+  static $pb.PbList<IceCandidateResponse> createRepeated() => $pb.PbList<IceCandidateResponse>();
+  @$core.pragma('dart2js:noInline')
+  static IceCandidateResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<IceCandidateResponse>(create);
+  static IceCandidateResponse _defaultInstance;
+}
+
+class RtcSessionDescription extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RtcSessionDescription', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sdp')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type')
+    ..hasRequiredFields = false
+  ;
+
+  RtcSessionDescription._() : super();
+  factory RtcSessionDescription() => create();
+  factory RtcSessionDescription.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RtcSessionDescription.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RtcSessionDescription clone() => RtcSessionDescription()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RtcSessionDescription copyWith(void Function(RtcSessionDescription) updates) => super.copyWith((message) => updates(message as RtcSessionDescription)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RtcSessionDescription create() => RtcSessionDescription._();
+  RtcSessionDescription createEmptyInstance() => create();
+  static $pb.PbList<RtcSessionDescription> createRepeated() => $pb.PbList<RtcSessionDescription>();
+  @$core.pragma('dart2js:noInline')
+  static RtcSessionDescription getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RtcSessionDescription>(create);
+  static RtcSessionDescription _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get sdp => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set sdp($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSdp() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSdp() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get type => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set type($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasType() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearType() => clearField(2);
+}
+
+class IceCandidateNotification extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'IceCandidateNotification', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..aOM<RtcIceCandidate>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rtcIceCandidate', subBuilder: RtcIceCandidate.create)
+    ..hasRequiredFields = false
+  ;
+
+  IceCandidateNotification._() : super();
+  factory IceCandidateNotification() => create();
+  factory IceCandidateNotification.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory IceCandidateNotification.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  IceCandidateNotification clone() => IceCandidateNotification()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  IceCandidateNotification copyWith(void Function(IceCandidateNotification) updates) => super.copyWith((message) => updates(message as IceCandidateNotification)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static IceCandidateNotification create() => IceCandidateNotification._();
+  IceCandidateNotification createEmptyInstance() => create();
+  static $pb.PbList<IceCandidateNotification> createRepeated() => $pb.PbList<IceCandidateNotification>();
+  @$core.pragma('dart2js:noInline')
+  static IceCandidateNotification getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<IceCandidateNotification>(create);
+  static IceCandidateNotification _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RtcIceCandidate get rtcIceCandidate => $_getN(0);
+  @$pb.TagNumber(1)
+  set rtcIceCandidate(RtcIceCandidate v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRtcIceCandidate() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRtcIceCandidate() => clearField(1);
+  @$pb.TagNumber(1)
+  RtcIceCandidate ensureRtcIceCandidate() => $_ensure(0);
+}
+
+class RtcIceCandidate extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'RtcIceCandidate', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'candidate')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sdpMid', protoName: 'sdpMid')
+    ..a<$core.int>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sdpMlineIndex', $pb.PbFieldType.O3, protoName: 'sdpMlineIndex')
+    ..hasRequiredFields = false
+  ;
+
+  RtcIceCandidate._() : super();
+  factory RtcIceCandidate() => create();
+  factory RtcIceCandidate.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory RtcIceCandidate.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  RtcIceCandidate clone() => RtcIceCandidate()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  RtcIceCandidate copyWith(void Function(RtcIceCandidate) updates) => super.copyWith((message) => updates(message as RtcIceCandidate)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static RtcIceCandidate create() => RtcIceCandidate._();
+  RtcIceCandidate createEmptyInstance() => create();
+  static $pb.PbList<RtcIceCandidate> createRepeated() => $pb.PbList<RtcIceCandidate>();
+  @$core.pragma('dart2js:noInline')
+  static RtcIceCandidate getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<RtcIceCandidate>(create);
+  static RtcIceCandidate _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get candidate => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set candidate($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasCandidate() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearCandidate() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get sdpMid => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set sdpMid($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSdpMid() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSdpMid() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.int get sdpMlineIndex => $_getIZ(2);
+  @$pb.TagNumber(3)
+  set sdpMlineIndex($core.int v) { $_setSignedInt32(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasSdpMlineIndex() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearSdpMlineIndex() => clearField(3);
+}
+
+class CallOfferRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CallOfferRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..aOM<RtcSessionDescription>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rtcSessionDescription', subBuilder: RtcSessionDescription.create)
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
+    ..hasRequiredFields = false
+  ;
+
+  CallOfferRequest._() : super();
+  factory CallOfferRequest() => create();
+  factory CallOfferRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CallOfferRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CallOfferRequest clone() => CallOfferRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CallOfferRequest copyWith(void Function(CallOfferRequest) updates) => super.copyWith((message) => updates(message as CallOfferRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CallOfferRequest create() => CallOfferRequest._();
+  CallOfferRequest createEmptyInstance() => create();
+  static $pb.PbList<CallOfferRequest> createRepeated() => $pb.PbList<CallOfferRequest>();
+  @$core.pragma('dart2js:noInline')
+  static CallOfferRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CallOfferRequest>(create);
+  static CallOfferRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  RtcSessionDescription get rtcSessionDescription => $_getN(0);
+  @$pb.TagNumber(1)
+  set rtcSessionDescription(RtcSessionDescription v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRtcSessionDescription() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRtcSessionDescription() => clearField(1);
+  @$pb.TagNumber(1)
+  RtcSessionDescription ensureRtcSessionDescription() => $_ensure(0);
+
+  @$pb.TagNumber(2)
+  $core.String get roomId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set roomId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRoomId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRoomId() => clearField(2);
+}
+
+class CallOfferResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CallOfferResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..e<CallOfferStatus>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: CallOfferStatus.Rejected, valueOf: CallOfferStatus.valueOf, enumValues: CallOfferStatus.values)
+    ..aOM<RtcSessionDescription>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rtcSessionDescription', subBuilder: RtcSessionDescription.create)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'receiverId')
+    ..hasRequiredFields = false
+  ;
+
+  CallOfferResponse._() : super();
+  factory CallOfferResponse() => create();
+  factory CallOfferResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CallOfferResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CallOfferResponse clone() => CallOfferResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CallOfferResponse copyWith(void Function(CallOfferResponse) updates) => super.copyWith((message) => updates(message as CallOfferResponse)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CallOfferResponse create() => CallOfferResponse._();
+  CallOfferResponse createEmptyInstance() => create();
+  static $pb.PbList<CallOfferResponse> createRepeated() => $pb.PbList<CallOfferResponse>();
+  @$core.pragma('dart2js:noInline')
+  static CallOfferResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CallOfferResponse>(create);
+  static CallOfferResponse _defaultInstance;
+
+  @$pb.TagNumber(1)
+  CallOfferStatus get status => $_getN(0);
+  @$pb.TagNumber(1)
+  set status(CallOfferStatus v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasStatus() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearStatus() => clearField(1);
+
+  @$pb.TagNumber(2)
+  RtcSessionDescription get rtcSessionDescription => $_getN(1);
+  @$pb.TagNumber(2)
+  set rtcSessionDescription(RtcSessionDescription v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRtcSessionDescription() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRtcSessionDescription() => clearField(2);
+  @$pb.TagNumber(2)
+  RtcSessionDescription ensureRtcSessionDescription() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.String get receiverId => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set receiverId($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasReceiverId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearReceiverId() => clearField(3);
+}
+
+class CallAnswerRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CallAnswerRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..e<CallOfferStatus>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: CallOfferStatus.Rejected, valueOf: CallOfferStatus.valueOf, enumValues: CallOfferStatus.values)
+    ..aOM<RtcSessionDescription>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rtcSessionDescription', subBuilder: RtcSessionDescription.create)
+    ..aOS(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
+    ..hasRequiredFields = false
+  ;
+
+  CallAnswerRequest._() : super();
+  factory CallAnswerRequest() => create();
+  factory CallAnswerRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CallAnswerRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CallAnswerRequest clone() => CallAnswerRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CallAnswerRequest copyWith(void Function(CallAnswerRequest) updates) => super.copyWith((message) => updates(message as CallAnswerRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CallAnswerRequest create() => CallAnswerRequest._();
+  CallAnswerRequest createEmptyInstance() => create();
+  static $pb.PbList<CallAnswerRequest> createRepeated() => $pb.PbList<CallAnswerRequest>();
+  @$core.pragma('dart2js:noInline')
+  static CallAnswerRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CallAnswerRequest>(create);
+  static CallAnswerRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  CallOfferStatus get status => $_getN(0);
+  @$pb.TagNumber(1)
+  set status(CallOfferStatus v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasStatus() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearStatus() => clearField(1);
+
+  @$pb.TagNumber(2)
+  RtcSessionDescription get rtcSessionDescription => $_getN(1);
+  @$pb.TagNumber(2)
+  set rtcSessionDescription(RtcSessionDescription v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRtcSessionDescription() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRtcSessionDescription() => clearField(2);
+  @$pb.TagNumber(2)
+  RtcSessionDescription ensureRtcSessionDescription() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.String get roomId => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set roomId($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasRoomId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRoomId() => clearField(3);
+}
+
+class CallAnswerResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CallAnswerResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  CallAnswerResponse._() : super();
+  factory CallAnswerResponse() => create();
+  factory CallAnswerResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CallAnswerResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CallAnswerResponse clone() => CallAnswerResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CallAnswerResponse copyWith(void Function(CallAnswerResponse) updates) => super.copyWith((message) => updates(message as CallAnswerResponse)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CallAnswerResponse create() => CallAnswerResponse._();
+  CallAnswerResponse createEmptyInstance() => create();
+  static $pb.PbList<CallAnswerResponse> createRepeated() => $pb.PbList<CallAnswerResponse>();
+  @$core.pragma('dart2js:noInline')
+  static CallAnswerResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CallAnswerResponse>(create);
+  static CallAnswerResponse _defaultInstance;
+}
+
+class CallOfferNotification extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CallOfferNotification', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'senderId')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
+    ..aOM<RtcSessionDescription>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rtcSessionDescription', subBuilder: RtcSessionDescription.create)
+    ..hasRequiredFields = false
+  ;
+
+  CallOfferNotification._() : super();
+  factory CallOfferNotification() => create();
+  factory CallOfferNotification.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CallOfferNotification.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CallOfferNotification clone() => CallOfferNotification()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CallOfferNotification copyWith(void Function(CallOfferNotification) updates) => super.copyWith((message) => updates(message as CallOfferNotification)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CallOfferNotification create() => CallOfferNotification._();
+  CallOfferNotification createEmptyInstance() => create();
+  static $pb.PbList<CallOfferNotification> createRepeated() => $pb.PbList<CallOfferNotification>();
+  @$core.pragma('dart2js:noInline')
+  static CallOfferNotification getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CallOfferNotification>(create);
+  static CallOfferNotification _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get senderId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set senderId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSenderId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSenderId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get roomId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set roomId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRoomId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRoomId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  RtcSessionDescription get rtcSessionDescription => $_getN(2);
+  @$pb.TagNumber(3)
+  set rtcSessionDescription(RtcSessionDescription v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasRtcSessionDescription() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearRtcSessionDescription() => clearField(3);
+  @$pb.TagNumber(3)
+  RtcSessionDescription ensureRtcSessionDescription() => $_ensure(2);
+}
+
+class CallSignal extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'CallSignal', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..e<CallSignalType>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: CallSignalType.Offer, valueOf: CallSignalType.valueOf, enumValues: CallSignalType.values)
+    ..aOM<RtcSessionDescription>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rtcSessionDescription', subBuilder: RtcSessionDescription.create)
+    ..hasRequiredFields = false
+  ;
+
+  CallSignal._() : super();
+  factory CallSignal() => create();
+  factory CallSignal.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory CallSignal.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  CallSignal clone() => CallSignal()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  CallSignal copyWith(void Function(CallSignal) updates) => super.copyWith((message) => updates(message as CallSignal)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static CallSignal create() => CallSignal._();
+  CallSignal createEmptyInstance() => create();
+  static $pb.PbList<CallSignal> createRepeated() => $pb.PbList<CallSignal>();
+  @$core.pragma('dart2js:noInline')
+  static CallSignal getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<CallSignal>(create);
+  static CallSignal _defaultInstance;
+
+  @$pb.TagNumber(1)
+  CallSignalType get type => $_getN(0);
+  @$pb.TagNumber(1)
+  set type(CallSignalType v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasType() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearType() => clearField(1);
+
+  @$pb.TagNumber(2)
+  RtcSessionDescription get rtcSessionDescription => $_getN(1);
+  @$pb.TagNumber(2)
+  set rtcSessionDescription(RtcSessionDescription v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRtcSessionDescription() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRtcSessionDescription() => clearField(2);
+  @$pb.TagNumber(2)
+  RtcSessionDescription ensureRtcSessionDescription() => $_ensure(1);
 }
 
 class MessageNotification extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'MessageNotification', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
     ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
-    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sender')
+    ..aOS(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'senderId')
     ..hasRequiredFields = false
   ;
 
@@ -134,13 +701,13 @@ class MessageNotification extends $pb.GeneratedMessage {
   void clearRoomId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get sender => $_getSZ(1);
+  $core.String get senderId => $_getSZ(1);
   @$pb.TagNumber(2)
-  set sender($core.String v) { $_setString(1, v); }
+  set senderId($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(2)
-  $core.bool hasSender() => $_has(1);
+  $core.bool hasSenderId() => $_has(1);
   @$pb.TagNumber(2)
-  void clearSender() => clearField(2);
+  void clearSenderId() => clearField(2);
 }
 
 class MessageRequest extends $pb.GeneratedMessage {

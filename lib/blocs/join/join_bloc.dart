@@ -18,7 +18,7 @@ class JoinBloc extends Bloc<JoinEvent, JoinState> {
     });
     _joinResponseStreamSubscription =
         _chatService.joinResponseController.stream.listen((event) {
-      if (event.confirmation) {
+      if (event.type == JoinResponseType.Confirmation) {
         add(JoinEvent.joinSuccess);
       }
     });

@@ -36,6 +36,24 @@ class ChatClient extends $grpc.Client {
           ($0.MessageRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.MessageResponse.fromBuffer(value));
+  static final _$sendCallOffer =
+      $grpc.ClientMethod<$0.CallOfferRequest, $0.CallOfferResponse>(
+          '/chat.Chat/SendCallOffer',
+          ($0.CallOfferRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.CallOfferResponse.fromBuffer(value));
+  static final _$receiveCallAnswer =
+      $grpc.ClientMethod<$0.CallAnswerRequest, $0.CallAnswerResponse>(
+          '/chat.Chat/ReceiveCallAnswer',
+          ($0.CallAnswerRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.CallAnswerResponse.fromBuffer(value));
+  static final _$sendIceCandidate =
+      $grpc.ClientMethod<$0.IceCandidateRequest, $0.IceCandidateResponse>(
+          '/chat.Chat/SendIceCandidate',
+          ($0.IceCandidateRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.IceCandidateResponse.fromBuffer(value));
 
   ChatClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -63,6 +81,24 @@ class ChatClient extends $grpc.Client {
       $0.MessageRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$sendMessageRequest, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.CallOfferResponse> sendCallOffer(
+      $0.CallOfferRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$sendCallOffer, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.CallAnswerResponse> receiveCallAnswer(
+      $0.CallAnswerRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$receiveCallAnswer, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.IceCandidateResponse> sendIceCandidate(
+      $0.IceCandidateRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$sendIceCandidate, request, options: options);
   }
 }
 
@@ -100,6 +136,29 @@ abstract class ChatServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.MessageRequest.fromBuffer(value),
         ($0.MessageResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.CallOfferRequest, $0.CallOfferResponse>(
+        'SendCallOffer',
+        sendCallOffer_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.CallOfferRequest.fromBuffer(value),
+        ($0.CallOfferResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.CallAnswerRequest, $0.CallAnswerResponse>(
+        'ReceiveCallAnswer',
+        receiveCallAnswer_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.CallAnswerRequest.fromBuffer(value),
+        ($0.CallAnswerResponse value) => value.writeToBuffer()));
+    $addMethod(
+        $grpc.ServiceMethod<$0.IceCandidateRequest, $0.IceCandidateResponse>(
+            'SendIceCandidate',
+            sendIceCandidate_Pre,
+            false,
+            false,
+            ($core.List<$core.int> value) =>
+                $0.IceCandidateRequest.fromBuffer(value),
+            ($0.IceCandidateResponse value) => value.writeToBuffer()));
   }
 
   $async.Stream<$0.JoinResponse> join_Pre(
@@ -122,6 +181,23 @@ abstract class ChatServiceBase extends $grpc.Service {
     return sendMessageRequest(call, await request);
   }
 
+  $async.Future<$0.CallOfferResponse> sendCallOffer_Pre($grpc.ServiceCall call,
+      $async.Future<$0.CallOfferRequest> request) async {
+    return sendCallOffer(call, await request);
+  }
+
+  $async.Future<$0.CallAnswerResponse> receiveCallAnswer_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.CallAnswerRequest> request) async {
+    return receiveCallAnswer(call, await request);
+  }
+
+  $async.Future<$0.IceCandidateResponse> sendIceCandidate_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.IceCandidateRequest> request) async {
+    return sendIceCandidate(call, await request);
+  }
+
   $async.Stream<$0.JoinResponse> join(
       $grpc.ServiceCall call, $0.JoinRequest request);
   $async.Future<$0.GetRoomsResponse> getRooms(
@@ -130,4 +206,10 @@ abstract class ChatServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.GetMessagesRequest request);
   $async.Future<$0.MessageResponse> sendMessageRequest(
       $grpc.ServiceCall call, $0.MessageRequest request);
+  $async.Future<$0.CallOfferResponse> sendCallOffer(
+      $grpc.ServiceCall call, $0.CallOfferRequest request);
+  $async.Future<$0.CallAnswerResponse> receiveCallAnswer(
+      $grpc.ServiceCall call, $0.CallAnswerRequest request);
+  $async.Future<$0.IceCandidateResponse> sendIceCandidate(
+      $grpc.ServiceCall call, $0.IceCandidateRequest request);
 }

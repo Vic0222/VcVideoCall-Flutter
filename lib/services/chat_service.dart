@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter_webrtc/src/interface/rtc_session_description.dart';
 import 'package:grpc/grpc.dart';
 import 'package:vc_video_call/grpc/generated/chat.pbgrpc.dart';
 import 'package:vc_video_call/grpc/interceptors/auth_client_interceptor.dart';
@@ -112,5 +113,35 @@ class ChatService {
     messageRequest.messageBody = message;
 
     await _client.sendMessageRequest(messageRequest);
+  }
+
+  Future<RtcSessionDescription> sendCallOffer(
+      String roomId, RtcSessionDescription offer) async {
+    var callOfferRequest = CallOfferRequest();
+    callOfferRequest.roomId = roomId;
+    callOfferRequest.rtcSessionDescription = offer;
+
+    var response = await _client.sendCallOffer(callOfferRequest);
+    RtcSessionDescription result;
+    if (response.status == CallOfferStatus.Accepted) {
+      result = response.rtcSessionDescription;
+    }
+    return result;
+  }
+
+  sendAnswerOffer(
+    String roomId,
+    RtcSessionDescription answer, {
+    bool rejected = false,
+  }) {
+    var callAnswerRequest = CallAnswerRequest();
+    callAnswerRequest.roomId = roomId;
+    callAnswerRequest.rtcSessionDescription = answer;
+    if (rejected) {
+      callAnswerRequest.status = CallOfferStatus.Rejected;
+    } else {
+      callAnswerRequest.status = CallOfferStatus.Accepted;
+    }
+    _client.receiveCallAnswer(callAnswerRequest);
   }
 }
