@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:vc_video_call/pages/call_page.dart';
+import 'package:vc_video_call/pages/call_initiate_page.dart';
+import 'package:vc_video_call/pages/call_received_page.dart';
 import 'package:vc_video_call/pages/home_page.dart';
 import 'package:vc_video_call/pages/login_page.dart';
 import 'package:vc_video_call/pages/chat_page.dart';
@@ -17,8 +18,10 @@ class AppRoutes {
       case '/chat_page':
         return MaterialPageRoute(
             builder: (context) => ChatPage(settings.arguments));
-      case '/call_page':
-        return MaterialPageRoute(builder: (context) => CallPage());
+      case '/call_initiate':
+        return MaterialPageRoute(builder: (context) => CallInitiatePage());
+      case '/call_received':
+        return MaterialPageRoute(builder: (context) => CallReceivedPage());
       default:
         return null;
     }

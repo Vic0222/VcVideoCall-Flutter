@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vc_video_call/blocs/call_initiate/call_initiate_bloc.dart';
+import 'package:vc_video_call/blocs/call_initiate/call_initiate_state.dart';
 import 'package:vc_video_call/blocs/get_messages/get_messages_bloc.dart';
 import 'package:vc_video_call/blocs/get_messages/get_messages_state.dart';
 import 'package:vc_video_call/blocs/send_message_bloc/send_message_bloc.dart';
@@ -38,13 +40,27 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
+    return BlocListener<CallInitiateBloc, CallInitiateState>(
+      listener: (context, state) {
+        if (state.status == CallInitiateStatus.inProgress) {
+          Navigator.of(context)
+              .pushNamed("/call_initiate", arguments: state.localRenderer);
+        }
+      },
+      child: buildScaffold(context),
+    );
+  }
+
+  Scaffold buildScaffold(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
             icon: Icon(Icons.call),
             onPressed: () {
-              Navigator.of(context).pushNamed("/call_page");
+              context
+                  .read<CallInitiateBloc>()
+                  .startCallInitiate(widget.room.id);
             },
           ),
           IconButton(

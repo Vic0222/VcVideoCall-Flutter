@@ -81,12 +81,8 @@ class WebRtcManager {
       }
     };
 
-    try {
-      var stream = await navigator.getUserMedia(mediaConstraints);
-      localRenderer.srcObject = stream;
-    } catch (e) {
-      print(e.toString());
-    }
+    var stream = await navigator.getUserMedia(mediaConstraints);
+    localRenderer.srcObject = stream;
   }
 
   Future setupPeerConnection(
@@ -120,7 +116,7 @@ class WebRtcManager {
 
   Future call(String roomId) async {
     peerConnections[roomId] = await createPeerConnection(_iceServers, _config);
-    await initLocalRenderer();
+
     await setupPeerConnection(roomId, peerConnections[roomId]);
 
     await peerConnections[roomId].createOffer(_constraints).then((value) async {
@@ -138,14 +134,18 @@ class WebRtcManager {
     });
   }
 
-  Future<RTCSessionDescription> answer(
-      String roomId, RtcSessionDescription protoOffer) async {
+  Future cancel(String roomId) async {
+    await peerConnections[roomId].close();
+  }
+
+  Future<RTCSessionDescription> accept(
+      String roomId, RtcSessionDescription protoAnswer) async {
     peerConnections[roomId] = await createPeerConnection(_iceServers, _config);
 
     await initLocalRenderer();
     await setupPeerConnection(roomId, peerConnections[roomId]);
 
-    var offer = RTCSessionDescription(protoOffer.sdp, protoOffer.type);
+    var offer = RTCSessionDescription(protoAnswer.sdp, protoAnswer.type);
 
     await peerConnections[roomId].setRemoteDescription(offer);
     RTCSessionDescription answer =
@@ -156,10 +156,14 @@ class WebRtcManager {
     var protoAnser = RtcSessionDescription();
     protoAnser.type = answer.type;
     protoAnser.sdp = answer.sdp;
-    await _chatService.sendAnswerOffer(roomId, protoAnser);
+    await _chatService.sendAnswer(roomId, answer: protoAnser);
     onPeerConnectionAnswer?.call(roomId);
 
     return answer;
+  }
+
+  Future decline(String roomId) async {
+    await _chatService.sendAnswer(roomId, declined: true);
   }
 
   Future confirmAnswer(String roomId, RtcSessionDescription protoAnswer) async {

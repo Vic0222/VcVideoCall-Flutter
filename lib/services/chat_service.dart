@@ -129,15 +129,15 @@ class ChatService {
     return result;
   }
 
-  sendAnswerOffer(
-    String roomId,
-    RtcSessionDescription answer, {
-    bool rejected = false,
+  sendAnswer(
+    String roomId, {
+    RtcSessionDescription answer,
+    bool declined = false,
   }) {
     var callAnswerRequest = CallAnswerRequest();
     callAnswerRequest.roomId = roomId;
     callAnswerRequest.rtcSessionDescription = answer;
-    if (rejected) {
+    if (declined) {
       callAnswerRequest.status = CallOfferStatus.Rejected;
     } else {
       callAnswerRequest.status = CallOfferStatus.Accepted;

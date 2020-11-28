@@ -50,14 +50,14 @@ class AuthenticationService {
   }
 
   Future<String> getToken() async {
-    return await _firebaseAuth.currentUser.getIdToken();
+    return await _firebaseAuth?.currentUser?.getIdToken() ?? "";
   }
 
   String getUserPhotoURL() {
-    return _firebaseAuth.currentUser.photoURL;
+    return _firebaseAuth?.currentUser?.photoURL ?? "";
   }
 
   String getUserId() {
-    return _firebaseAuth.currentUser.uid;
+    return _firebaseAuth?.currentUser?.uid ?? "";
   }
 }

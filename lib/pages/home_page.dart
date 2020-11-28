@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vc_video_call/blocs/call_listening/call_listening_bloc.dart';
+import 'package:vc_video_call/blocs/call_listening/call_listening_state.dart';
 import 'package:vc_video_call/blocs/getrooms/get_rooms_bloc.dart';
 import 'package:vc_video_call/blocs/getrooms/get_rooms_state.dart';
 import 'package:vc_video_call/blocs/join/join_bloc.dart';
@@ -10,9 +12,30 @@ import 'package:vc_video_call/blocs/profilepic/profilepic_state.dart';
 import 'package:vc_video_call/components/connection_status_indicator.dart';
 import 'package:vc_video_call/components/contact_card.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends StatefulWidget {
+  @override
+  _HomePageState createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    return BlocListener<CallListeningBloc, CallListeningState>(
+      listener: (context, state) {
+        if (state.status == CallListeningStatus.ringingInProgress) {
+          Navigator.of(context).pushNamed("/call_received");
+        }
+      },
+      child: buildScaffold(),
+    );
+  }
+
+  Scaffold buildScaffold() {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

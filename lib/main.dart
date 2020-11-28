@@ -2,16 +2,23 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:vc_video_call/blocs/authentication/authentication_state.dart';
+import 'package:vc_video_call/blocs/call_initiate/call_initiate_bloc.dart';
+import 'package:vc_video_call/blocs/call_listening/call_listening_bloc.dart';
+import 'package:vc_video_call/blocs/call_listening/call_listening_state.dart';
 import 'package:vc_video_call/blocs/firebase_initialize/firebase_initialize_bloc.dart';
 import 'package:vc_video_call/blocs/get_messages/get_messages_bloc.dart';
 import 'package:vc_video_call/blocs/getrooms/get_rooms_bloc.dart';
 import 'package:vc_video_call/blocs/join/join_bloc.dart';
+import 'package:vc_video_call/blocs/join/join_state.dart';
 import 'package:vc_video_call/blocs/profilepic/profilepic_bloc.dart';
 import 'package:vc_video_call/blocs/send_message_bloc/send_message_bloc.dart';
+import 'package:vc_video_call/environment_config.dart';
 import 'package:vc_video_call/services/authentication_service.dart';
 import 'package:vc_video_call/blocs/authentication/authentication_bloc.dart';
 import 'package:vc_video_call/app_routes.dart';
 import 'package:vc_video_call/services/chat_service.dart';
+import 'package:vc_video_call/services/web_rtc_manager.dart';
 
 void main() {
   runApp(MyApp());
@@ -66,8 +73,14 @@ class _MyAppState extends State<MyApp> {
         RepositoryProvider<ChatService>(
           create: (context) => ChatService(
             context.read<AuthenticationService>(),
-            "10.0.2.2",
+            EnvironmentConfig.SERVER_ADDRESS,
+            //"10.0.2.2",
             80,
+          ),
+        ),
+        RepositoryProvider<WebRtcManager>(
+          create: (context) => WebRtcManager(
+            context.read<ChatService>(),
           ),
         ),
       ],
@@ -104,13 +117,49 @@ class _MyAppState extends State<MyApp> {
               context.read<ChatService>(),
             ),
           ),
+          BlocProvider<CallInitiateBloc>(
+            create: (BuildContext context) => CallInitiateBloc(
+              context.read<WebRtcManager>(),
+            ),
+          ),
+          BlocProvider<CallListeningBloc>(
+            create: (BuildContext context) => CallListeningBloc(
+              context.read<WebRtcManager>(),
+              context.read<ChatService>(),
+            ),
+          ),
         ],
-        child: MaterialApp(
-          title: 'Vc Video Call',
-          theme: theme,
-          initialRoute: '/',
-          navigatorKey: AppRoutes.navigatorKey,
-          onGenerateRoute: AppRoutes.onGenerateRoute,
+        child: MultiBlocListener(
+          listeners: [
+            BlocListener<AuthenticationBloc, AuthenticationState>(
+              listener: (context, state) {
+                if (state.status == AuthenticationStatus.success) {
+                  context.read<JoinBloc>().startJoin();
+                }
+              },
+            ),
+            BlocListener<JoinBloc, JoinState>(
+              listener: (context, state) {
+                if (state.status == JoinStatus.success) {
+                  context.read<CallListeningBloc>().startCallListening();
+                }
+              },
+            ),
+            BlocListener<CallListeningBloc, CallListeningState>(
+              listener: (context, state) {
+                if (state.status == CallListeningStatus.ringingInProgress) {
+                  Navigator.of(context).pushNamed("/call_received");
+                }
+              },
+            ),
+          ],
+          child: MaterialApp(
+            title: 'Vc Video Call',
+            theme: theme,
+            initialRoute: '/',
+            navigatorKey: AppRoutes.navigatorKey,
+            onGenerateRoute: AppRoutes.onGenerateRoute,
+          ),
         ),
       ),
     );
