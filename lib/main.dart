@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:vc_video_call/blocs/authentication/authentication_state.dart';
+import 'package:vc_video_call/blocs/call/call_connecting_bloc.dart';
 import 'package:vc_video_call/blocs/call_initiate/call_initiate_bloc.dart';
 import 'package:vc_video_call/blocs/call_listening/call_listening_bloc.dart';
 import 'package:vc_video_call/blocs/call_listening/call_listening_state.dart';
@@ -128,6 +129,11 @@ class _MyAppState extends State<MyApp> {
               context.read<ChatService>(),
             ),
           ),
+          BlocProvider<CallConnectingBloc>(
+            create: (BuildContext context) => CallConnectingBloc(
+              context.read<WebRtcManager>(),
+            ),
+          ),
         ],
         child: MultiBlocListener(
           listeners: [
@@ -148,7 +154,10 @@ class _MyAppState extends State<MyApp> {
             BlocListener<CallListeningBloc, CallListeningState>(
               listener: (context, state) {
                 if (state.status == CallListeningStatus.ringingInProgress) {
-                  Navigator.of(context).pushNamed("/call_received");
+                  AppRoutes.navigatorKey.currentState
+                      .pushNamed("/call_received");
+                } else if (state.status == CallListeningStatus.callInProgress) {
+                  AppRoutes.navigatorKey.currentState.pushNamed("/call");
                 }
               },
             ),

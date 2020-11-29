@@ -57,7 +57,7 @@ const JoinResponse$json = const {
 const IceCandidateRequest$json = const {
   '1': 'IceCandidateRequest',
   '2': const [
-    const {'1': 'send_to_user_id', '3': 1, '4': 1, '5': 9, '10': 'sendToUserId'},
+    const {'1': 'room_id', '3': 1, '4': 1, '5': 9, '10': 'roomId'},
     const {'1': 'rtc_ice_candidate', '3': 2, '4': 1, '5': 11, '6': '.chat.RtcIceCandidate', '10': 'rtcIceCandidate'},
   ],
 };
@@ -77,7 +77,8 @@ const RtcSessionDescription$json = const {
 const IceCandidateNotification$json = const {
   '1': 'IceCandidateNotification',
   '2': const [
-    const {'1': 'rtc_ice_candidate', '3': 1, '4': 1, '5': 11, '6': '.chat.RtcIceCandidate', '10': 'rtcIceCandidate'},
+    const {'1': 'room_id', '3': 1, '4': 1, '5': 9, '10': 'roomId'},
+    const {'1': 'rtc_ice_candidate', '3': 2, '4': 1, '5': 11, '6': '.chat.RtcIceCandidate', '10': 'rtcIceCandidate'},
   ],
 };
 

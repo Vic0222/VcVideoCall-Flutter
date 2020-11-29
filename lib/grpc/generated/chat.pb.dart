@@ -120,7 +120,7 @@ class JoinResponse extends $pb.GeneratedMessage {
 
 class IceCandidateRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'IceCandidateRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
-    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'sendToUserId')
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
     ..aOM<RtcIceCandidate>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rtcIceCandidate', subBuilder: RtcIceCandidate.create)
     ..hasRequiredFields = false
   ;
@@ -149,13 +149,13 @@ class IceCandidateRequest extends $pb.GeneratedMessage {
   static IceCandidateRequest _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get sendToUserId => $_getSZ(0);
+  $core.String get roomId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set sendToUserId($core.String v) { $_setString(0, v); }
+  set roomId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasSendToUserId() => $_has(0);
+  $core.bool hasRoomId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearSendToUserId() => clearField(1);
+  void clearRoomId() => clearField(1);
 
   @$pb.TagNumber(2)
   RtcIceCandidate get rtcIceCandidate => $_getN(1);
@@ -249,7 +249,8 @@ class RtcSessionDescription extends $pb.GeneratedMessage {
 
 class IceCandidateNotification extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'IceCandidateNotification', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
-    ..aOM<RtcIceCandidate>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rtcIceCandidate', subBuilder: RtcIceCandidate.create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
+    ..aOM<RtcIceCandidate>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'rtcIceCandidate', subBuilder: RtcIceCandidate.create)
     ..hasRequiredFields = false
   ;
 
@@ -277,15 +278,24 @@ class IceCandidateNotification extends $pb.GeneratedMessage {
   static IceCandidateNotification _defaultInstance;
 
   @$pb.TagNumber(1)
-  RtcIceCandidate get rtcIceCandidate => $_getN(0);
+  $core.String get roomId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set rtcIceCandidate(RtcIceCandidate v) { setField(1, v); }
+  set roomId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasRtcIceCandidate() => $_has(0);
+  $core.bool hasRoomId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearRtcIceCandidate() => clearField(1);
-  @$pb.TagNumber(1)
-  RtcIceCandidate ensureRtcIceCandidate() => $_ensure(0);
+  void clearRoomId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  RtcIceCandidate get rtcIceCandidate => $_getN(1);
+  @$pb.TagNumber(2)
+  set rtcIceCandidate(RtcIceCandidate v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasRtcIceCandidate() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearRtcIceCandidate() => clearField(2);
+  @$pb.TagNumber(2)
+  RtcIceCandidate ensureRtcIceCandidate() => $_ensure(1);
 }
 
 class RtcIceCandidate extends $pb.GeneratedMessage {

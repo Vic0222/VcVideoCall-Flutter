@@ -12,6 +12,13 @@ class CallListningStarted extends CallListeningEvent {}
 
 class CallListningCallDeclined extends CallListeningEvent {}
 
+class CallListningCallAccepted extends CallListeningEvent {
+  CallListningCallAccepted(this.callOfferNotification);
+  final CallOfferNotification callOfferNotification;
+  @override
+  List<Object> get props => [callOfferNotification];
+}
+
 class CallListningCallReceived extends CallListeningEvent {
   CallListningCallReceived(this.callOfferNotification);
   final CallOfferNotification callOfferNotification;

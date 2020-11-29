@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:developer';
+
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 import 'package:vc_video_call/services/chat_service.dart';
@@ -11,6 +14,8 @@ typedef PeerConnectionConnectionChangeCallback = void Function(
 class WebRtcManager {
   static WebRtcManager _instance;
 
+  StreamSubscription<JoinResponse> _joinSubscription;
+
   factory WebRtcManager(ChatService chatService) {
     if (_instance == null) {
       _instance = WebRtcManager._(chatService);
@@ -18,7 +23,15 @@ class WebRtcManager {
     return _instance;
   }
 
-  WebRtcManager._(this._chatService);
+  WebRtcManager._(this._chatService) {
+    _joinSubscription =
+        _chatService.joinResponseController.stream.listen((event) {
+      if (event.type == JoinResponseType.IceCandidate) {
+        receiveIceCandidate(event.iceCandidateNotification.roomId,
+            event.iceCandidateNotification.rtcIceCandidate);
+      }
+    });
+  }
 
   final ChatService _chatService;
 
@@ -106,6 +119,8 @@ class WebRtcManager {
 
     peerConnection.onIceCandidate = (iceCandidate) {
       //send ice candidate here
+      _chatService.sendIceServer(roomId, iceCandidate.candidate,
+          iceCandidate.sdpMid, iceCandidate.sdpMlineIndex);
     };
 
     iceCandidates.forEach((candidate) {
@@ -170,6 +185,8 @@ class WebRtcManager {
     var answer = RTCSessionDescription(protoAnswer.sdp, protoAnswer.type);
     await peerConnections[roomId].setRemoteDescription(answer);
     onPeerConnectionAnswerConfirmCallback?.call(roomId);
+    log("Peer Connection State:" +
+        peerConnections[roomId].connectionState.toString());
   }
 
   void receiveIceCandidate(
@@ -191,5 +208,12 @@ class WebRtcManager {
 
   Future endConnection(String roomId) async {
     await peerConnections[roomId].close();
+  }
+
+  RTCVideoRenderer getRemoteRenderer(String roomId) {
+    if (remoteRenderers.containsKey(roomId)) {
+      return remoteRenderers[roomId];
+    }
+    return null;
   }
 }

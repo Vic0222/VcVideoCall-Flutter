@@ -144,4 +144,17 @@ class ChatService {
     }
     _client.receiveCallAnswer(callAnswerRequest);
   }
+
+  Future sendIceServer(
+      String roomId, String candidate, String sdpMid, int sdpMlineIndex) async {
+    RtcIceCandidate rtcIceCandidate = RtcIceCandidate();
+    rtcIceCandidate.candidate = candidate;
+    rtcIceCandidate.sdpMid = sdpMid;
+    rtcIceCandidate.sdpMlineIndex = sdpMlineIndex;
+    var iceCandidateRequest = IceCandidateRequest();
+    iceCandidateRequest.rtcIceCandidate = rtcIceCandidate;
+    iceCandidateRequest.roomId = roomId;
+
+    await _client.sendIceCandidate(iceCandidateRequest);
+  }
 }
