@@ -157,7 +157,8 @@ class _MyAppState extends State<MyApp> {
                   AppRoutes.navigatorKey.currentState
                       .pushNamed("/call_received");
                 } else if (state.status == CallListeningStatus.callInProgress) {
-                  AppRoutes.navigatorKey.currentState.pushNamed("/call");
+                  AppRoutes.navigatorKey.currentState
+                      .pushReplacementNamed("/call");
                 }
               },
             ),

@@ -50,16 +50,28 @@ class WebRtcManager {
       Map<String, RTCVideoRenderer>();
 
   Map<String, dynamic> _iceServers = {
-    'iceServers': [
-      {'url': 'stun:stun.l.google.com:19302'},
-      /*
-       * turn server configuration example.
+    "iceServers": [
       {
-        'url': 'turn:123.45.67.89:3478',
-        'username': 'change_to_real_user',
-        'credential': 'change_to_real_secret'
+        "urls": ["stun:stun.l.google.com:19302"]
       },
-       */
+      {
+        "urls": [
+          "stun:ss-turn2.xirsys.com",
+        ]
+      },
+      {
+        "username":
+            "Lx8ePfUfQQahi5GCdC3_DVuiI_rl4uQokDc6-OX8xiM4RIosgtdNlph5G2LeujhRAAAAAF_DPhBWaWMwMTEx",
+        "credential": "352de696-320b-11eb-ae41-0242ac140004",
+        "urls": [
+          "turn:ss-turn2.xirsys.com:80?transport=udp",
+          "turn:ss-turn2.xirsys.com:3478?transport=udp",
+          "turn:ss-turn2.xirsys.com:80?transport=tcp",
+          "turn:ss-turn2.xirsys.com:3478?transport=tcp",
+          "turns:ss-turn2.xirsys.com:443?transport=tcp",
+          "turns:ss-turn2.xirsys.com:5349?transport=tcp"
+        ]
+      }
     ]
   };
 

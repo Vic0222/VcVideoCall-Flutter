@@ -21,6 +21,16 @@
                 "-dC6EINBSKQCEMMVKN",
                 "--dart-define=SERVER_ADDRESS=192.168.1.110"
             ]
-        }
+        },
+
+        {
+            "name": "emulator-pixel",
+            "request": "launch",
+            "type": "dart",
+            "args": [
+                "-demulator-5554",
+                "--dart-define=SERVER_ADDRESS=10.0.2.2"
+            ]
+        },
     ]
 }
