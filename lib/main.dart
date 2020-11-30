@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:vc_video_call/blocs/authentication/authentication_state.dart';
+import 'package:vc_video_call/blocs/call/call_bloc.dart';
 import 'package:vc_video_call/blocs/call_connecting/call_connecting_bloc.dart';
 import 'package:vc_video_call/blocs/call_initiate/call_initiate_bloc.dart';
 import 'package:vc_video_call/blocs/call_listening/call_listening_bloc.dart';
@@ -130,6 +131,11 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider<CallConnectingBloc>(
             create: (BuildContext context) => CallConnectingBloc(
+              context.read<WebRtcManager>(),
+            ),
+          ),
+          BlocProvider<CallBloc>(
+            create: (BuildContext context) => CallBloc(
               context.read<WebRtcManager>(),
             ),
           ),

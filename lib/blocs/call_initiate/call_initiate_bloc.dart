@@ -41,8 +41,12 @@ class CallInitiateBloc extends Bloc<CallInitiateEvent, CallInitiateState> {
 
   Future _onStartCallInitiate(CallInitiateStarted event) async {
     try {
-      await _webRtcManager.call(event.roomId);
-      add(CallInitiateSucceeded(event.roomId));
+      bool success = await _webRtcManager.call(event.roomId);
+      if (success) {
+        add(CallInitiateSucceeded(event.roomId));
+      } else {
+        add(CallInitiateFailed(event.roomId, "Unknown"));
+      }
     } catch (e) {
       add(CallInitiateFailed(event.roomId, e.toString()));
     }

@@ -115,7 +115,10 @@ class WebRtcManager {
   }
 
   void disposeLocalRenderer() {
+    localRenderer?.srcObject?.dispose();
     localRenderer?.srcObject = null;
+    localRenderer?.dispose();
+    localRenderer = null;
   }
 
   Future setupPeerConnection(
@@ -149,29 +152,34 @@ class WebRtcManager {
     iceCandidates.clear();
   }
 
-  Future call(String roomId) async {
+  Future<bool> call(String roomId) async {
+    bool succeeded = false;
     peerConnections[roomId] = await createPeerConnection(_iceServers, _config);
 
     await setupPeerConnection(roomId, peerConnections[roomId]);
 
-    await peerConnections[roomId].createOffer(_constraints).then((value) async {
-      await peerConnections[roomId].setLocalDescription(value);
-      //send offer to server
-      var offer = RtcSessionDescription();
-      offer.type = value.type;
-      offer.sdp = value.sdp;
-      var answer = await _chatService.sendCallOffer(roomId, offer);
-      if (answer != null) {
-        confirmAnswer(roomId, answer);
-      } else {
-        throw ("answer confirmation error");
-      }
-    });
+    var offer = await peerConnections[roomId].createOffer(_constraints);
+    await peerConnections[roomId].setLocalDescription(offer);
+    //send offer to server
+    var protooffer = RtcSessionDescription();
+    protooffer.type = offer.type;
+    protooffer.sdp = offer.sdp;
+    var answer = await _chatService.sendCallOffer(roomId, protooffer);
+    if (answer != null) {
+      confirmAnswer(roomId, answer);
+      succeeded = true;
+    } else {
+      await cancel(roomId);
+      succeeded = false;
+    }
+    return succeeded;
   }
 
   Future cancel(String roomId) async {
     disposeLocalRenderer();
     await peerConnections[roomId].close();
+    await peerConnections[roomId].dispose();
+    remoteRenderers[roomId].dispose();
   }
 
   Future<RTCSessionDescription> accept(

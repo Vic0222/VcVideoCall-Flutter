@@ -19,8 +19,8 @@ class CallState extends Equatable {
     this.peerConnection,
     this.localRenderer,
     this.remoteRenderer,
-    this.audioEnabled,
-    this.videoEnabled,
+    this.audioEnabled = true,
+    this.videoEnabled = true,
     this.errorMessage = "",
   });
 

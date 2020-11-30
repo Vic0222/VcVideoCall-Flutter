@@ -105,6 +105,24 @@ class _ChatPageState extends State<ChatPage> {
       body: Column(
         children: [
           ConnectionStatusIndicator(),
+          BlocBuilder<GetMessagesBloc, GetMessagesState>(
+            builder: (context, state) {
+              if (state.status == GetMessagesStatus.inProgress) {
+                return Container(
+                  width: double.infinity,
+                  padding: EdgeInsets.all(4),
+                  child: Center(
+                    child: SizedBox(
+                      height: 16,
+                      width: 16,
+                      child: CircularProgressIndicator(),
+                    ),
+                  ),
+                );
+              }
+              return Container();
+            },
+          ),
           Expanded(
             child: BlocListener<GetMessagesBloc, GetMessagesState>(
               listener: (context, state) {
