@@ -76,6 +76,12 @@ class _HomePageState extends State<HomePage> {
             icon: Icon(Icons.search),
             onPressed: () {},
           ),
+          IconButton(
+            icon: Icon(Icons.call),
+            onPressed: () {
+              Navigator.of(context).pushNamed("/call_initiate");
+            },
+          ),
         ],
       ),
       body: BlocConsumer<JoinBloc, JoinState>(

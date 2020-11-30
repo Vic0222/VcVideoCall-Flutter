@@ -1,10 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:vc_video_call/blocs/call_initiate/call_initiate_event.dart';
 import 'package:vc_video_call/blocs/call_initiate/call_initiate_state.dart';
-import 'package:vc_video_call/blocs/get_messages/get_messages_event.dart';
 import 'package:vc_video_call/services/web_rtc_manager.dart';
 
 class CallInitiateBloc extends Bloc<CallInitiateEvent, CallInitiateState> {
@@ -15,18 +13,23 @@ class CallInitiateBloc extends Bloc<CallInitiateEvent, CallInitiateState> {
   @override
   Stream<CallInitiateState> mapEventToState(CallInitiateEvent event) async* {
     if (event is CallInitiateStarted) {
+      //init video camera before calling
       try {
-        //init video camera before calling
         await _webRtcManager.initLocalRenderer();
-        yield CallInitiateState.inProgress(_webRtcManager.localRenderer);
-        await _onStartCallInitiate(event);
-        yield CallInitiateState.success(event.roomId);
+        yield CallInitiateState.inProgress(
+            event.roomId, _webRtcManager.localRenderer);
+        _onStartCallInitiate(event);
       } catch (e) {
-        _webRtcManager.localRenderer.dispose();
         yield CallInitiateState.failure(e.toString());
+        _webRtcManager.cancel(event.roomId);
       }
+    } else if (event is CallInitiateSucceeded) {
+      yield CallInitiateState.success(event.roomId);
+    } else if (event is CallInitiateFailed) {
+      yield CallInitiateState.failure(event.errorMessage);
     } else if (event is CallInitiateCancelled) {
       await _webRtcManager.cancel(event.roomId);
+      yield CallInitiateState.failure("Call cancelled");
     } else {
       yield CallInitiateState.initial();
     }
@@ -37,11 +40,20 @@ class CallInitiateBloc extends Bloc<CallInitiateEvent, CallInitiateState> {
   }
 
   Future _onStartCallInitiate(CallInitiateStarted event) async {
-    return await _webRtcManager.call(event.roomId);
+    try {
+      await _webRtcManager.call(event.roomId);
+      add(CallInitiateSucceeded(event.roomId));
+    } catch (e) {
+      add(CallInitiateFailed(event.roomId, e.toString()));
+    }
   }
 
   @override
   Future close() async {
     super.close();
+  }
+
+  void cancelCall(String roomId) {
+    add(CallInitiateCancelled(roomId));
   }
 }

@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 import 'package:vc_video_call/blocs/call_initiate/call_initiate_bloc.dart';
 import 'package:vc_video_call/blocs/call_initiate/call_initiate_state.dart';
-import 'package:vc_video_call/services/web_rtc_manager.dart';
 
 class CallInitiatePage extends StatefulWidget {
   @override
@@ -17,6 +16,8 @@ class _CallInitiatePageState extends State<CallInitiatePage> {
         listener: (context, state) {
           if (state.status == CallInitiateStatus.success) {
             Navigator.of(context).pushReplacementNamed("/call");
+          } else if (state.status == CallInitiateStatus.failure) {
+            Navigator.of(context).pop();
           }
         },
         child: buildScaffold(context));
@@ -74,6 +75,34 @@ class _CallInitiatePageState extends State<CallInitiatePage> {
             ),
           ],
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Stack(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(bottom: 32.0, left: 32, right: 32),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: BlocBuilder<CallInitiateBloc, CallInitiateState>(
+                builder: (context, state) {
+                  return FloatingActionButton(
+                    onPressed: state.status == CallInitiateStatus.inProgress
+                        ? () {
+                            context
+                                .read<CallInitiateBloc>()
+                                .cancelCall(state.roomId);
+                          }
+                        : null,
+                    heroTag: null,
+                    tooltip: 'End Call',
+                    child: Icon(Icons.call_end),
+                    backgroundColor: Theme.of(context).errorColor,
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

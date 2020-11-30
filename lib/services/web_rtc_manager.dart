@@ -44,7 +44,7 @@ class WebRtcManager {
 
   List<RTCIceCandidate> iceCandidates = new List<RTCIceCandidate>();
 
-  RTCVideoRenderer localRenderer = new RTCVideoRenderer();
+  RTCVideoRenderer localRenderer;
 
   Map<String, RTCVideoRenderer> remoteRenderers =
       Map<String, RTCVideoRenderer>();
@@ -91,6 +91,10 @@ class WebRtcManager {
   };
 
   Future initLocalRenderer() async {
+    disposeLocalRenderer();
+    if (localRenderer == null) {
+      localRenderer = RTCVideoRenderer();
+    }
     await localRenderer.initialize();
     final Map<String, dynamic> mediaConstraints = {
       'audio': true,
@@ -105,9 +109,13 @@ class WebRtcManager {
         'optional': [],
       }
     };
+    await navigator.getUserMedia(mediaConstraints).then((stream) {
+      localRenderer.srcObject = stream;
+    });
+  }
 
-    var stream = await navigator.getUserMedia(mediaConstraints);
-    localRenderer.srcObject = stream;
+  void disposeLocalRenderer() {
+    localRenderer?.srcObject = null;
   }
 
   Future setupPeerConnection(
@@ -162,6 +170,7 @@ class WebRtcManager {
   }
 
   Future cancel(String roomId) async {
+    disposeLocalRenderer();
     await peerConnections[roomId].close();
   }
 

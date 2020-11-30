@@ -3,22 +3,27 @@
 import 'package:equatable/equatable.dart';
 
 abstract class CallInitiateEvent extends Equatable {
+  CallInitiateEvent(this.roomId);
+
+  final String roomId;
   @override
-  List<Object> get props => [];
+  List<Object> get props => [roomId];
 }
 
 class CallInitiateStarted extends CallInitiateEvent {
-  CallInitiateStarted(this.roomId);
+  CallInitiateStarted(String roomId) : super(roomId);
+}
 
-  final String roomId;
-  @override
-  List<Object> get props => [roomId];
+class CallInitiateSucceeded extends CallInitiateEvent {
+  CallInitiateSucceeded(String roomId) : super(roomId);
 }
 
 class CallInitiateCancelled extends CallInitiateEvent {
-  CallInitiateCancelled(this.roomId);
+  CallInitiateCancelled(String roomId) : super(roomId);
+}
 
-  final String roomId;
-  @override
-  List<Object> get props => [roomId];
+class CallInitiateFailed extends CallInitiateEvent {
+  CallInitiateFailed(String roomId, this.errorMessage) : super(roomId);
+
+  final String errorMessage;
 }

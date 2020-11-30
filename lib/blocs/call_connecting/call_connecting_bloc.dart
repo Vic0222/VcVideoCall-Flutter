@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
-import 'package:vc_video_call/blocs/call/call_connecting_event.dart';
-import 'package:vc_video_call/blocs/call/call_connecting_state.dart';
+import 'package:vc_video_call/blocs/call_connecting/call_connecting_event.dart';
+import 'package:vc_video_call/blocs/call_connecting/call_connecting_state.dart';
 import 'package:vc_video_call/services/web_rtc_manager.dart';
 
 class CallConnectingBloc
