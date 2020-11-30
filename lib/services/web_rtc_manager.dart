@@ -180,6 +180,8 @@ class WebRtcManager {
     await peerConnections[roomId].close();
     await peerConnections[roomId].dispose();
     remoteRenderers[roomId].dispose();
+    peerConnections.remove(roomId);
+    remoteRenderers.remove(roomId);
   }
 
   Future<RTCSessionDescription> accept(
