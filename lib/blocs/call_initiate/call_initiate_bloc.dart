@@ -15,28 +15,28 @@ class CallInitiateBloc extends Bloc<CallInitiateEvent, CallInitiateState> {
     if (event is CallInitiateStarted) {
       //init video camera before calling
       try {
-        await _webRtcManager.initLocalRenderer();
+        await _webRtcManager.initLocalRenderer(event.withVideo);
         yield CallInitiateState.inProgress(
             event.roomId, _webRtcManager.localRenderer);
         _onStartCallInitiate(event);
       } catch (e) {
         yield CallInitiateState.failure(e.toString());
-        _webRtcManager.cancel(event.roomId);
+        _webRtcManager.close(event.roomId);
       }
     } else if (event is CallInitiateSucceeded) {
       yield CallInitiateState.success(event.roomId);
     } else if (event is CallInitiateFailed) {
       yield CallInitiateState.failure(event.errorMessage);
     } else if (event is CallInitiateCancelled) {
-      await _webRtcManager.cancel(event.roomId);
+      await _webRtcManager.close(event.roomId);
       yield CallInitiateState.failure("Call cancelled");
     } else {
       yield CallInitiateState.initial();
     }
   }
 
-  void startCallInitiate(String roomId) {
-    add(CallInitiateStarted(roomId));
+  void startCallInitiate(String roomId, bool withVideo) {
+    add(CallInitiateStarted(roomId, withVideo));
   }
 
   Future _onStartCallInitiate(CallInitiateStarted event) async {

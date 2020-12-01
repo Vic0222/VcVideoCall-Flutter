@@ -6,6 +6,7 @@ import 'package:vc_video_call/blocs/call/call_event.dart';
 import 'package:vc_video_call/blocs/call/call_state.dart';
 import 'package:vc_video_call/blocs/call_connecting/call_connecting_bloc.dart';
 import 'package:vc_video_call/blocs/call_connecting/call_connecting_state.dart';
+import 'package:vc_video_call/services/web_rtc_manager.dart';
 
 class CallPage extends StatefulWidget {
   @override
@@ -14,14 +15,24 @@ class CallPage extends StatefulWidget {
 
 class _CallPageState extends State<CallPage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocBuilder<CallConnectingBloc, CallConnectingState>(
-        builder: (context, state) {
-          if (state.status != CallConnectingStatus.success) {
-            return Container();
+      body: BlocConsumer<CallConnectingBloc, CallConnectingState>(
+        listener: (context, state) {
+          if (state.status == CallConnectingStatus.success) {
+            bool withVideo = state.localRenderer.srcObject
+                .getVideoTracks()
+                .any((track) => track.enabled);
+            context.read<CallBloc>().callStarted(state.roomId, withVideo);
           }
-          return Center(
+        },
+        builder: (context, state) {
+          return SafeArea(
             child: Stack(
               children: <Widget>[
                 Align(
@@ -43,8 +54,11 @@ class _CallPageState extends State<CallPage> {
                   margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
-                  child: RTCVideoView(state.remoteRenderer),
-                  decoration: BoxDecoration(color: Colors.black54),
+                  decoration:
+                      BoxDecoration(color: Theme.of(context).primaryColor),
+                  child: state.status == CallConnectingStatus.success
+                      ? RTCVideoView(state.remoteRenderer)
+                      : Center(child: CircularProgressIndicator()),
                 ),
                 Align(
                   alignment: Alignment.topRight,
@@ -52,7 +66,9 @@ class _CallPageState extends State<CallPage> {
                     margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                     width: MediaQuery.of(context).size.width * 0.3,
                     height: MediaQuery.of(context).size.height * 0.3,
-                    child: RTCVideoView(state.localRenderer),
+                    child: RTCVideoView(
+                        RepositoryProvider.of<WebRtcManager>(context)
+                            .localRenderer),
                     decoration: BoxDecoration(color: Colors.black54),
                   ),
                 ),

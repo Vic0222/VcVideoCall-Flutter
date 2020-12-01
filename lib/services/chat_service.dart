@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:flutter_webrtc/src/interface/rtc_session_description.dart';
 import 'package:grpc/grpc.dart';
 import 'package:vc_video_call/grpc/generated/chat.pbgrpc.dart';
 import 'package:vc_video_call/grpc/interceptors/auth_client_interceptor.dart';

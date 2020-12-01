@@ -10,10 +10,16 @@ abstract class CallListeningEvent extends Equatable {
 
 class CallListningStarted extends CallListeningEvent {}
 
-class CallListningCallDeclined extends CallListeningEvent {}
+class CallListningCallDeclined extends CallListeningEvent {
+  CallListningCallDeclined(this.callOfferNotification);
+  final CallOfferNotification callOfferNotification;
+  @override
+  List<Object> get props => [callOfferNotification];
+}
 
 class CallListningCallAccepted extends CallListeningEvent {
-  CallListningCallAccepted(this.callOfferNotification);
+  CallListningCallAccepted(this.callOfferNotification, {this.withVideo = true});
+  final bool withVideo;
   final CallOfferNotification callOfferNotification;
   @override
   List<Object> get props => [callOfferNotification];

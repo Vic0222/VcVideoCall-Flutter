@@ -23,9 +23,7 @@ class CallBloc extends Bloc<CallEvent, CallState> {
       );
     } else if (event is CallEndedEvent) {
       try {
-        event.peerConnection.close();
-        _webRtcManager.localRenderer.dispose();
-        _webRtcManager.getRemoteRenderer(event.roomId)?.dispose();
+        _webRtcManager.close(event.roomId);
       } catch (e) {
         log(e.toString());
       }
@@ -61,6 +59,10 @@ class CallBloc extends Bloc<CallEvent, CallState> {
   @override
   Future close() async {
     super.close();
+  }
+
+  void callStarted(String roomId, bool withVideo) {
+    add(CallStartedEvent(roomId, withVideo: withVideo));
   }
 
   bool _onAudioToggled() {

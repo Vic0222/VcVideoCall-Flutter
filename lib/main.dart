@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:vc_video_call/blocs/authentication/authentication_state.dart';
 import 'package:vc_video_call/blocs/call/call_bloc.dart';
+import 'package:vc_video_call/blocs/call/call_state.dart';
 import 'package:vc_video_call/blocs/call_connecting/call_connecting_bloc.dart';
+import 'package:vc_video_call/blocs/call_connecting/call_connecting_state.dart';
 import 'package:vc_video_call/blocs/call_initiate/call_initiate_bloc.dart';
 import 'package:vc_video_call/blocs/call_listening/call_listening_bloc.dart';
 import 'package:vc_video_call/blocs/call_listening/call_listening_state.dart';
@@ -164,6 +166,21 @@ class _MyAppState extends State<MyApp> {
                 } else if (state.status == CallListeningStatus.callInProgress) {
                   AppRoutes.navigatorKey.currentState
                       .pushReplacementNamed("/call");
+                }
+              },
+            ),
+            BlocListener<CallConnectingBloc, CallConnectingState>(
+              listener: (context, state) {
+                if (state.status == CallConnectingStatus.failure) {
+                  AppRoutes.navigatorKey.currentState.pop();
+                }
+              },
+            ),
+            BlocListener<CallBloc, CallState>(
+              listener: (context, state) {
+                if (state.status == CallStatus.done ||
+                    state.status == CallStatus.failure) {
+                  AppRoutes.navigatorKey.currentState.pop();
                 }
               },
             ),

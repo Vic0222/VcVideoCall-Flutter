@@ -55,18 +55,76 @@ class _CallReceivedPageState extends State<CallReceivedPage> {
                               color:
                                   Theme.of(blocContext).colorScheme.onPrimary,
                             ),
-                      )
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 128),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(32.0),
+                              child: FloatingActionButton(
+                                onPressed: state.status ==
+                                        CallListeningStatus.ringingInProgress
+                                    ? () {
+                                        BlocProvider.of<CallListeningBloc>(
+                                                context)
+                                            .add(CallListningCallAccepted(
+                                                state.callOfferNotification,
+                                                withVideo: false));
+                                      }
+                                    : () {},
+                                heroTag: null,
+                                tooltip: 'Answer auido only',
+                                child: Icon(Icons.mic),
+                                elevation: 0,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(32.0),
+                              child: FloatingActionButton(
+                                onPressed: state.status ==
+                                        CallListeningStatus.ringingInProgress
+                                    ? () {
+                                        BlocProvider.of<CallListeningBloc>(
+                                                context)
+                                            .add(CallListningCallAccepted(
+                                                state.callOfferNotification));
+                                      }
+                                    : null,
+                                heroTag: null,
+                                tooltip: 'Answer with audio and video',
+                                child: Icon(Icons.videocam),
+                                elevation: 0,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(32.0),
+                              child: FloatingActionButton(
+                                onPressed: state.status ==
+                                        CallListeningStatus.ringingInProgress
+                                    ? () {
+                                        BlocProvider.of<CallListeningBloc>(
+                                                context)
+                                            .add(CallListningCallDeclined(
+                                                state.callOfferNotification));
+                                      }
+                                    : null,
+                                heroTag: null,
+                                tooltip: 'Decline call',
+                                child: Icon(Icons.call_end),
+                                elevation: 0,
+                                backgroundColor: Theme.of(context).errorColor,
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
                     ],
                   ),
                 ),
               ],
             ),
-          ),
-          floatingActionButton: FloatingActionButton(
-            onPressed: () {
-              BlocProvider.of<CallListeningBloc>(context)
-                  .add(CallListningCallAccepted(state.callOfferNotification));
-            },
           ),
         );
       },

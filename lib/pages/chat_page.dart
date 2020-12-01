@@ -60,7 +60,15 @@ class _ChatPageState extends State<ChatPage> {
             onPressed: () {
               context
                   .read<CallInitiateBloc>()
-                  .startCallInitiate(widget.room.id);
+                  .startCallInitiate(widget.room.id, false);
+            },
+          ),
+          IconButton(
+            icon: Icon(Icons.video_call),
+            onPressed: () {
+              context
+                  .read<CallInitiateBloc>()
+                  .startCallInitiate(widget.room.id, true);
             },
           ),
           IconButton(

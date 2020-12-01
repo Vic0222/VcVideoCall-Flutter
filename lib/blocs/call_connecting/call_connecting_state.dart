@@ -18,25 +18,32 @@ class CallConnectingState extends Equatable {
     this.errorMessage = "",
   });
 
-  CallConnectingState.initial() : this._();
+  CallConnectingState.initial(RTCVideoRenderer localRenderer)
+      : this._(localRenderer: localRenderer);
 
-  CallConnectingState.inProgress(RTCVideoRenderer localRenderer)
+  CallConnectingState.inProgress(String roomId, RTCVideoRenderer localRenderer)
       : this._(
           status: CallConnectingStatus.inProgress,
           localRenderer: localRenderer,
+          roomId: roomId,
         );
 
-  CallConnectingState.success(String userId, RTCVideoRenderer localRenderer,
+  CallConnectingState.success(String roomId, RTCVideoRenderer localRenderer,
       RTCVideoRenderer remoteRenderer)
       : this._(
           status: CallConnectingStatus.success,
           localRenderer: localRenderer,
           remoteRenderer: remoteRenderer,
+          roomId: roomId,
         );
 
-  CallConnectingState.failure(String errorMessage)
-      : this._(
-            status: CallConnectingStatus.failure, errorMessage: errorMessage);
+  CallConnectingState.failure(
+    String errorMessage,
+    RTCVideoRenderer localRenderer,
+  ) : this._(
+            status: CallConnectingStatus.failure,
+            errorMessage: errorMessage,
+            localRenderer: localRenderer);
 
   @override
   List<Object> get props => [
@@ -44,5 +51,6 @@ class CallConnectingState extends Equatable {
         errorMessage,
         localRenderer,
         remoteRenderer,
+        roomId,
       ];
 }

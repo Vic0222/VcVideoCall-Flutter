@@ -11,7 +11,7 @@ class CallConnectingBloc
   final WebRtcManager _webRtcManager;
 
   CallConnectingBloc(this._webRtcManager)
-      : super(CallConnectingState.initial()) {
+      : super(CallConnectingState.initial(_webRtcManager.localRenderer)) {
     _webRtcManager.onPeerConnectionConnectionChange =
         (connectionState, roomId) {
       add(CallConnectingConnectionStateChanged(roomId, connectionState));
@@ -32,10 +32,9 @@ class CallConnectingBloc
 
           break;
         default:
-          yield CallConnectingState.failure("Peer connection not connected");
       }
     } else {
-      yield CallConnectingState.initial();
+      yield CallConnectingState.initial(_webRtcManager.localRenderer);
     }
   }
 

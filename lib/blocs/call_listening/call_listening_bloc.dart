@@ -29,7 +29,7 @@ class CallListeningBloc extends Bloc<CallListeningEvent, CallListeningState> {
       yield CallListeningState.ringingInProgress(event.callOfferNotification);
     } else if (event is CallListningCallAccepted) {
       _joinResponseSubscription?.cancel();
-      await acceptCall();
+      await acceptCall(event.withVideo);
       yield CallListeningState.callInProgress(event.callOfferNotification);
     } else if (event is CallListningCallDeclined) {
       await declineCall();
@@ -65,11 +65,9 @@ class CallListeningBloc extends Bloc<CallListeningEvent, CallListeningState> {
     _joinResponseSubscription?.cancel();
   }
 
-  Future acceptCall() async {
-    await _webRtcManager.accept(
-      state.callOfferNotification.roomId,
-      state.callOfferNotification.rtcSessionDescription,
-    );
+  Future acceptCall(bool withVideo) async {
+    await _webRtcManager.accept(state.callOfferNotification.roomId,
+        state.callOfferNotification.rtcSessionDescription, withVideo);
   }
 
   Future declineCall() async {

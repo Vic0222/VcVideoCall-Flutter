@@ -54,5 +54,12 @@ class CallState extends Equatable {
       : this._(status: CallStatus.failure, errorMessage: errorMessage);
 
   @override
-  List<Object> get props => [status, errorMessage, peerConnection, roomId];
+  List<Object> get props => [
+        status,
+        errorMessage,
+        peerConnection,
+        roomId,
+        audioEnabled,
+        audioEnabled
+      ];
 }

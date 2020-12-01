@@ -79,7 +79,7 @@ class _HomePageState extends State<HomePage> {
           IconButton(
             icon: Icon(Icons.call),
             onPressed: () {
-              Navigator.of(context).pushNamed("/call_initiate");
+              Navigator.of(context).pushNamed("/call");
             },
           ),
         ],

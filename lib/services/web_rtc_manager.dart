@@ -52,7 +52,13 @@ class WebRtcManager {
   Map<String, dynamic> _iceServers = {
     "iceServers": [
       {
-        "urls": ["stun:stun.l.google.com:19302"]
+        "urls": [
+          "stun:stun.l.google.com:19302",
+          "stun:stun1.l.google.com:19302",
+          "stun:stun2.l.google.com:19302",
+          "stun:stun3.l.google.com:19302",
+          "stun:stun4.l.google.com:19302",
+        ]
       },
       {
         "urls": [
@@ -90,7 +96,7 @@ class WebRtcManager {
     'optional': [],
   };
 
-  Future initLocalRenderer() async {
+  Future initLocalRenderer(bool withVideo) async {
     disposeLocalRenderer();
     if (localRenderer == null) {
       localRenderer = RTCVideoRenderer();
@@ -110,12 +116,16 @@ class WebRtcManager {
       }
     };
     await navigator.getUserMedia(mediaConstraints).then((stream) {
+      if (!withVideo) {
+        stream.getVideoTracks().forEach((track) {
+          track.enabled = false;
+        });
+      }
       localRenderer.srcObject = stream;
     });
   }
 
   void disposeLocalRenderer() {
-    localRenderer?.srcObject?.dispose();
     localRenderer?.srcObject = null;
     localRenderer?.dispose();
     localRenderer = null;
@@ -131,6 +141,7 @@ class WebRtcManager {
     remoteRenderers[roomId] = remoteRenderer;
 
     peerConnection.onConnectionState = (rtcConnectionState) {
+      log("connection state change" + rtcConnectionState.toString());
       onPeerConnectionConnectionChange?.call(rtcConnectionState, roomId);
     };
 
@@ -145,8 +156,9 @@ class WebRtcManager {
       _chatService.sendIceServer(roomId, iceCandidate.candidate,
           iceCandidate.sdpMid, iceCandidate.sdpMlineIndex);
     };
-
+    int i = 0;
     iceCandidates.forEach((candidate) {
+      log("ice candidate:" + (i++).toString());
       peerConnection.addCandidate(candidate);
     });
     iceCandidates.clear();
@@ -169,26 +181,30 @@ class WebRtcManager {
       confirmAnswer(roomId, answer);
       succeeded = true;
     } else {
-      await cancel(roomId);
+      await close(roomId);
       succeeded = false;
     }
     return succeeded;
   }
 
-  Future cancel(String roomId) async {
+  Future close(String roomId) async {
     disposeLocalRenderer();
-    await peerConnections[roomId].close();
-    await peerConnections[roomId].dispose();
-    remoteRenderers[roomId].dispose();
-    peerConnections.remove(roomId);
-    remoteRenderers.remove(roomId);
+    await peerConnections[roomId]?.close();
+    await peerConnections[roomId]?.dispose();
+    remoteRenderers[roomId]?.dispose();
+    if (peerConnections.containsKey(roomId)) {
+      peerConnections.remove(roomId);
+    }
+    if (remoteRenderers.containsKey(roomId)) {
+      remoteRenderers.remove(roomId);
+    }
   }
 
   Future<RTCSessionDescription> accept(
-      String roomId, RtcSessionDescription protoAnswer) async {
+      String roomId, RtcSessionDescription protoAnswer, bool withVideo) async {
     peerConnections[roomId] = await createPeerConnection(_iceServers, _config);
 
-    await initLocalRenderer();
+    await initLocalRenderer(withVideo);
     await setupPeerConnection(roomId, peerConnections[roomId]);
 
     var offer = RTCSessionDescription(protoAnswer.sdp, protoAnswer.type);
@@ -216,8 +232,6 @@ class WebRtcManager {
     var answer = RTCSessionDescription(protoAnswer.sdp, protoAnswer.type);
     await peerConnections[roomId].setRemoteDescription(answer);
     onPeerConnectionAnswerConfirmCallback?.call(roomId);
-    log("Peer Connection State:" +
-        peerConnections[roomId].connectionState.toString());
   }
 
   void receiveIceCandidate(
