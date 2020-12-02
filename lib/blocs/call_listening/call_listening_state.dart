@@ -13,11 +13,13 @@ class CallListeningState extends Equatable {
   final CallListeningStatus status;
   final CallOfferNotification callOfferNotification;
   final String errorMessage;
+  final bool withVideo;
 
   const CallListeningState._({
     this.status = CallListeningStatus.initial,
     this.callOfferNotification,
     this.errorMessage = "",
+    this.withVideo = true,
   });
 
   CallListeningState.initial() : this._();
@@ -31,10 +33,12 @@ class CallListeningState extends Equatable {
             status: CallListeningStatus.ringingInProgress,
             callOfferNotification: callOfferNotification);
 
-  CallListeningState.callInProgress(CallOfferNotification callOfferNotification)
+  CallListeningState.callInProgress(
+      CallOfferNotification callOfferNotification, bool withVideo)
       : this._(
           status: CallListeningStatus.callInProgress,
           callOfferNotification: callOfferNotification,
+          withVideo: withVideo,
         );
 
   CallListeningState.failure(String errorMessage)

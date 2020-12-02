@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 
-enum CallConnectingStatus { initial, inProgress, success, failure }
+enum CallConnectingStatus { initial, inProgress, success, failure, close }
 
 class CallConnectingState extends Equatable {
   final CallConnectingStatus status;
@@ -44,6 +44,14 @@ class CallConnectingState extends Equatable {
             status: CallConnectingStatus.failure,
             errorMessage: errorMessage,
             localRenderer: localRenderer);
+
+  CallConnectingState.close(
+    RTCVideoRenderer localRenderer,
+  ) : this._(
+          status: CallConnectingStatus.close,
+          errorMessage: "Connection was closed",
+          localRenderer: localRenderer,
+        );
 
   @override
   List<Object> get props => [

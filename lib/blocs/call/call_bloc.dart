@@ -9,7 +9,12 @@ import 'package:vc_video_call/services/web_rtc_manager.dart';
 class CallBloc extends Bloc<CallEvent, CallState> {
   final WebRtcManager _webRtcManager;
 
-  CallBloc(this._webRtcManager) : super(CallState.initial());
+  CallBloc(this._webRtcManager) : super(CallState.initial()) {
+    _webRtcManager.onPeerConnectionServerClose = (roomId) {
+      add(CallEndedFomServerEvent(
+          roomId, _webRtcManager.peerConnections[roomId]));
+    };
+  }
 
   @override
   Stream<CallState> mapEventToState(CallEvent event) async* {
@@ -24,6 +29,14 @@ class CallBloc extends Bloc<CallEvent, CallState> {
     } else if (event is CallEndedEvent) {
       try {
         _webRtcManager.close(event.roomId);
+      } catch (e) {
+        log(e.toString());
+      }
+
+      yield CallState.done(event.roomId, event.peerConnection);
+    } else if (event is CallEndedFomServerEvent) {
+      try {
+        _webRtcManager.close(event.roomId, fromServer: true);
       } catch (e) {
         log(e.toString());
       }

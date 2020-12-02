@@ -38,6 +38,12 @@ class CallConnectingBloc
           );
 
           break;
+        case RTCPeerConnectionState.RTCPeerConnectionStateClosed:
+          yield CallConnectingState.close(
+            _webRtcManager.localRenderer,
+          );
+          _webRtcManager.close(event.roomId);
+          break;
         default:
       }
     } else {

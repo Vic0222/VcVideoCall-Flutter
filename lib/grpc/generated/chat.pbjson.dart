@@ -12,6 +12,7 @@ const JoinResponseType$json = const {
     const {'1': 'Notification', '2': 1},
     const {'1': 'CallSignaling', '2': 2},
     const {'1': 'IceCandidate', '2': 3},
+    const {'1': 'PeerConnectionClose', '2': 4},
   ],
 };
 
@@ -40,6 +41,17 @@ const RoomType$json = const {
   ],
 };
 
+const PeerConnectionCloseRequest$json = const {
+  '1': 'PeerConnectionCloseRequest',
+  '2': const [
+    const {'1': 'room_id', '3': 1, '4': 1, '5': 9, '10': 'roomId'},
+  ],
+};
+
+const PeerConnectionCloseResponse$json = const {
+  '1': 'PeerConnectionCloseResponse',
+};
+
 const JoinRequest$json = const {
   '1': 'JoinRequest',
 };
@@ -51,6 +63,7 @@ const JoinResponse$json = const {
     const {'1': 'message_notification', '3': 2, '4': 1, '5': 11, '6': '.chat.MessageNotification', '10': 'messageNotification'},
     const {'1': 'call_offer_notification', '3': 3, '4': 1, '5': 11, '6': '.chat.CallOfferNotification', '10': 'callOfferNotification'},
     const {'1': 'ice_candidate_notification', '3': 4, '4': 1, '5': 11, '6': '.chat.IceCandidateNotification', '10': 'iceCandidateNotification'},
+    const {'1': 'peer_connection_close_notification', '3': 5, '4': 1, '5': 11, '6': '.chat.PeerConnectionCloseNotification', '10': 'peerConnectionCloseNotification'},
   ],
 };
 
@@ -79,6 +92,13 @@ const IceCandidateNotification$json = const {
   '2': const [
     const {'1': 'room_id', '3': 1, '4': 1, '5': 9, '10': 'roomId'},
     const {'1': 'rtc_ice_candidate', '3': 2, '4': 1, '5': 11, '6': '.chat.RtcIceCandidate', '10': 'rtcIceCandidate'},
+  ],
+};
+
+const PeerConnectionCloseNotification$json = const {
+  '1': 'PeerConnectionCloseNotification',
+  '2': const [
+    const {'1': 'room_id', '3': 1, '4': 1, '5': 9, '10': 'roomId'},
   ],
 };
 

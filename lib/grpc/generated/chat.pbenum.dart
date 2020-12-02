@@ -14,12 +14,14 @@ class JoinResponseType extends $pb.ProtobufEnum {
   static const JoinResponseType Notification = JoinResponseType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Notification');
   static const JoinResponseType CallSignaling = JoinResponseType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CallSignaling');
   static const JoinResponseType IceCandidate = JoinResponseType._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'IceCandidate');
+  static const JoinResponseType PeerConnectionClose = JoinResponseType._(4, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'PeerConnectionClose');
 
   static const $core.List<JoinResponseType> values = <JoinResponseType> [
     Confirmation,
     Notification,
     CallSignaling,
     IceCandidate,
+    PeerConnectionClose,
   ];
 
   static final $core.Map<$core.int, JoinResponseType> _byValue = $pb.ProtobufEnum.initByValue(values);

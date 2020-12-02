@@ -26,3 +26,8 @@ class CallEndedEvent extends CallEvent {
   CallEndedEvent(String roomId, RTCPeerConnection peerConnection)
       : super(roomId: roomId, peerConnection: peerConnection);
 }
+
+class CallEndedFomServerEvent extends CallEvent {
+  CallEndedFomServerEvent(String roomId, RTCPeerConnection peerConnection)
+      : super(roomId: roomId, peerConnection: peerConnection);
+}

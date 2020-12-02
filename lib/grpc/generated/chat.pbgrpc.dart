@@ -42,9 +42,9 @@ class ChatClient extends $grpc.Client {
           ($0.CallOfferRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.CallOfferResponse.fromBuffer(value));
-  static final _$receiveCallAnswer =
+  static final _$sendCallAnswer =
       $grpc.ClientMethod<$0.CallAnswerRequest, $0.CallAnswerResponse>(
-          '/chat.Chat/ReceiveCallAnswer',
+          '/chat.Chat/SendCallAnswer',
           ($0.CallAnswerRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.CallAnswerResponse.fromBuffer(value));
@@ -54,6 +54,12 @@ class ChatClient extends $grpc.Client {
           ($0.IceCandidateRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.IceCandidateResponse.fromBuffer(value));
+  static final _$sendPeerConnectionClose = $grpc.ClientMethod<
+          $0.PeerConnectionCloseRequest, $0.PeerConnectionCloseResponse>(
+      '/chat.Chat/SendPeerConnectionClose',
+      ($0.PeerConnectionCloseRequest value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) =>
+          $0.PeerConnectionCloseResponse.fromBuffer(value));
 
   ChatClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -89,16 +95,23 @@ class ChatClient extends $grpc.Client {
     return $createUnaryCall(_$sendCallOffer, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.CallAnswerResponse> receiveCallAnswer(
+  $grpc.ResponseFuture<$0.CallAnswerResponse> sendCallAnswer(
       $0.CallAnswerRequest request,
       {$grpc.CallOptions options}) {
-    return $createUnaryCall(_$receiveCallAnswer, request, options: options);
+    return $createUnaryCall(_$sendCallAnswer, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.IceCandidateResponse> sendIceCandidate(
       $0.IceCandidateRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$sendIceCandidate, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.PeerConnectionCloseResponse> sendPeerConnectionClose(
+      $0.PeerConnectionCloseRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$sendPeerConnectionClose, request,
+        options: options);
   }
 }
 
@@ -144,8 +157,8 @@ abstract class ChatServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) => $0.CallOfferRequest.fromBuffer(value),
         ($0.CallOfferResponse value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.CallAnswerRequest, $0.CallAnswerResponse>(
-        'ReceiveCallAnswer',
-        receiveCallAnswer_Pre,
+        'SendCallAnswer',
+        sendCallAnswer_Pre,
         false,
         false,
         ($core.List<$core.int> value) => $0.CallAnswerRequest.fromBuffer(value),
@@ -159,6 +172,15 @@ abstract class ChatServiceBase extends $grpc.Service {
             ($core.List<$core.int> value) =>
                 $0.IceCandidateRequest.fromBuffer(value),
             ($0.IceCandidateResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.PeerConnectionCloseRequest,
+            $0.PeerConnectionCloseResponse>(
+        'SendPeerConnectionClose',
+        sendPeerConnectionClose_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) =>
+            $0.PeerConnectionCloseRequest.fromBuffer(value),
+        ($0.PeerConnectionCloseResponse value) => value.writeToBuffer()));
   }
 
   $async.Stream<$0.JoinResponse> join_Pre(
@@ -186,16 +208,22 @@ abstract class ChatServiceBase extends $grpc.Service {
     return sendCallOffer(call, await request);
   }
 
-  $async.Future<$0.CallAnswerResponse> receiveCallAnswer_Pre(
+  $async.Future<$0.CallAnswerResponse> sendCallAnswer_Pre(
       $grpc.ServiceCall call,
       $async.Future<$0.CallAnswerRequest> request) async {
-    return receiveCallAnswer(call, await request);
+    return sendCallAnswer(call, await request);
   }
 
   $async.Future<$0.IceCandidateResponse> sendIceCandidate_Pre(
       $grpc.ServiceCall call,
       $async.Future<$0.IceCandidateRequest> request) async {
     return sendIceCandidate(call, await request);
+  }
+
+  $async.Future<$0.PeerConnectionCloseResponse> sendPeerConnectionClose_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.PeerConnectionCloseRequest> request) async {
+    return sendPeerConnectionClose(call, await request);
   }
 
   $async.Stream<$0.JoinResponse> join(
@@ -208,8 +236,10 @@ abstract class ChatServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.MessageRequest request);
   $async.Future<$0.CallOfferResponse> sendCallOffer(
       $grpc.ServiceCall call, $0.CallOfferRequest request);
-  $async.Future<$0.CallAnswerResponse> receiveCallAnswer(
+  $async.Future<$0.CallAnswerResponse> sendCallAnswer(
       $grpc.ServiceCall call, $0.CallAnswerRequest request);
   $async.Future<$0.IceCandidateResponse> sendIceCandidate(
       $grpc.ServiceCall call, $0.IceCandidateRequest request);
+  $async.Future<$0.PeerConnectionCloseResponse> sendPeerConnectionClose(
+      $grpc.ServiceCall call, $0.PeerConnectionCloseRequest request);
 }

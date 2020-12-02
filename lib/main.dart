@@ -162,9 +162,14 @@ class _MyAppState extends State<MyApp> {
             BlocListener<CallInitiateBloc, CallInitiateState>(
               listener: (context, state) {
                 if (state.status == CallInitiateStatus.success) {
-                  Navigator.of(context).pushReplacementNamed("/call");
+                  context
+                      .read<CallBloc>()
+                      .callStarted(state.roomId, state.withVideo);
+
+                  AppRoutes.navigatorKey.currentState
+                      .pushReplacementNamed("/call");
                 } else if (state.status == CallInitiateStatus.failure) {
-                  Navigator.of(context).pop();
+                  popUntilHomeOrChatPage();
                 }
               },
             ),
@@ -174,28 +179,25 @@ class _MyAppState extends State<MyApp> {
                   AppRoutes.navigatorKey.currentState
                       .pushNamed("/call_received");
                 } else if (state.status == CallListeningStatus.callInProgress) {
+                  context.read<CallBloc>().callStarted(
+                        state.callOfferNotification.roomId,
+                        state.withVideo,
+                      );
                   AppRoutes.navigatorKey.currentState.pushNamed("/call");
                 }
               },
             ),
             BlocListener<CallConnectingBloc, CallConnectingState>(
               listener: (context, state) {
-                if (state.status == CallConnectingStatus.failure) {
-                  AppRoutes.navigatorKey.currentState.popUntil((route) {
-                    return route.settings.name == "/home" ||
-                        route.settings.name == "/chat_page";
-                  });
+                if (state.status == CallConnectingStatus.close) {
+                  popUntilHomeOrChatPage();
                 }
               },
             ),
             BlocListener<CallBloc, CallState>(
               listener: (context, state) {
-                if (state.status == CallStatus.done ||
-                    state.status == CallStatus.failure) {
-                  AppRoutes.navigatorKey.currentState.popUntil((route) {
-                    return route.settings.name == "/home" ||
-                        route.settings.name == "/chat_page";
-                  });
+                if (state.status == CallStatus.done) {
+                  popUntilHomeOrChatPage();
                 }
               },
             ),
@@ -210,5 +212,12 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+
+  void popUntilHomeOrChatPage() {
+    AppRoutes.navigatorKey.currentState.popUntil((route) {
+      return route.settings.name == "/home" ||
+          route.settings.name == "/chat_page";
+    });
   }
 }

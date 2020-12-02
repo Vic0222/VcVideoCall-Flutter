@@ -17,14 +17,14 @@ class CallInitiateBloc extends Bloc<CallInitiateEvent, CallInitiateState> {
       try {
         await _webRtcManager.initLocalRenderer(event.withVideo);
         yield CallInitiateState.inProgress(
-            event.roomId, _webRtcManager.localRenderer);
+            event.roomId, _webRtcManager.localRenderer, event.withVideo);
         _onStartCallInitiate(event);
       } catch (e) {
         yield CallInitiateState.failure(e.toString());
         _webRtcManager.close(event.roomId);
       }
     } else if (event is CallInitiateSucceeded) {
-      yield CallInitiateState.success(event.roomId);
+      yield CallInitiateState.success(event.roomId, event.withVideo);
     } else if (event is CallInitiateFailed) {
       yield CallInitiateState.failure(event.errorMessage);
     } else if (event is CallInitiateCancelled) {
