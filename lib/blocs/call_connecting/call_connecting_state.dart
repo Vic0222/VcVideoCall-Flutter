@@ -40,17 +40,22 @@ class CallConnectingState extends Equatable {
   CallConnectingState.failure(
     String errorMessage,
     RTCVideoRenderer localRenderer,
+    RTCVideoRenderer remoteRenderer,
   ) : this._(
-            status: CallConnectingStatus.failure,
-            errorMessage: errorMessage,
-            localRenderer: localRenderer);
+          status: CallConnectingStatus.failure,
+          errorMessage: errorMessage,
+          localRenderer: localRenderer,
+          remoteRenderer: remoteRenderer,
+        );
 
   CallConnectingState.close(
     RTCVideoRenderer localRenderer,
+    RTCVideoRenderer remoteRenderer,
   ) : this._(
           status: CallConnectingStatus.close,
           errorMessage: "Connection was closed",
           localRenderer: localRenderer,
+          remoteRenderer: remoteRenderer,
         );
 
   @override

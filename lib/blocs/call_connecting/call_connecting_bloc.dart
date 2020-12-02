@@ -24,10 +24,11 @@ class CallConnectingBloc
     if (event is CallConnectingConnectionStateChanged) {
       switch (event.connectionState) {
         case RTCPeerConnectionState.RTCPeerConnectionStateConnected:
+          var remoteRenderer = _webRtcManager.getRemoteRenderer(event.roomId);
           yield CallConnectingState.success(
             event.roomId,
             _webRtcManager.localRenderer,
-            _webRtcManager.getRemoteRenderer(event.roomId),
+            remoteRenderer,
           );
 
           break;
@@ -35,12 +36,14 @@ class CallConnectingBloc
           yield CallConnectingState.failure(
             "Peer connection disconnected.",
             _webRtcManager.localRenderer,
+            _webRtcManager.getRemoteRenderer(event.roomId),
           );
 
           break;
         case RTCPeerConnectionState.RTCPeerConnectionStateClosed:
           yield CallConnectingState.close(
             _webRtcManager.localRenderer,
+            _webRtcManager.getRemoteRenderer(event.roomId),
           );
           _webRtcManager.close(event.roomId);
           break;

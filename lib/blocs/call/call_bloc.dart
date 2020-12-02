@@ -33,16 +33,15 @@ class CallBloc extends Bloc<CallEvent, CallState> {
         this._webRtcManager.getRemoteRenderer(event.roomId),
       );
     } else if (event is CallEndedEvent) {
+      yield CallState.done(event.roomId, event.peerConnection);
       try {
-        _webRtcManager.close(event.roomId);
+        _webRtcManager.close(event.roomId, shouldCallServer: true);
       } catch (e) {
         log(e.toString());
       }
-
-      yield CallState.done(event.roomId, event.peerConnection);
     } else if (event is CallEndedFomServerEvent) {
       try {
-        _webRtcManager.close(event.roomId, fromServer: true);
+        _webRtcManager.close(event.roomId, shouldCallServer: false);
       } catch (e) {
         log(e.toString());
       }
