@@ -141,7 +141,7 @@ class ChatService {
     } else {
       callAnswerRequest.status = CallOfferStatus.Accepted;
     }
-    _client.receiveCallAnswer(callAnswerRequest);
+    _client.sendCallAnswer(callAnswerRequest);
   }
 
   Future sendIceServer(
@@ -155,5 +155,11 @@ class ChatService {
     iceCandidateRequest.roomId = roomId;
 
     await _client.sendIceCandidate(iceCandidateRequest);
+  }
+
+  Future sendPeerConnectionClose(String roomId) async {
+    var peerConnectionCloseRequest = PeerConnectionCloseRequest();
+    peerConnectionCloseRequest.roomId = roomId;
+    await _client.sendPeerConnectionClose(peerConnectionCloseRequest);
   }
 }

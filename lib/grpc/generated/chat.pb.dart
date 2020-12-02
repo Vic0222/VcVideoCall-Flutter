@@ -14,6 +14,74 @@ import 'chat.pbenum.dart';
 
 export 'chat.pbenum.dart';
 
+class PeerConnectionCloseRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PeerConnectionCloseRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
+    ..hasRequiredFields = false
+  ;
+
+  PeerConnectionCloseRequest._() : super();
+  factory PeerConnectionCloseRequest() => create();
+  factory PeerConnectionCloseRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PeerConnectionCloseRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PeerConnectionCloseRequest clone() => PeerConnectionCloseRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PeerConnectionCloseRequest copyWith(void Function(PeerConnectionCloseRequest) updates) => super.copyWith((message) => updates(message as PeerConnectionCloseRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PeerConnectionCloseRequest create() => PeerConnectionCloseRequest._();
+  PeerConnectionCloseRequest createEmptyInstance() => create();
+  static $pb.PbList<PeerConnectionCloseRequest> createRepeated() => $pb.PbList<PeerConnectionCloseRequest>();
+  @$core.pragma('dart2js:noInline')
+  static PeerConnectionCloseRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PeerConnectionCloseRequest>(create);
+  static PeerConnectionCloseRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get roomId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set roomId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoomId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoomId() => clearField(1);
+}
+
+class PeerConnectionCloseResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PeerConnectionCloseResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..hasRequiredFields = false
+  ;
+
+  PeerConnectionCloseResponse._() : super();
+  factory PeerConnectionCloseResponse() => create();
+  factory PeerConnectionCloseResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PeerConnectionCloseResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PeerConnectionCloseResponse clone() => PeerConnectionCloseResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PeerConnectionCloseResponse copyWith(void Function(PeerConnectionCloseResponse) updates) => super.copyWith((message) => updates(message as PeerConnectionCloseResponse)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PeerConnectionCloseResponse create() => PeerConnectionCloseResponse._();
+  PeerConnectionCloseResponse createEmptyInstance() => create();
+  static $pb.PbList<PeerConnectionCloseResponse> createRepeated() => $pb.PbList<PeerConnectionCloseResponse>();
+  @$core.pragma('dart2js:noInline')
+  static PeerConnectionCloseResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PeerConnectionCloseResponse>(create);
+  static PeerConnectionCloseResponse _defaultInstance;
+}
+
 class JoinRequest extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'JoinRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
     ..hasRequiredFields = false
@@ -49,6 +117,7 @@ class JoinResponse extends $pb.GeneratedMessage {
     ..aOM<MessageNotification>(2, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'messageNotification', subBuilder: MessageNotification.create)
     ..aOM<CallOfferNotification>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'callOfferNotification', subBuilder: CallOfferNotification.create)
     ..aOM<IceCandidateNotification>(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'iceCandidateNotification', subBuilder: IceCandidateNotification.create)
+    ..aOM<PeerConnectionCloseNotification>(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'peerConnectionCloseNotification', subBuilder: PeerConnectionCloseNotification.create)
     ..hasRequiredFields = false
   ;
 
@@ -116,6 +185,17 @@ class JoinResponse extends $pb.GeneratedMessage {
   void clearIceCandidateNotification() => clearField(4);
   @$pb.TagNumber(4)
   IceCandidateNotification ensureIceCandidateNotification() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  PeerConnectionCloseNotification get peerConnectionCloseNotification => $_getN(4);
+  @$pb.TagNumber(5)
+  set peerConnectionCloseNotification(PeerConnectionCloseNotification v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasPeerConnectionCloseNotification() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearPeerConnectionCloseNotification() => clearField(5);
+  @$pb.TagNumber(5)
+  PeerConnectionCloseNotification ensurePeerConnectionCloseNotification() => $_ensure(4);
 }
 
 class IceCandidateRequest extends $pb.GeneratedMessage {
@@ -296,6 +376,45 @@ class IceCandidateNotification extends $pb.GeneratedMessage {
   void clearRtcIceCandidate() => clearField(2);
   @$pb.TagNumber(2)
   RtcIceCandidate ensureRtcIceCandidate() => $_ensure(1);
+}
+
+class PeerConnectionCloseNotification extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'PeerConnectionCloseNotification', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
+    ..hasRequiredFields = false
+  ;
+
+  PeerConnectionCloseNotification._() : super();
+  factory PeerConnectionCloseNotification() => create();
+  factory PeerConnectionCloseNotification.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory PeerConnectionCloseNotification.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  PeerConnectionCloseNotification clone() => PeerConnectionCloseNotification()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  PeerConnectionCloseNotification copyWith(void Function(PeerConnectionCloseNotification) updates) => super.copyWith((message) => updates(message as PeerConnectionCloseNotification)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static PeerConnectionCloseNotification create() => PeerConnectionCloseNotification._();
+  PeerConnectionCloseNotification createEmptyInstance() => create();
+  static $pb.PbList<PeerConnectionCloseNotification> createRepeated() => $pb.PbList<PeerConnectionCloseNotification>();
+  @$core.pragma('dart2js:noInline')
+  static PeerConnectionCloseNotification getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<PeerConnectionCloseNotification>(create);
+  static PeerConnectionCloseNotification _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get roomId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set roomId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoomId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoomId() => clearField(1);
 }
 
 class RtcIceCandidate extends $pb.GeneratedMessage {

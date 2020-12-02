@@ -22,15 +22,7 @@ class _CallPageState extends State<CallPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: BlocConsumer<CallConnectingBloc, CallConnectingState>(
-        listener: (context, state) {
-          if (state.status == CallConnectingStatus.success) {
-            bool withVideo = state.localRenderer.srcObject
-                .getVideoTracks()
-                .any((track) => track.enabled);
-            context.read<CallBloc>().callStarted(state.roomId, withVideo);
-          }
-        },
+      body: BlocBuilder<CallConnectingBloc, CallConnectingState>(
         builder: (context, state) {
           return SafeArea(
             child: Stack(

@@ -8,6 +8,14 @@ abstract class CallConnectingEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class CallConnectingStartedEvent extends CallConnectingEvent {
+  CallConnectingStartedEvent(this.roomId);
+
+  final String roomId;
+  @override
+  List<Object> get props => [roomId];
+}
+
 class CallConnectingConnectionStateChanged extends CallConnectingEvent {
   CallConnectingConnectionStateChanged(this.roomId, this.connectionState);
 

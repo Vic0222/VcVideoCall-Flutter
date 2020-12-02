@@ -7,6 +7,7 @@ import 'package:vc_video_call/services/chat_service.dart';
 
 typedef PeerConnectionAnswerCallback = void Function(String roomId);
 typedef PeerConnectionAnswerConfirmCallback = void Function(String roomId);
+typedef PeerConnectionServerCloseCallback = void Function(String roomId);
 typedef PeerConnectionConnectionChangeCallback = void Function(
     RTCPeerConnectionState state, String roomId);
 
@@ -29,6 +30,10 @@ class WebRtcManager {
       if (event.type == JoinResponseType.IceCandidate) {
         receiveIceCandidate(event.iceCandidateNotification.roomId,
             event.iceCandidateNotification.rtcIceCandidate);
+      } else if (event.type == JoinResponseType.PeerConnectionClose) {
+        onPeerConnectionServerClose
+            ?.call(event.peerConnectionCloseNotification.roomId);
+        log("PeerConnectionClose recevied");
       }
     });
   }
@@ -41,6 +46,7 @@ class WebRtcManager {
   PeerConnectionAnswerCallback onPeerConnectionAnswer;
   PeerConnectionConnectionChangeCallback onPeerConnectionConnectionChange;
   PeerConnectionAnswerConfirmCallback onPeerConnectionAnswerConfirmCallback;
+  PeerConnectionServerCloseCallback onPeerConnectionServerClose;
 
   List<RTCIceCandidate> iceCandidates = new List<RTCIceCandidate>();
 
@@ -189,7 +195,7 @@ class WebRtcManager {
     return succeeded;
   }
 
-  Future close(String roomId) async {
+  Future close(String roomId, {bool fromServer = false}) async {
     disposeLocalRenderer();
     await peerConnections[roomId]?.close();
     await peerConnections[roomId]?.dispose();
@@ -199,6 +205,12 @@ class WebRtcManager {
     }
     if (remoteRenderers.containsKey(roomId)) {
       remoteRenderers.remove(roomId);
+    }
+    if (!fromServer) {
+      _chatService.sendPeerConnectionClose(roomId).catchError((error) {
+        //log error but don't do anything
+        log(error.toString());
+      });
     }
   }
 

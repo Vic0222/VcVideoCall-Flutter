@@ -30,7 +30,8 @@ class CallListeningBloc extends Bloc<CallListeningEvent, CallListeningState> {
     } else if (event is CallListningCallAccepted) {
       _joinResponseSubscription?.cancel();
       await acceptCall(event.withVideo);
-      yield CallListeningState.callInProgress(event.callOfferNotification);
+      yield CallListeningState.callInProgress(
+          event.callOfferNotification, event.withVideo);
     } else if (event is CallListningCallDeclined) {
       await declineCall();
       yield CallListeningState.failure("Call Declined");
