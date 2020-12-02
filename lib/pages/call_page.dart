@@ -71,6 +71,10 @@ class _CallPageState extends State<CallPage> {
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: BlocBuilder<CallBloc, CallState>(
+        buildWhen: (previous, current) =>
+            previous.status != current.status ||
+            previous.audioEnabled != current.audioEnabled ||
+            previous.videoEnabled != current.videoEnabled,
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.only(bottom: 32.0, left: 32, right: 32),
