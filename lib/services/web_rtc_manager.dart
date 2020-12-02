@@ -156,9 +156,11 @@ class WebRtcManager {
       _chatService.sendIceServer(roomId, iceCandidate.candidate,
           iceCandidate.sdpMid, iceCandidate.sdpMlineIndex);
     };
-    int i = 0;
+    peerConnection.onIceConnectionState = (rtcIceConnectionState) {
+      log("Ice connection change" + (rtcIceConnectionState?.toString() ?? ""));
+    };
+
     iceCandidates.forEach((candidate) {
-      log("ice candidate:" + (i++).toString());
       peerConnection.addCandidate(candidate);
     });
     iceCandidates.clear();
