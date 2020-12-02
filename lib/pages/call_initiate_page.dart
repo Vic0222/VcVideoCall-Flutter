@@ -12,15 +12,7 @@ class CallInitiatePage extends StatefulWidget {
 class _CallInitiatePageState extends State<CallInitiatePage> {
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CallInitiateBloc, CallInitiateState>(
-        listener: (context, state) {
-          if (state.status == CallInitiateStatus.success) {
-            Navigator.of(context).pushReplacementNamed("/call");
-          } else if (state.status == CallInitiateStatus.failure) {
-            Navigator.of(context).pop();
-          }
-        },
-        child: buildScaffold(context));
+    return buildScaffold(context);
   }
 
   Scaffold buildScaffold(BuildContext context) {

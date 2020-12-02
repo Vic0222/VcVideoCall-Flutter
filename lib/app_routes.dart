@@ -12,19 +12,30 @@ class AppRoutes {
   static Route<dynamic> onGenerateRoute(RouteSettings settings) {
     switch (settings.name) {
       case '/':
-        return MaterialPageRoute(builder: (context) => LoginPage());
+        return MaterialPageRoute(
+            builder: (context) => LoginPage(),
+            settings: RouteSettings(name: settings.name));
         break;
       case '/home':
-        return MaterialPageRoute(builder: (context) => HomePage());
+        return MaterialPageRoute(
+            builder: (context) => HomePage(),
+            settings: RouteSettings(name: settings.name));
       case '/chat_page':
         return MaterialPageRoute(
-            builder: (context) => ChatPage(settings.arguments));
+            builder: (context) => ChatPage(settings.arguments),
+            settings: RouteSettings(name: settings.name));
       case '/call_initiate':
-        return MaterialPageRoute(builder: (context) => CallInitiatePage());
+        return MaterialPageRoute(
+            builder: (context) => CallInitiatePage(),
+            settings: RouteSettings(name: settings.name));
       case '/call_received':
-        return MaterialPageRoute(builder: (context) => CallReceivedPage());
+        return MaterialPageRoute(
+            builder: (context) => CallReceivedPage(),
+            settings: RouteSettings(name: settings.name));
       case '/call':
-        return MaterialPageRoute(builder: (context) => CallPage());
+        return MaterialPageRoute(
+            builder: (context) => CallPage(),
+            settings: RouteSettings(name: settings.name));
       default:
         return null;
     }

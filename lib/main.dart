@@ -8,6 +8,7 @@ import 'package:vc_video_call/blocs/call/call_state.dart';
 import 'package:vc_video_call/blocs/call_connecting/call_connecting_bloc.dart';
 import 'package:vc_video_call/blocs/call_connecting/call_connecting_state.dart';
 import 'package:vc_video_call/blocs/call_initiate/call_initiate_bloc.dart';
+import 'package:vc_video_call/blocs/call_initiate/call_initiate_state.dart';
 import 'package:vc_video_call/blocs/call_listening/call_listening_bloc.dart';
 import 'package:vc_video_call/blocs/call_listening/call_listening_state.dart';
 import 'package:vc_video_call/blocs/firebase_initialize/firebase_initialize_bloc.dart';
@@ -158,21 +159,32 @@ class _MyAppState extends State<MyApp> {
                 }
               },
             ),
+            BlocListener<CallInitiateBloc, CallInitiateState>(
+              listener: (context, state) {
+                if (state.status == CallInitiateStatus.success) {
+                  Navigator.of(context).pushReplacementNamed("/call");
+                } else if (state.status == CallInitiateStatus.failure) {
+                  Navigator.of(context).pop();
+                }
+              },
+            ),
             BlocListener<CallListeningBloc, CallListeningState>(
               listener: (context, state) {
                 if (state.status == CallListeningStatus.ringingInProgress) {
                   AppRoutes.navigatorKey.currentState
                       .pushNamed("/call_received");
                 } else if (state.status == CallListeningStatus.callInProgress) {
-                  AppRoutes.navigatorKey.currentState
-                      .pushReplacementNamed("/call");
+                  AppRoutes.navigatorKey.currentState.pushNamed("/call");
                 }
               },
             ),
             BlocListener<CallConnectingBloc, CallConnectingState>(
               listener: (context, state) {
                 if (state.status == CallConnectingStatus.failure) {
-                  AppRoutes.navigatorKey.currentState.pop();
+                  AppRoutes.navigatorKey.currentState.popUntil((route) {
+                    return route.settings.name == "/home" ||
+                        route.settings.name == "/chat_page";
+                  });
                 }
               },
             ),
@@ -180,7 +192,10 @@ class _MyAppState extends State<MyApp> {
               listener: (context, state) {
                 if (state.status == CallStatus.done ||
                     state.status == CallStatus.failure) {
-                  AppRoutes.navigatorKey.currentState.pop();
+                  AppRoutes.navigatorKey.currentState.popUntil((route) {
+                    return route.settings.name == "/home" ||
+                        route.settings.name == "/chat_page";
+                  });
                 }
               },
             ),

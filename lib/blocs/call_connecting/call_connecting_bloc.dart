@@ -31,6 +31,13 @@ class CallConnectingBloc
           );
 
           break;
+        case RTCPeerConnectionState.RTCPeerConnectionStateDisconnected:
+          yield CallConnectingState.failure(
+            "Peer connection disconnected.",
+            _webRtcManager.localRenderer,
+          );
+
+          break;
         default:
       }
     } else {
