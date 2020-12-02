@@ -39,8 +39,8 @@ class CallState extends Equatable {
           peerConnection: peerConnection,
           localRenderer: localRenderer,
           remoteRenderer: remoteRenderer,
-          videoEnabled: audioEnabled,
-          audioEnabled: videoEnabled,
+          videoEnabled: videoEnabled,
+          audioEnabled: audioEnabled,
         );
 
   CallState.done(String roomId, RTCPeerConnection peerConnection)
@@ -60,6 +60,6 @@ class CallState extends Equatable {
         peerConnection,
         roomId,
         audioEnabled,
-        audioEnabled
+        videoEnabled
       ];
 }

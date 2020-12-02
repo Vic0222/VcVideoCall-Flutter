@@ -4,16 +4,22 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vc_video_call/blocs/call/call_event.dart';
 import 'package:vc_video_call/blocs/call/call_state.dart';
+import 'package:vc_video_call/blocs/models/peer_connection_close_event.dart';
 import 'package:vc_video_call/services/web_rtc_manager.dart';
 
 class CallBloc extends Bloc<CallEvent, CallState> {
   final WebRtcManager _webRtcManager;
+  StreamSubscription<PeerConnectionCloseEvent>
+      onPeerConnectionCloseSubscription;
 
   CallBloc(this._webRtcManager) : super(CallState.initial()) {
-    _webRtcManager.onPeerConnectionServerClose = (roomId) {
-      add(CallEndedFomServerEvent(
-          roomId, _webRtcManager.peerConnections[roomId]));
-    };
+    onPeerConnectionCloseSubscription =
+        _webRtcManager.onPeerConnectionCloseStream.stream.listen((event) {
+      if (event.fromServer) {
+        add(CallEndedFomServerEvent(
+            event.roomId, _webRtcManager.peerConnections[event.roomId]));
+      }
+    });
   }
 
   @override
@@ -72,6 +78,7 @@ class CallBloc extends Bloc<CallEvent, CallState> {
   @override
   Future close() async {
     super.close();
+    onPeerConnectionCloseSubscription?.cancel();
   }
 
   void callStarted(String roomId, bool withVideo) {

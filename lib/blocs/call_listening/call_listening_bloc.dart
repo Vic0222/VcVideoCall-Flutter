@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vc_video_call/blocs/call_listening/call_listening_event.dart';
 import 'package:vc_video_call/blocs/call_listening/call_listening_state.dart';
+import 'package:vc_video_call/blocs/models/peer_connection_close_event.dart';
 import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 import 'package:vc_video_call/services/chat_service.dart';
 import 'package:vc_video_call/services/web_rtc_manager.dart';
@@ -13,8 +14,16 @@ class CallListeningBloc extends Bloc<CallListeningEvent, CallListeningState> {
 
   StreamSubscription<JoinResponse> _joinResponseSubscription;
 
+  StreamSubscription<PeerConnectionCloseEvent>
+      onPeerConnectionCloseSubscription;
+
   CallListeningBloc(this._webRtcManager, this._chatService)
-      : super(CallListeningState.initial());
+      : super(CallListeningState.initial()) {
+    onPeerConnectionCloseSubscription =
+        _webRtcManager.onPeerConnectionCloseStream.stream.listen((event) {
+      add(CallListningStarted());
+    });
+  }
 
   @override
   Stream<CallListeningState> mapEventToState(CallListeningEvent event) async* {

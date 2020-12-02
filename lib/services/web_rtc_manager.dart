@@ -2,12 +2,12 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flutter_webrtc/flutter_webrtc.dart';
+import 'package:vc_video_call/blocs/models/peer_connection_close_event.dart';
 import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 import 'package:vc_video_call/services/chat_service.dart';
 
 typedef PeerConnectionAnswerCallback = void Function(String roomId);
 typedef PeerConnectionAnswerConfirmCallback = void Function(String roomId);
-typedef PeerConnectionServerCloseCallback = void Function(String roomId);
 typedef PeerConnectionConnectionChangeCallback = void Function(
     RTCPeerConnectionState state, String roomId);
 
@@ -31,8 +31,9 @@ class WebRtcManager {
         receiveIceCandidate(event.iceCandidateNotification.roomId,
             event.iceCandidateNotification.rtcIceCandidate);
       } else if (event.type == JoinResponseType.PeerConnectionClose) {
-        onPeerConnectionServerClose
-            ?.call(event.peerConnectionCloseNotification.roomId);
+        onPeerConnectionCloseStream.add(PeerConnectionCloseEvent(
+            event.peerConnectionCloseNotification.roomId,
+            fromServer: true));
         log("PeerConnectionClose recevied");
       }
     });
@@ -46,7 +47,8 @@ class WebRtcManager {
   PeerConnectionAnswerCallback onPeerConnectionAnswer;
   PeerConnectionConnectionChangeCallback onPeerConnectionConnectionChange;
   PeerConnectionAnswerConfirmCallback onPeerConnectionAnswerConfirmCallback;
-  PeerConnectionServerCloseCallback onPeerConnectionServerClose;
+  StreamController<PeerConnectionCloseEvent> onPeerConnectionCloseStream =
+      StreamController<PeerConnectionCloseEvent>.broadcast();
 
   List<RTCIceCandidate> iceCandidates = new List<RTCIceCandidate>();
 
@@ -206,6 +208,8 @@ class WebRtcManager {
     if (remoteRenderers.containsKey(roomId)) {
       remoteRenderers.remove(roomId);
     }
+    onPeerConnectionCloseStream
+        .add(PeerConnectionCloseEvent(roomId, fromServer: fromServer));
     if (!fromServer) {
       _chatService.sendPeerConnectionClose(roomId).catchError((error) {
         //log error but don't do anything
