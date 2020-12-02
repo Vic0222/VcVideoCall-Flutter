@@ -26,9 +26,13 @@ class CallListeningBloc extends Bloc<CallListeningEvent, CallListeningState> {
         yield CallListeningState.failure(e.toString());
       }
     } else if (event is CallListningCallReceived) {
-      yield CallListeningState.ringingInProgress(event.callOfferNotification);
+      if (state.status == CallListeningStatus.ringingInProgress ||
+          state.status == CallListeningStatus.callInProgress) {
+        declineCall();
+      } else {
+        yield CallListeningState.ringingInProgress(event.callOfferNotification);
+      }
     } else if (event is CallListningCallAccepted) {
-      _joinResponseSubscription?.cancel();
       await acceptCall(event.withVideo);
       yield CallListeningState.callInProgress(
           event.callOfferNotification, event.withVideo);
