@@ -6,6 +6,7 @@ enum CallListeningStatus {
   listeningInProgress,
   ringingInProgress,
   callInProgress,
+  decline,
   failure
 }
 
@@ -39,6 +40,12 @@ class CallListeningState extends Equatable {
           status: CallListeningStatus.callInProgress,
           callOfferNotification: callOfferNotification,
           withVideo: withVideo,
+        );
+
+  CallListeningState.decline(CallOfferNotification callOfferNotification)
+      : this._(
+          status: CallListeningStatus.decline,
+          callOfferNotification: callOfferNotification,
         );
 
   CallListeningState.failure(String errorMessage)

@@ -135,7 +135,14 @@ class ChatService {
   }) {
     var callAnswerRequest = CallAnswerRequest();
     callAnswerRequest.roomId = roomId;
-    callAnswerRequest.rtcSessionDescription = answer;
+    if (answer == null) {
+      callAnswerRequest.rtcSessionDescription = RtcSessionDescription();
+      callAnswerRequest.rtcSessionDescription.sdp = "";
+      callAnswerRequest.rtcSessionDescription.type = "";
+    } else {
+      callAnswerRequest.rtcSessionDescription = answer;
+    }
+
     if (declined) {
       callAnswerRequest.status = CallOfferStatus.Rejected;
     } else {

@@ -38,7 +38,7 @@ class CallListeningBloc extends Bloc<CallListeningEvent, CallListeningState> {
           event.callOfferNotification, event.withVideo);
     } else if (event is CallListningCallDeclined) {
       await declineCall();
-      yield CallListeningState.failure("Call Declined");
+      yield CallListeningState.decline(event.callOfferNotification);
     } else {
       yield CallListeningState.initial();
     }

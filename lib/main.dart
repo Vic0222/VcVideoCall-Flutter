@@ -184,6 +184,8 @@ class _MyAppState extends State<MyApp> {
                         state.withVideo,
                       );
                   AppRoutes.navigatorKey.currentState.pushNamed("/call");
+                } else if (state.status == CallListeningStatus.decline) {
+                  popUntilHomeOrChatPage();
                 }
               },
             ),
