@@ -197,7 +197,7 @@ class WebRtcManager {
     return succeeded;
   }
 
-  Future close(String roomId, {bool fromServer = false}) async {
+  Future close(String roomId, {bool shouldCallServer = false}) async {
     disposeLocalRenderer();
     await peerConnections[roomId]?.close();
     await peerConnections[roomId]?.dispose();
@@ -209,8 +209,8 @@ class WebRtcManager {
       remoteRenderers.remove(roomId);
     }
     onPeerConnectionCloseStream
-        .add(PeerConnectionCloseEvent(roomId, fromServer: fromServer));
-    if (!fromServer) {
+        .add(PeerConnectionCloseEvent(roomId, fromServer: false));
+    if (shouldCallServer) {
       _chatService.sendPeerConnectionClose(roomId).catchError((error) {
         //log error but don't do anything
         log(error.toString());
