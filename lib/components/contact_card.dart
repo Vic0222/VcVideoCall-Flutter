@@ -45,34 +45,45 @@ class ContactCard extends StatelessWidget {
                   ),
                 ),
                 Flexible(
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          room.name,
-                          softWrap: false,
-                          overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.headline6,
-                          textAlign: TextAlign.left,
-                        ),
-                        Container(
-                          width: MediaQuery.of(context).size.width - 100,
-                          child: Text(
-                            room.lastMessage,
-                            softWrap: false,
-                            overflow: TextOverflow.ellipsis,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText2
-                                .copyWith(
-                                    color: Theme.of(context).disabledColor),
-                            textAlign: TextAlign.left,
+                  child: Container(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            flex: 0,
+                            child: Container(
+                              padding: const EdgeInsets.only(bottom: 8),
+                              child: Text(
+                                room.name,
+                                softWrap: false,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context).textTheme.headline6,
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
                           ),
-                        ),
-                      ],
+                          Flexible(
+                            flex: 0,
+                            child: Container(
+                              child: Text(
+                                room.lastMessage,
+                                softWrap: false,
+                                overflow: TextOverflow.ellipsis,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2
+                                    .copyWith(
+                                        color: Theme.of(context).disabledColor),
+                                textAlign: TextAlign.left,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 )
