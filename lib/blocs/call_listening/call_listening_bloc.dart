@@ -77,6 +77,7 @@ class CallListeningBloc extends Bloc<CallListeningEvent, CallListeningState> {
   Future close() async {
     super.close();
     _joinResponseSubscription?.cancel();
+    onPeerConnectionCloseSubscription?.cancel();
   }
 
   Future acceptCall(bool withVideo) async {

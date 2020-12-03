@@ -162,6 +162,7 @@ class _MyAppState extends State<MyApp> {
             BlocListener<CallInitiateBloc, CallInitiateState>(
               listener: (context, state) {
                 if (state.status == CallInitiateStatus.success) {
+                  context.read<CallConnectingBloc>().reinitialize();
                   context
                       .read<CallBloc>()
                       .callStarted(state.roomId, state.withVideo);
@@ -179,11 +180,14 @@ class _MyAppState extends State<MyApp> {
                   AppRoutes.navigatorKey.currentState
                       .pushNamed("/call_received");
                 } else if (state.status == CallListeningStatus.callInProgress) {
+                  context.read<CallConnectingBloc>().reinitialize();
                   context.read<CallBloc>().callStarted(
                         state.callOfferNotification.roomId,
                         state.withVideo,
                       );
-                  AppRoutes.navigatorKey.currentState.pushNamed("/call");
+
+                  AppRoutes.navigatorKey.currentState
+                      .pushReplacementNamed("/call");
                 } else if (state.status == CallListeningStatus.decline) {
                   popUntilHomeOrChatPage();
                 }

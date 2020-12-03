@@ -40,13 +40,12 @@ class CallBloc extends Bloc<CallEvent, CallState> {
         log(e.toString());
       }
     } else if (event is CallEndedFomServerEvent) {
+      yield CallState.done(event.roomId, event.peerConnection);
       try {
         _webRtcManager.close(event.roomId, shouldCallServer: false);
       } catch (e) {
         log(e.toString());
       }
-
-      yield CallState.done(event.roomId, event.peerConnection);
     } else if (event is CallAudioToggledEvent) {
       if (state.status == CallStatus.inProgress) {
         bool audioEnabled = _onAudioToggled();
@@ -98,5 +97,12 @@ class CallBloc extends Bloc<CallEvent, CallState> {
       track.enabled = videoEnabled;
     });
     return videoEnabled;
+  }
+
+  Future disposeRenderers() async {
+    await _webRtcManager.disposeLocalRenderer();
+    if (state.roomId?.isNotEmpty ?? false) {
+      await _webRtcManager.disposeRemoteRenderer(state.roomId);
+    }
   }
 }

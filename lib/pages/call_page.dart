@@ -6,7 +6,6 @@ import 'package:vc_video_call/blocs/call/call_event.dart';
 import 'package:vc_video_call/blocs/call/call_state.dart';
 import 'package:vc_video_call/blocs/call_connecting/call_connecting_bloc.dart';
 import 'package:vc_video_call/blocs/call_connecting/call_connecting_state.dart';
-import 'package:vc_video_call/services/web_rtc_manager.dart';
 
 class CallPage extends StatefulWidget {
   @override
@@ -14,9 +13,18 @@ class CallPage extends StatefulWidget {
 }
 
 class _CallPageState extends State<CallPage> {
+  CallBloc callBloc;
+
   @override
   void initState() {
     super.initState();
+    callBloc = context.read<CallBloc>();
+  }
+
+  @override
+  Future dispose() async {
+    super.dispose();
+    await callBloc?.disposeRenderers();
   }
 
   @override
@@ -58,9 +66,10 @@ class _CallPageState extends State<CallPage> {
                     margin: EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 0.0),
                     width: MediaQuery.of(context).size.width * 0.3,
                     height: MediaQuery.of(context).size.height * 0.3,
-                    child: RTCVideoView(
-                        RepositoryProvider.of<WebRtcManager>(context)
-                            .localRenderer),
+                    child: state.status == CallConnectingStatus.ready ||
+                            state.status == CallConnectingStatus.success
+                        ? RTCVideoView(state.localRenderer)
+                        : Center(child: CircularProgressIndicator()),
                     decoration: BoxDecoration(color: Colors.black54),
                   ),
                 ),

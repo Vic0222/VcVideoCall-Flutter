@@ -105,7 +105,7 @@ class WebRtcManager {
   };
 
   Future initLocalRenderer(bool withVideo) async {
-    disposeLocalRenderer();
+    await disposeLocalRenderer();
     if (localRenderer == null) {
       localRenderer = RTCVideoRenderer();
     }
@@ -123,19 +123,18 @@ class WebRtcManager {
         'optional': [],
       }
     };
-    await navigator.getUserMedia(mediaConstraints).then((stream) {
-      if (!withVideo) {
-        stream.getVideoTracks().forEach((track) {
-          track.enabled = false;
-        });
-      }
-      localRenderer.srcObject = stream;
-    });
+    var stream = await navigator.getUserMedia(mediaConstraints);
+    if (!withVideo) {
+      stream.getVideoTracks().forEach((track) {
+        track.enabled = false;
+      });
+    }
+    localRenderer.srcObject = stream;
   }
 
-  void disposeLocalRenderer() {
+  Future disposeLocalRenderer() async {
     localRenderer?.srcObject = null;
-    localRenderer?.dispose();
+    await localRenderer?.dispose();
     localRenderer = null;
   }
 
@@ -143,6 +142,7 @@ class WebRtcManager {
     String roomId,
     RTCPeerConnection peerConnection,
   ) async {
+    await disposeRemoteRenderer(roomId);
     var remoteRenderer = RTCVideoRenderer();
     await remoteRenderer.initialize();
 
@@ -198,23 +198,27 @@ class WebRtcManager {
   }
 
   Future close(String roomId, {bool shouldCallServer = false}) async {
-    disposeLocalRenderer();
-    await peerConnections[roomId]?.close();
-    await peerConnections[roomId]?.dispose();
-    remoteRenderers[roomId]?.dispose();
-    if (peerConnections.containsKey(roomId)) {
-      peerConnections.remove(roomId);
-    }
-    if (remoteRenderers.containsKey(roomId)) {
-      remoteRenderers.remove(roomId);
-    }
+    //send close signal to prepare ui 1st.
     onPeerConnectionCloseStream
         .add(PeerConnectionCloseEvent(roomId, fromServer: false));
+    if (peerConnections.containsKey(roomId)) {
+      peerConnections.remove(roomId);
+      await peerConnections[roomId]?.close();
+      await peerConnections[roomId]?.dispose();
+    }
+
     if (shouldCallServer) {
       _chatService.sendPeerConnectionClose(roomId).catchError((error) {
         //log error but don't do anything
         log(error.toString());
       });
+    }
+  }
+
+  Future disposeRemoteRenderer(String roomId) async {
+    if (remoteRenderers.containsKey(roomId)) {
+      remoteRenderers.remove(roomId);
+      await remoteRenderers[roomId]?.dispose();
     }
   }
 

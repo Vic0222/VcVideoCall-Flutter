@@ -1,7 +1,14 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_webrtc/flutter_webrtc.dart';
 
-enum CallConnectingStatus { initial, inProgress, success, failure, close }
+enum CallConnectingStatus {
+  initial,
+  ready,
+  inProgress,
+  success,
+  failure,
+  close,
+}
 
 class CallConnectingState extends Equatable {
   final CallConnectingStatus status;
@@ -18,8 +25,11 @@ class CallConnectingState extends Equatable {
     this.errorMessage = "",
   });
 
-  CallConnectingState.initial(RTCVideoRenderer localRenderer)
-      : this._(localRenderer: localRenderer);
+  CallConnectingState.initial() : this._();
+
+  CallConnectingState.ready(RTCVideoRenderer localRenderer)
+      : this._(
+            status: CallConnectingStatus.ready, localRenderer: localRenderer);
 
   CallConnectingState.inProgress(String roomId, RTCVideoRenderer localRenderer)
       : this._(
