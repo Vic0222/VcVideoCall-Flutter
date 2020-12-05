@@ -986,6 +986,7 @@ class Room extends $pb.GeneratedMessage {
     ..e<RoomType>(3, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: RoomType.Unknown, valueOf: RoomType.valueOf, enumValues: RoomType.values)
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lastMessage')
     ..aInt64(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lastMessageDatetime')
+    ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isOnline')
     ..hasRequiredFields = false
   ;
 
@@ -1056,6 +1057,15 @@ class Room extends $pb.GeneratedMessage {
   $core.bool hasLastMessageDatetime() => $_has(4);
   @$pb.TagNumber(5)
   void clearLastMessageDatetime() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.bool get isOnline => $_getBF(5);
+  @$pb.TagNumber(6)
+  set isOnline($core.bool v) { $_setBool(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasIsOnline() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearIsOnline() => clearField(6);
 }
 
 class GetMessagesRequest extends $pb.GeneratedMessage {

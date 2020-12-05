@@ -1,1 +1,2 @@
+docker run -v ${pwd}:/working_directory -it --rm vic0111/dart-protobuf bash
 protoc --dart_out=grpc:lib/grpc/generated -I lib/protos lib/protos/chat.proto
