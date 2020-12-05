@@ -1,6 +1,8 @@
 import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
+import 'package:vc_video_call/components/default_circle_avatar.dart';
+import 'package:vc_video_call/components/online_indicator.dart';
 import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 
 class ContactCard extends StatelessWidget {
@@ -40,8 +42,10 @@ class ContactCard extends StatelessWidget {
                 SizedBox(
                   height: 72,
                   width: 72,
-                  child: Image.asset(
-                    "assets/images/profile-pic-placeholder-card.png",
+                  child: DefaultCircleAvatar(
+                    isOnline: room.isOnline,
+                    image: AssetImage(
+                        "assets/images/profile-pic-placeholder-card.png"),
                   ),
                 ),
                 Flexible(

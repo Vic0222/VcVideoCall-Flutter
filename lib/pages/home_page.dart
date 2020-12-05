@@ -11,6 +11,7 @@ import 'package:vc_video_call/blocs/profilepic/profilepic_event.dart';
 import 'package:vc_video_call/blocs/profilepic/profilepic_state.dart';
 import 'package:vc_video_call/components/connection_status_indicator.dart';
 import 'package:vc_video_call/components/contact_card.dart';
+import 'package:vc_video_call/components/default_circle_avatar.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -49,18 +50,9 @@ class _HomePageState extends State<HomePage> {
             }
             switch (state.status) {
               case GetProfilePicStatus.success:
-                return Container(
-                  height: 40,
-                  width: 40,
-                  decoration: new BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: new DecorationImage(
-                      fit: BoxFit.fill,
-                      image: new NetworkImage(
-                        state.photoURL,
-                      ),
-                    ),
-                  ),
+                return DefaultCircleAvatar(
+                  radius: 20,
+                  image: NetworkImage(state.photoURL),
                 );
                 break;
               default:

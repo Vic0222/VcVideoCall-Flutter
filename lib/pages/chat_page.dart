@@ -7,6 +7,7 @@ import 'package:vc_video_call/blocs/get_messages/get_messages_state.dart';
 import 'package:vc_video_call/blocs/send_message_bloc/send_message_bloc.dart';
 import 'package:vc_video_call/blocs/send_message_bloc/send_message_state.dart';
 import 'package:vc_video_call/components/connection_status_indicator.dart';
+import 'package:vc_video_call/components/default_circle_avatar.dart';
 import 'package:vc_video_call/components/receiver_message_card.dart';
 import 'package:vc_video_call/components/sender_message_card.dart';
 import 'package:vc_video_call/custom_classes/custom_color_scheme.dart';
@@ -78,7 +79,12 @@ class _ChatPageState extends State<ChatPage> {
         ],
         title: Row(
           children: [
-            Image.asset("assets/images/profile-pic-placeholder.png"),
+            DefaultCircleAvatar(
+              isOnline: widget.room.isOnline,
+              radius: 20,
+              image:
+                  AssetImage("assets/images/profile-pic-placeholder-card.png"),
+            ),
             Flexible(
               fit: FlexFit.tight,
               child: Padding(
