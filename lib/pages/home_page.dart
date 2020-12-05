@@ -91,12 +91,15 @@ class _HomePageState extends State<HomePage> {
                   builder: (context, state) {
                     switch (state.status) {
                       case GetRoomsStatus.success:
-                        return ListView.builder(
-                          itemCount: state.getRoomsResponse.rooms.length,
-                          itemBuilder: (context, index) {
-                            return ContactCard(
-                                state.getRoomsResponse.rooms[index]);
-                          },
+                        return RefreshIndicator(
+                          onRefresh: _onRefresh,
+                          child: ListView.builder(
+                            itemCount: state.getRoomsResponse.rooms.length,
+                            itemBuilder: (context, index) {
+                              return ContactCard(
+                                  state.getRoomsResponse.rooms[index]);
+                            },
+                          ),
                         );
                         break;
                       default:
@@ -112,5 +115,9 @@ class _HomePageState extends State<HomePage> {
         },
       ),
     );
+  }
+
+  Future<void> _onRefresh() async {
+    BlocProvider.of<GetRoomsBloc>(context).startGetRooms();
   }
 }
