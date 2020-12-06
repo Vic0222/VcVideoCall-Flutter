@@ -183,29 +183,31 @@ class _ChatPageState extends State<ChatPage> {
             ),
           ),
           Container(
-            height: 56,
             color: Theme.of(context).primaryColor,
             padding: EdgeInsets.all(8),
             child: Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Expanded(
                   child: Container(
-                    height: 40,
                     decoration: BoxDecoration(
                       color: Theme.of(context).backgroundColor,
                       borderRadius: BorderRadius.all(
                         Radius.circular(16),
                       ),
                     ),
-                    padding: EdgeInsets.all(8),
-                    child: Center(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                    child: Container(
                       child: TextField(
+                        keyboardType: TextInputType.multiline,
+                        maxLines: null,
                         onChanged: (text) {
                           setState(() {
                             textfieldEnabled = text?.isNotEmpty ?? false;
                           });
                         },
                         decoration: InputDecoration(
+                          contentPadding: EdgeInsets.all(0),
                           border: InputBorder.none,
                           hintText: "Aa",
                           hintStyle:
@@ -245,7 +247,7 @@ class _ChatPageState extends State<ChatPage> {
                               )
                             : CircularProgressIndicator();
                       }),
-                )
+                ),
               ],
             ),
           )
