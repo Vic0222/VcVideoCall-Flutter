@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_parsed_text/flutter_parsed_text.dart';
+import 'package:vc_video_call/components/message_container.dart';
 import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 
 class ReceiverMessageCard extends StatelessWidget {
@@ -23,15 +25,9 @@ class ReceiverMessageCard extends StatelessWidget {
             bottomRight: Radius.circular(8),
           ),
         ),
-        child: Container(
-          constraints: BoxConstraints(
-            minHeight: 34,
-          ),
-          padding: EdgeInsets.all(8),
-          child: Text(
-            message.messageBody,
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
+        child: MessageContainer(
+          message: message.messageBody,
+          textStyle: Theme.of(context).textTheme.bodyText1,
         ),
       ),
     );

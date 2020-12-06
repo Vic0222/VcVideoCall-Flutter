@@ -23,22 +23,18 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  flutter_signin_button: ^1.1.0
-  firebase_core: ^0.5.2
-  firebase_auth: ^0.18.3
-  google_sign_in: ^4.5.6
-  flutter_bloc: ^6.1.1
-  equatable: ^1.2.3
-  protobuf: ^1.1.0
-  grpc: ^2.8.0
-  fixnum: ^0.10.11
-  flutter_webrtc: ^0.5.7
-
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.0
+  equatable: ^1.2.3
+  firebase_auth: ^0.18.3
+  firebase_core: ^0.5.2
+  fixnum: ^0.10.11
+  flutter_bloc: ^6.1.1
+  flutter_parsed_text: ^1.2.5
+  flutter_signin_button: ^1.1.0
+  flutter_webrtc: ^0.5.7
+  google_sign_in: ^4.5.6
+  grpc: ^2.8.0
+  protobuf: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -46,7 +42,6 @@ dev_dependencies:
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
-
 # The following section is specific to Flutter.
 flutter:
 
@@ -60,13 +55,10 @@ flutter:
     - assets/images/logo.png
     - assets/images/profile-pic-placeholder.png
     - assets/images/profile-pic-placeholder-card.png
-
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
-
   # For details regarding adding assets from package dependencies, see
   # https://flutter.dev/assets-and-images/#from-packages
-
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

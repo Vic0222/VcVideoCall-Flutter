@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 
+import 'message_container.dart';
+
 class SenderMessageCard extends StatelessWidget {
   const SenderMessageCard(
     this.message, {
@@ -24,18 +26,11 @@ class SenderMessageCard extends StatelessWidget {
             bottomRight: Radius.circular(0),
           ),
         ),
-        child: Container(
-          constraints: BoxConstraints(
-            minHeight: 34,
-          ),
-          padding: EdgeInsets.all(8),
-          child: Text(
-            message.messageBody,
-            style: Theme.of(context)
-                .textTheme
-                .bodyText1
-                .copyWith(color: Theme.of(context).colorScheme.onPrimary),
-          ),
+        child: MessageContainer(
+          message: message.messageBody,
+          textStyle: Theme.of(context).textTheme.bodyText1.copyWith(
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
         ),
       ),
     );
