@@ -198,6 +198,7 @@ const Room$json = const {
     const {'1': 'last_message', '3': 4, '4': 1, '5': 9, '10': 'lastMessage'},
     const {'1': 'last_message_datetime', '3': 5, '4': 1, '5': 3, '10': 'lastMessageDatetime'},
     const {'1': 'is_online', '3': 6, '4': 1, '5': 8, '10': 'isOnline'},
+    const {'1': 'photo_url', '3': 7, '4': 1, '5': 9, '10': 'photoUrl'},
   ],
 };
 

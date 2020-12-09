@@ -82,8 +82,9 @@ class _ChatPageState extends State<ChatPage> {
             DefaultCircleAvatar(
               isOnline: widget.room.isOnline,
               radius: 20,
-              image:
-                  AssetImage("assets/images/profile-pic-placeholder-card.png"),
+              image: widget.room.photoUrl?.isEmpty ?? true
+                  ? AssetImage("assets/images/profile-pic-placeholder-card.png")
+                  : NetworkImage(widget.room.photoUrl),
             ),
             Flexible(
               fit: FlexFit.tight,

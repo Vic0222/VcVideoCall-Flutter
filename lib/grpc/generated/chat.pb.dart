@@ -987,6 +987,7 @@ class Room extends $pb.GeneratedMessage {
     ..aOS(4, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lastMessage')
     ..aInt64(5, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'lastMessageDatetime')
     ..aOB(6, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'isOnline')
+    ..aOS(7, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'photoUrl')
     ..hasRequiredFields = false
   ;
 
@@ -1066,6 +1067,15 @@ class Room extends $pb.GeneratedMessage {
   $core.bool hasIsOnline() => $_has(5);
   @$pb.TagNumber(6)
   void clearIsOnline() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get photoUrl => $_getSZ(6);
+  @$pb.TagNumber(7)
+  set photoUrl($core.String v) { $_setString(6, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasPhotoUrl() => $_has(6);
+  @$pb.TagNumber(7)
+  void clearPhotoUrl() => clearField(7);
 }
 
 class GetMessagesRequest extends $pb.GeneratedMessage {

@@ -44,8 +44,10 @@ class ContactCard extends StatelessWidget {
                   width: 72,
                   child: DefaultCircleAvatar(
                     isOnline: room.isOnline,
-                    image: AssetImage(
-                        "assets/images/profile-pic-placeholder-card.png"),
+                    image: room.photoUrl?.isEmpty ?? true
+                        ? AssetImage(
+                            "assets/images/profile-pic-placeholder-card.png")
+                        : NetworkImage(room.photoUrl),
                   ),
                 ),
                 Flexible(
