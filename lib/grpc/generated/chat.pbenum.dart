@@ -31,12 +31,12 @@ class JoinResponseType extends $pb.ProtobufEnum {
 }
 
 class CallOfferStatus extends $pb.ProtobufEnum {
-  static const CallOfferStatus Rejected = CallOfferStatus._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Rejected');
-  static const CallOfferStatus Accepted = CallOfferStatus._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Accepted');
+  static const CallOfferStatus CallOfferRejected = CallOfferStatus._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CallOfferRejected');
+  static const CallOfferStatus CallOfferAccepted = CallOfferStatus._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CallOfferAccepted');
 
   static const $core.List<CallOfferStatus> values = <CallOfferStatus> [
-    Rejected,
-    Accepted,
+    CallOfferRejected,
+    CallOfferAccepted,
   ];
 
   static final $core.Map<$core.int, CallOfferStatus> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -46,12 +46,12 @@ class CallOfferStatus extends $pb.ProtobufEnum {
 }
 
 class CallSignalType extends $pb.ProtobufEnum {
-  static const CallSignalType Offer = CallSignalType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Offer');
-  static const CallSignalType Answer = CallSignalType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Answer');
+  static const CallSignalType CallSignalOffer = CallSignalType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CallSignalOffer');
+  static const CallSignalType CallSignalAnswer = CallSignalType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'CallSignalAnswer');
 
   static const $core.List<CallSignalType> values = <CallSignalType> [
-    Offer,
-    Answer,
+    CallSignalOffer,
+    CallSignalAnswer,
   ];
 
   static final $core.Map<$core.int, CallSignalType> _byValue = $pb.ProtobufEnum.initByValue(values);
@@ -60,15 +60,49 @@ class CallSignalType extends $pb.ProtobufEnum {
   const CallSignalType._($core.int v, $core.String n) : super(v, n);
 }
 
+class GetRoomType extends $pb.ProtobufEnum {
+  static const GetRoomType GetRoomTypeFromUserIdPrivate = GetRoomType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GetRoomTypeFromUserIdPrivate');
+  static const GetRoomType GetRoomTypeFromRoomId = GetRoomType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'GetRoomTypeFromRoomId');
+
+  static const $core.List<GetRoomType> values = <GetRoomType> [
+    GetRoomTypeFromUserIdPrivate,
+    GetRoomTypeFromRoomId,
+  ];
+
+  static final $core.Map<$core.int, GetRoomType> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static GetRoomType valueOf($core.int value) => _byValue[value];
+
+  const GetRoomType._($core.int v, $core.String n) : super(v, n);
+}
+
+class RoomStatus extends $pb.ProtobufEnum {
+  static const RoomStatus RoomNotExisting = RoomStatus._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RoomNotExisting');
+  static const RoomStatus RoomInvitePending = RoomStatus._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RoomInvitePending');
+  static const RoomStatus RoomAcceptPending = RoomStatus._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RoomAcceptPending');
+  static const RoomStatus RoomAccepted = RoomStatus._(3, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RoomAccepted');
+
+  static const $core.List<RoomStatus> values = <RoomStatus> [
+    RoomNotExisting,
+    RoomInvitePending,
+    RoomAcceptPending,
+    RoomAccepted,
+  ];
+
+  static final $core.Map<$core.int, RoomStatus> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static RoomStatus valueOf($core.int value) => _byValue[value];
+
+  const RoomStatus._($core.int v, $core.String n) : super(v, n);
+}
+
 class RoomType extends $pb.ProtobufEnum {
-  static const RoomType Unknown = RoomType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Unknown');
-  static const RoomType Private = RoomType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Private');
-  static const RoomType Group = RoomType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'Group');
+  static const RoomType RoomTypeUnknown = RoomType._(0, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RoomTypeUnknown');
+  static const RoomType RoomTypePrivate = RoomType._(1, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RoomTypePrivate');
+  static const RoomType RoomTypeGroup = RoomType._(2, const $core.bool.fromEnvironment('protobuf.omit_enum_names') ? '' : 'RoomTypeGroup');
 
   static const $core.List<RoomType> values = <RoomType> [
-    Unknown,
-    Private,
-    Group,
+    RoomTypeUnknown,
+    RoomTypePrivate,
+    RoomTypeGroup,
   ];
 
   static final $core.Map<$core.int, RoomType> _byValue = $pb.ProtobufEnum.initByValue(values);

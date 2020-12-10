@@ -2,7 +2,6 @@ import 'package:intl/intl.dart';
 
 import 'package:flutter/material.dart';
 import 'package:vc_video_call/components/default_circle_avatar.dart';
-import 'package:vc_video_call/components/online_indicator.dart';
 import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 
 class ContactCard extends StatelessWidget {

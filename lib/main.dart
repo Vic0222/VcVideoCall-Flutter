@@ -17,6 +17,7 @@ import 'package:vc_video_call/blocs/getrooms/get_rooms_bloc.dart';
 import 'package:vc_video_call/blocs/join/join_bloc.dart';
 import 'package:vc_video_call/blocs/join/join_state.dart';
 import 'package:vc_video_call/blocs/profilepic/profilepic_bloc.dart';
+import 'package:vc_video_call/blocs/search_user/search_user_bloc.dart';
 import 'package:vc_video_call/blocs/send_message_bloc/send_message_bloc.dart';
 import 'package:vc_video_call/environment_config.dart';
 import 'package:vc_video_call/services/authentication_service.dart';
@@ -140,6 +141,11 @@ class _MyAppState extends State<MyApp> {
           BlocProvider<CallBloc>(
             create: (BuildContext context) => CallBloc(
               context.read<WebRtcManager>(),
+            ),
+          ),
+          BlocProvider<SearchUserBloc>(
+            create: (BuildContext context) => SearchUserBloc(
+              context.read<ChatService>(),
             ),
           ),
         ],

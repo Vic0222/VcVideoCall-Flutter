@@ -122,7 +122,7 @@ class ChatService {
 
     var response = await _client.sendCallOffer(callOfferRequest);
     RtcSessionDescription result;
-    if (response.status == CallOfferStatus.Accepted) {
+    if (response.status == CallOfferStatus.CallOfferAccepted) {
       result = response.rtcSessionDescription;
     }
     return result;
@@ -144,9 +144,9 @@ class ChatService {
     }
 
     if (declined) {
-      callAnswerRequest.status = CallOfferStatus.Rejected;
+      callAnswerRequest.status = CallOfferStatus.CallOfferRejected;
     } else {
-      callAnswerRequest.status = CallOfferStatus.Accepted;
+      callAnswerRequest.status = CallOfferStatus.CallOfferRejected;
     }
     _client.sendCallAnswer(callAnswerRequest);
   }
@@ -168,5 +168,12 @@ class ChatService {
     var peerConnectionCloseRequest = PeerConnectionCloseRequest();
     peerConnectionCloseRequest.roomId = roomId;
     await _client.sendPeerConnectionClose(peerConnectionCloseRequest);
+  }
+
+  Future<List<User>> searchUser(String keyword) async {
+    var searchUserRequest = SearchUserRequest();
+    searchUserRequest.keyword = keyword;
+    var response = await _client.searchUser(searchUserRequest);
+    return response.users;
   }
 }

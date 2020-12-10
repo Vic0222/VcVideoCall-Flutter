@@ -19,25 +19,43 @@ const JoinResponseType$json = const {
 const CallOfferStatus$json = const {
   '1': 'CallOfferStatus',
   '2': const [
-    const {'1': 'Rejected', '2': 0},
-    const {'1': 'Accepted', '2': 1},
+    const {'1': 'CallOfferRejected', '2': 0},
+    const {'1': 'CallOfferAccepted', '2': 1},
   ],
 };
 
 const CallSignalType$json = const {
   '1': 'CallSignalType',
   '2': const [
-    const {'1': 'Offer', '2': 0},
-    const {'1': 'Answer', '2': 1},
+    const {'1': 'CallSignalOffer', '2': 0},
+    const {'1': 'CallSignalAnswer', '2': 1},
+  ],
+};
+
+const GetRoomType$json = const {
+  '1': 'GetRoomType',
+  '2': const [
+    const {'1': 'GetRoomTypeFromUserIdPrivate', '2': 0},
+    const {'1': 'GetRoomTypeFromRoomId', '2': 1},
+  ],
+};
+
+const RoomStatus$json = const {
+  '1': 'RoomStatus',
+  '2': const [
+    const {'1': 'RoomNotExisting', '2': 0},
+    const {'1': 'RoomInvitePending', '2': 1},
+    const {'1': 'RoomAcceptPending', '2': 2},
+    const {'1': 'RoomAccepted', '2': 3},
   ],
 };
 
 const RoomType$json = const {
   '1': 'RoomType',
   '2': const [
-    const {'1': 'Unknown', '2': 0},
-    const {'1': 'Private', '2': 1},
-    const {'1': 'Group', '2': 2},
+    const {'1': 'RoomTypeUnknown', '2': 0},
+    const {'1': 'RoomTypePrivate', '2': 1},
+    const {'1': 'RoomTypeGroup', '2': 2},
   ],
 };
 
@@ -189,6 +207,23 @@ const GetRoomsResponse$json = const {
   ],
 };
 
+const GetRoomRequest$json = const {
+  '1': 'GetRoomRequest',
+  '2': const [
+    const {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.chat.GetRoomType', '10': 'type'},
+    const {'1': 'user_id', '3': 2, '4': 1, '5': 9, '10': 'userId'},
+    const {'1': 'room_id', '3': 3, '4': 1, '5': 9, '10': 'roomId'},
+  ],
+};
+
+const GetRoomResponse$json = const {
+  '1': 'GetRoomResponse',
+  '2': const [
+    const {'1': 'room_status', '3': 1, '4': 1, '5': 14, '6': '.chat.RoomStatus', '10': 'roomStatus'},
+    const {'1': 'room', '3': 2, '4': 1, '5': 11, '6': '.chat.Room', '10': 'room'},
+  ],
+};
+
 const Room$json = const {
   '1': 'Room',
   '2': const [
@@ -199,6 +234,7 @@ const Room$json = const {
     const {'1': 'last_message_datetime', '3': 5, '4': 1, '5': 3, '10': 'lastMessageDatetime'},
     const {'1': 'is_online', '3': 6, '4': 1, '5': 8, '10': 'isOnline'},
     const {'1': 'photo_url', '3': 7, '4': 1, '5': 9, '10': 'photoUrl'},
+    const {'1': 'status', '3': 8, '4': 1, '5': 14, '6': '.chat.RoomStatus', '10': 'status'},
   ],
 };
 
@@ -226,6 +262,30 @@ const Message$json = const {
     const {'1': 'message_body', '3': 3, '4': 1, '5': 9, '10': 'messageBody'},
     const {'1': 'sender_id', '3': 4, '4': 1, '5': 9, '10': 'senderId'},
     const {'1': 'date_sent', '3': 5, '4': 1, '5': 3, '10': 'dateSent'},
+  ],
+};
+
+const SearchUserRequest$json = const {
+  '1': 'SearchUserRequest',
+  '2': const [
+    const {'1': 'keyword', '3': 1, '4': 1, '5': 9, '10': 'keyword'},
+  ],
+};
+
+const SearchUserResponse$json = const {
+  '1': 'SearchUserResponse',
+  '2': const [
+    const {'1': 'users', '3': 1, '4': 3, '5': 11, '6': '.chat.User', '10': 'users'},
+  ],
+};
+
+const User$json = const {
+  '1': 'User',
+  '2': const [
+    const {'1': 'user_id', '3': 1, '4': 1, '5': 9, '10': 'userId'},
+    const {'1': 'email', '3': 2, '4': 1, '5': 9, '10': 'email'},
+    const {'1': 'username', '3': 3, '4': 1, '5': 9, '10': 'username'},
+    const {'1': 'photo_url', '3': 4, '4': 1, '5': 9, '10': 'photoUrl'},
   ],
 };
 

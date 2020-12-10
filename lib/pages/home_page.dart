@@ -66,12 +66,8 @@ class _HomePageState extends State<HomePage> {
         actions: [
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: () {},
-          ),
-          IconButton(
-            icon: Icon(Icons.call),
             onPressed: () {
-              Navigator.of(context).pushNamed("/call");
+              Navigator.of(context).pushNamed("/search_user");
             },
           ),
         ],

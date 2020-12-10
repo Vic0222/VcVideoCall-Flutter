@@ -5,6 +5,7 @@ import 'package:vc_video_call/pages/call_received_page.dart';
 import 'package:vc_video_call/pages/home_page.dart';
 import 'package:vc_video_call/pages/login_page.dart';
 import 'package:vc_video_call/pages/chat_page.dart';
+import 'package:vc_video_call/pages/search_user_page.dart';
 
 class AppRoutes {
   static final GlobalKey<NavigatorState> navigatorKey =
@@ -35,6 +36,10 @@ class AppRoutes {
       case '/call':
         return MaterialPageRoute(
             builder: (context) => CallPage(),
+            settings: RouteSettings(name: settings.name));
+      case '/search_user':
+        return MaterialPageRoute(
+            builder: (context) => SearchUserPage(),
             settings: RouteSettings(name: settings.name));
       default:
         return null;

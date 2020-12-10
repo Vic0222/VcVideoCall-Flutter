@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_parsed_text/flutter_parsed_text.dart';
 import 'package:vc_video_call/components/message_container.dart';
 import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 
