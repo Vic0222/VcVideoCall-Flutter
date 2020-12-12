@@ -101,6 +101,7 @@ class ContactCard extends StatelessWidget {
   }
 
   void openChatPage(BuildContext context) {
-    Navigator.pushNamed(context, "/chat_page", arguments: room);
+    Navigator.pushNamed(context, "/chat_page",
+        arguments: {"room": room, "userId": ""});
   }
 }

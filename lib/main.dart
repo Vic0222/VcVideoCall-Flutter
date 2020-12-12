@@ -13,6 +13,7 @@ import 'package:vc_video_call/blocs/call_listening/call_listening_bloc.dart';
 import 'package:vc_video_call/blocs/call_listening/call_listening_state.dart';
 import 'package:vc_video_call/blocs/firebase_initialize/firebase_initialize_bloc.dart';
 import 'package:vc_video_call/blocs/get_messages/get_messages_bloc.dart';
+import 'package:vc_video_call/blocs/get_room/get_room_bloc.dart';
 import 'package:vc_video_call/blocs/getrooms/get_rooms_bloc.dart';
 import 'package:vc_video_call/blocs/join/join_bloc.dart';
 import 'package:vc_video_call/blocs/join/join_state.dart';
@@ -145,6 +146,11 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider<SearchUserBloc>(
             create: (BuildContext context) => SearchUserBloc(
+              context.read<ChatService>(),
+            ),
+          ),
+          BlocProvider<GetRoomBloc>(
+            create: (BuildContext context) => GetRoomBloc(
               context.read<ChatService>(),
             ),
           ),

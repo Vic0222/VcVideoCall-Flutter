@@ -1,22 +1,28 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vc_video_call/blocs/call_initiate/call_initiate_bloc.dart';
 import 'package:vc_video_call/blocs/call_initiate/call_initiate_state.dart';
 import 'package:vc_video_call/blocs/get_messages/get_messages_bloc.dart';
 import 'package:vc_video_call/blocs/get_messages/get_messages_state.dart';
+import 'package:vc_video_call/blocs/get_room/get_room_bloc.dart';
+import 'package:vc_video_call/blocs/get_room/get_room_state.dart';
 import 'package:vc_video_call/blocs/send_message_bloc/send_message_bloc.dart';
 import 'package:vc_video_call/blocs/send_message_bloc/send_message_state.dart';
 import 'package:vc_video_call/components/connection_status_indicator.dart';
 import 'package:vc_video_call/components/default_circle_avatar.dart';
+import 'package:vc_video_call/components/default_progress_indicator.dart';
 import 'package:vc_video_call/components/receiver_message_card.dart';
 import 'package:vc_video_call/components/sender_message_card.dart';
 import 'package:vc_video_call/custom_classes/custom_color_scheme.dart';
 import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 
 class ChatPage extends StatefulWidget {
-  final Room room;
+  Room room;
+  final String userId;
 
-  ChatPage(this.room);
+  ChatPage({this.room, this.userId = ""});
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -29,6 +35,8 @@ class _ChatPageState extends State<ChatPage> {
 
   final List<Message> _messages = List<Message>();
 
+  StreamSubscription<GetRoomState> _getRoomSubscription;
+
   @override
   void initState() {
     super.initState();
@@ -36,7 +44,28 @@ class _ChatPageState extends State<ChatPage> {
 
     _scrollController = ScrollController();
 
-    context.read<GetMessagesBloc>().startGetMessages(widget.room.id);
+    if (widget.room?.id?.isNotEmpty ?? false) {
+      context.read<GetMessagesBloc>().startGetMessages(widget.room.id);
+    }
+
+    context
+        .read<GetRoomBloc>()
+        .startGetRoom(this.widget.userId, this.widget?.room?.id);
+
+    _getRoomSubscription = context.read<GetRoomBloc>().listen((state) {
+      if (state.status == GetRoomStatus.success) {
+        setState(() {
+          this.widget.room = state.room;
+        });
+        context.read<GetMessagesBloc>().startGetMessages(widget.room.id);
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _getRoomSubscription?.cancel();
+    super.dispose();
   }
 
   @override
@@ -48,7 +77,9 @@ class _ChatPageState extends State<ChatPage> {
               .pushNamed("/call_initiate", arguments: state.localRenderer);
         }
       },
-      child: buildScaffold(context),
+      child: widget.room != null
+          ? buildScaffold(context)
+          : Scaffold(body: DefaultProgressIndicator()),
     );
   }
 
@@ -80,11 +111,11 @@ class _ChatPageState extends State<ChatPage> {
         title: Row(
           children: [
             DefaultCircleAvatar(
-              isOnline: widget.room.isOnline,
+              isOnline: widget.room?.isOnline ?? false,
               radius: 20,
-              image: widget.room.photoUrl?.isEmpty ?? true
+              image: widget.room?.photoUrl?.isEmpty ?? true
                   ? AssetImage("assets/images/profile-pic-placeholder-card.png")
-                  : NetworkImage(widget.room.photoUrl),
+                  : NetworkImage(widget.room?.photoUrl ?? ""),
             ),
             Flexible(
               fit: FlexFit.tight,

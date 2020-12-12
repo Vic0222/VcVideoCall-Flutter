@@ -62,6 +62,7 @@ class UserCard extends StatelessWidget {
   }
 
   void openChatPage(BuildContext context) {
-    //Navigator.pushNamed(context, "/chat_page", arguments: room);
+    Navigator.pushNamed(context, "/chat_page",
+        arguments: {"room": null, "userId": this.user?.userId ?? ""});
   }
 }

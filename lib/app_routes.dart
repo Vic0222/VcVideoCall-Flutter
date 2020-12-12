@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:vc_video_call/grpc/generated/chat.pbgrpc.dart';
 import 'package:vc_video_call/pages/call_initiate_page.dart';
 import 'package:vc_video_call/pages/call_page.dart';
 import 'package:vc_video_call/pages/call_received_page.dart';
@@ -22,8 +23,13 @@ class AppRoutes {
             builder: (context) => HomePage(),
             settings: RouteSettings(name: settings.name));
       case '/chat_page':
+        Map<String, Object> arguments =
+            settings.arguments as Map<String, Object>;
         return MaterialPageRoute(
-            builder: (context) => ChatPage(settings.arguments),
+            builder: (context) => ChatPage(
+                  room: arguments["room"] as Room,
+                  userId: arguments["userId"],
+                ),
             settings: RouteSettings(name: settings.name));
       case '/call_initiate':
         return MaterialPageRoute(

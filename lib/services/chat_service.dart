@@ -176,4 +176,25 @@ class ChatService {
     var response = await _client.searchUser(searchUserRequest);
     return response.users;
   }
+
+  Future<Room> getRoom(String userId, String roomId) async {
+    var request = GetRoomRequest();
+
+    if (roomId?.isNotEmpty ?? false) {
+      request.type = GetRoomType.GetRoomTypeFromRoomId;
+      request.roomId = roomId;
+      request.userId = "";
+    } else {
+      request.type = GetRoomType.GetRoomTypeFromUserIdPrivate;
+      request.roomId = "";
+      request.userId = userId;
+    }
+
+    var response = await _client.getRoom(request);
+    if (response.roomStatus == RoomStatus.RoomNotExisting) {
+      return null;
+    } else {
+      return response.room;
+    }
+  }
 }
