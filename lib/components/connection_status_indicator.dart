@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vc_video_call/blocs/join/join_bloc.dart';
 import 'package:vc_video_call/blocs/join/join_state.dart';
 
-class ConnectionStatusIndicator extends StatelessWidget {
+class ConnectionStatusIndicatorComponent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<JoinBloc, JoinState>(

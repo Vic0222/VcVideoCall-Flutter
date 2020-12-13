@@ -8,30 +8,29 @@ import 'package:vc_video_call/blocs/get_messages/get_messages_bloc.dart';
 import 'package:vc_video_call/blocs/get_messages/get_messages_state.dart';
 import 'package:vc_video_call/blocs/get_room/get_room_bloc.dart';
 import 'package:vc_video_call/blocs/get_room/get_room_state.dart';
-import 'package:vc_video_call/blocs/send_message_bloc/send_message_bloc.dart';
-import 'package:vc_video_call/blocs/send_message_bloc/send_message_state.dart';
 import 'package:vc_video_call/components/connection_status_indicator.dart';
 import 'package:vc_video_call/components/default_circle_avatar.dart';
 import 'package:vc_video_call/components/default_progress_indicator.dart';
-import 'package:vc_video_call/components/receiver_message_card.dart';
-import 'package:vc_video_call/components/sender_message_card.dart';
+import 'package:vc_video_call/components/get_messages_indicator_component.dart';
+import 'package:vc_video_call/components/message_sender_component.dart';
+import 'package:vc_video_call/components/messages_component.dart';
 import 'package:vc_video_call/custom_classes/custom_color_scheme.dart';
 import 'package:vc_video_call/grpc/generated/chat.pb.dart';
 
 class ChatPage extends StatefulWidget {
-  Room room;
+  final Room room;
   final String userId;
 
   ChatPage({this.room, this.userId = ""});
 
   @override
-  _ChatPageState createState() => _ChatPageState();
+  _ChatPageState createState() => _ChatPageState(room: room);
 }
 
 class _ChatPageState extends State<ChatPage> {
-  TextEditingController _chatTextEditingController;
-  ScrollController _scrollController;
-  bool textfieldEnabled = true;
+  _ChatPageState({this.room});
+
+  Room room;
 
   final List<Message> _messages = List<Message>();
 
@@ -40,26 +39,14 @@ class _ChatPageState extends State<ChatPage> {
   @override
   void initState() {
     super.initState();
-    _chatTextEditingController = TextEditingController();
 
-    _scrollController = ScrollController();
-
-    if (widget.room?.id?.isNotEmpty ?? false) {
-      context.read<GetMessagesBloc>().startGetMessages(widget.room.id);
+    if (room?.id?.isNotEmpty ?? false) {
+      context.read<GetMessagesBloc>().startGetMessages(room.id);
     }
 
     context
         .read<GetRoomBloc>()
         .startGetRoom(this.widget.userId, this.widget?.room?.id);
-
-    _getRoomSubscription = context.read<GetRoomBloc>().listen((state) {
-      if (state.status == GetRoomStatus.success) {
-        setState(() {
-          this.widget.room = state.room;
-        });
-        context.read<GetMessagesBloc>().startGetMessages(widget.room.id);
-      }
-    });
   }
 
   @override
@@ -70,14 +57,28 @@ class _ChatPageState extends State<ChatPage> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CallInitiateBloc, CallInitiateState>(
-      listener: (context, state) {
-        if (state.status == CallInitiateStatus.inProgress) {
-          Navigator.of(context)
-              .pushNamed("/call_initiate", arguments: state.localRenderer);
-        }
-      },
-      child: widget.room != null
+    return MultiBlocListener(
+      listeners: [
+        BlocListener<CallInitiateBloc, CallInitiateState>(
+          listener: (context, state) {
+            if (state.status == CallInitiateStatus.inProgress) {
+              Navigator.of(context)
+                  .pushNamed("/call_initiate", arguments: state.localRenderer);
+            }
+          },
+        ),
+        BlocListener<GetRoomBloc, GetRoomState>(
+          listener: (context, state) {
+            if (state.status == GetRoomStatus.success) {
+              setState(() {
+                this.room = state.room;
+              });
+              context.read<GetMessagesBloc>().startGetMessages(room.id);
+            }
+          },
+        ),
+      ],
+      child: room != null
           ? buildScaffold(context)
           : Scaffold(body: DefaultProgressIndicator()),
     );
@@ -92,15 +93,13 @@ class _ChatPageState extends State<ChatPage> {
             onPressed: () {
               context
                   .read<CallInitiateBloc>()
-                  .startCallInitiate(widget.room.id, false);
+                  .startCallInitiate(room.id, false);
             },
           ),
           IconButton(
             icon: Icon(Icons.video_call),
             onPressed: () {
-              context
-                  .read<CallInitiateBloc>()
-                  .startCallInitiate(widget.room.id, true);
+              context.read<CallInitiateBloc>().startCallInitiate(room.id, true);
             },
           ),
           IconButton(
@@ -111,11 +110,11 @@ class _ChatPageState extends State<ChatPage> {
         title: Row(
           children: [
             DefaultCircleAvatar(
-              isOnline: widget.room?.isOnline ?? false,
+              isOnline: room?.isOnline ?? false,
               radius: 20,
-              image: widget.room?.photoUrl?.isEmpty ?? true
+              image: room?.photoUrl?.isEmpty ?? true
                   ? AssetImage("assets/images/profile-pic-placeholder-card.png")
-                  : NetworkImage(widget.room?.photoUrl ?? ""),
+                  : NetworkImage(room?.photoUrl ?? ""),
             ),
             Flexible(
               fit: FlexFit.tight,
@@ -125,7 +124,7 @@ class _ChatPageState extends State<ChatPage> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.room.name,
+                      room.name,
                       overflow: TextOverflow.ellipsis,
                       style: Theme.of(context).textTheme.headline6.copyWith(
                             color: Theme.of(context).colorScheme.onPrimary,
@@ -150,139 +149,19 @@ class _ChatPageState extends State<ChatPage> {
       ),
       body: Column(
         children: [
-          ConnectionStatusIndicator(),
-          BlocBuilder<GetMessagesBloc, GetMessagesState>(
-            builder: (context, state) {
-              if (state.status == GetMessagesStatus.inProgress) {
-                return Container(
-                  width: double.infinity,
-                  padding: EdgeInsets.all(4),
-                  child: Center(
-                    child: SizedBox(
-                      height: 16,
-                      width: 16,
-                      child: CircularProgressIndicator(),
-                    ),
-                  ),
-                );
-              }
-              return Container();
-            },
-          ),
-          Expanded(
-            child: BlocListener<GetMessagesBloc, GetMessagesState>(
-              listener: (context, state) {
-                if (state.status == GetMessagesStatus.success) {
-                  setState(() {
-                    if (_messages.isEmpty) {
-                      for (var message in state.getMessagesResponse.messages) {
-                        _messages.add(message);
-                      }
-                    } else {
-                      for (var message in state.getMessagesResponse.messages) {
-                        if (!_messages
-                            .any((element) => element.id == message.id)) {
-                          _messages.insert(0, message);
-                          _scrollController.animateTo(
-                            0.0,
-                            curve: Curves.easeOut,
-                            duration: const Duration(milliseconds: 300),
-                          );
-                        }
-                      }
-                    }
-                  });
-                }
-              },
-              child: ListView.builder(
-                controller: _scrollController,
-                shrinkWrap: true,
-                itemCount: _messages.length ?? 0,
-                reverse: true,
-                itemBuilder: (context, i) {
-                  Widget widget;
-
-                  Message message = _messages[i];
-                  if (message.senderId ==
-                      BlocProvider.of<GetMessagesBloc>(context).state.userId) {
-                    widget = SenderMessageCard(message);
-                  } else {
-                    widget = ReceiverMessageCard(message);
-                  }
-                  return widget;
-                },
+          ConnectionStatusIndicatorComponent(),
+          GetMessagesIndicatorComponent(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              child: Container(
+                height: 200,
+                width: 300,
               ),
             ),
           ),
-          Container(
-            color: Theme.of(context).primaryColor,
-            padding: EdgeInsets.all(8),
-            child: Row(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(16),
-                      ),
-                    ),
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-                    child: Container(
-                      child: TextField(
-                        keyboardType: TextInputType.multiline,
-                        maxLines: null,
-                        onChanged: (text) {
-                          setState(() {
-                            textfieldEnabled = text?.isNotEmpty ?? false;
-                          });
-                        },
-                        decoration: InputDecoration(
-                          contentPadding: EdgeInsets.all(0),
-                          border: InputBorder.none,
-                          hintText: "Aa",
-                          hintStyle:
-                              Theme.of(context).textTheme.bodyText1.copyWith(
-                                    color: Theme.of(context).disabledColor,
-                                  ),
-                        ),
-                        controller: _chatTextEditingController,
-                        style: Theme.of(context).textTheme.bodyText1.copyWith(
-                              color: Theme.of(context).colorScheme.onBackground,
-                            ),
-                      ),
-                    ),
-                  ),
-                ),
-                Container(
-                  child: BlocConsumer<SendMessageBloc, SendMessageState>(
-                      listener: (context, state) {},
-                      builder: (context, state) {
-                        return state.status != SendMessageStatus.inProgress
-                            ? IconButton(
-                                icon: Icon(Icons.send),
-                                color: Theme.of(context).colorScheme.onPrimary,
-                                onPressed: !textfieldEnabled
-                                    ? null
-                                    : () {
-                                        context
-                                            .read<SendMessageBloc>()
-                                            .startSendMessage(
-                                              widget.room.id,
-                                              _chatTextEditingController.text,
-                                            );
-                                        setState(() {
-                                          _chatTextEditingController.clear();
-                                        });
-                                      },
-                              )
-                            : CircularProgressIndicator();
-                      }),
-                ),
-              ],
-            ),
-          )
+          MessagesComponent(room: room, messages: _messages),
+          MessageSenderComponent(roomId: room.id),
         ],
       ),
     );

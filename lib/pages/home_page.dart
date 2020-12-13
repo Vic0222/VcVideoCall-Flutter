@@ -81,7 +81,7 @@ class _HomePageState extends State<HomePage> {
         builder: (context, state) {
           return Column(
             children: [
-              ConnectionStatusIndicator(),
+              ConnectionStatusIndicatorComponent(),
               Expanded(
                 child: BlocBuilder<GetRoomsBloc, GetRoomsState>(
                   builder: (context, state) {
