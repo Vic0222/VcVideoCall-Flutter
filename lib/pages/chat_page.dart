@@ -9,9 +9,12 @@ import 'package:vc_video_call/blocs/get_messages/get_messages_state.dart';
 import 'package:vc_video_call/blocs/get_room/get_room_bloc.dart';
 import 'package:vc_video_call/blocs/get_room/get_room_state.dart';
 import 'package:vc_video_call/components/connection_status_indicator.dart';
+import 'package:vc_video_call/components/decline_button_component.dart';
 import 'package:vc_video_call/components/default_circle_avatar.dart';
 import 'package:vc_video_call/components/default_progress_indicator.dart';
 import 'package:vc_video_call/components/get_messages_indicator_component.dart';
+import 'package:vc_video_call/components/accept_button_component.dart';
+import 'package:vc_video_call/components/invite_button_component.dart';
 import 'package:vc_video_call/components/message_sender_component.dart';
 import 'package:vc_video_call/components/messages_component.dart';
 import 'package:vc_video_call/custom_classes/custom_color_scheme.dart';
@@ -151,19 +154,45 @@ class _ChatPageState extends State<ChatPage> {
         children: [
           ConnectionStatusIndicatorComponent(),
           GetMessagesIndicatorComponent(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Card(
-              child: Container(
-                height: 200,
-                width: 300,
-              ),
-            ),
-          ),
+          _buildInviteButtons(),
           MessagesComponent(room: room, messages: _messages),
           MessageSenderComponent(roomId: room.id),
         ],
       ),
     );
+  }
+
+  Widget _buildInviteButtons() {
+    Widget inviteButtons = Container();
+    if (room.status == RoomStatus.RoomNotExisting) {
+      inviteButtons = Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: InviteButtonComponent(),
+      );
+    } else if (room.status == RoomStatus.RoomAcceptPending) {
+      inviteButtons = Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              AcceptButtonComponent(),
+              DeclineButtonComponent(),
+            ],
+          ),
+        ),
+      );
+    } else if (room.status == RoomStatus.RoomAcceptPending) {
+      inviteButtons = Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Text("Chat Invite Pending"),
+        ),
+      );
+    }
+
+    return inviteButtons;
   }
 }
