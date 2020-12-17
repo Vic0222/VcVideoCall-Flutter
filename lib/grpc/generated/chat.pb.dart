@@ -1510,3 +1510,83 @@ class User extends $pb.GeneratedMessage {
   void clearPhotoUrl() => clearField(4);
 }
 
+class UserInviteRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserInviteRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'userId')
+    ..hasRequiredFields = false
+  ;
+
+  UserInviteRequest._() : super();
+  factory UserInviteRequest() => create();
+  factory UserInviteRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UserInviteRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UserInviteRequest clone() => UserInviteRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UserInviteRequest copyWith(void Function(UserInviteRequest) updates) => super.copyWith((message) => updates(message as UserInviteRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static UserInviteRequest create() => UserInviteRequest._();
+  UserInviteRequest createEmptyInstance() => create();
+  static $pb.PbList<UserInviteRequest> createRepeated() => $pb.PbList<UserInviteRequest>();
+  @$core.pragma('dart2js:noInline')
+  static UserInviteRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserInviteRequest>(create);
+  static UserInviteRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get userId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set userId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasUserId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearUserId() => clearField(1);
+}
+
+class UserInviteResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserInviteResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..aOM<Room>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'room', subBuilder: Room.create)
+    ..hasRequiredFields = false
+  ;
+
+  UserInviteResponse._() : super();
+  factory UserInviteResponse() => create();
+  factory UserInviteResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UserInviteResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UserInviteResponse clone() => UserInviteResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UserInviteResponse copyWith(void Function(UserInviteResponse) updates) => super.copyWith((message) => updates(message as UserInviteResponse)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static UserInviteResponse create() => UserInviteResponse._();
+  UserInviteResponse createEmptyInstance() => create();
+  static $pb.PbList<UserInviteResponse> createRepeated() => $pb.PbList<UserInviteResponse>();
+  @$core.pragma('dart2js:noInline')
+  static UserInviteResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserInviteResponse>(create);
+  static UserInviteResponse _defaultInstance;
+
+  @$pb.TagNumber(1)
+  Room get room => $_getN(0);
+  @$pb.TagNumber(1)
+  set room(Room v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoom() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoom() => clearField(1);
+  @$pb.TagNumber(1)
+  Room ensureRoom() => $_ensure(0);
+}
+

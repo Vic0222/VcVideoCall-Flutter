@@ -72,6 +72,12 @@ class ChatClient extends $grpc.Client {
           ($0.SearchUserRequest value) => value.writeToBuffer(),
           ($core.List<$core.int> value) =>
               $0.SearchUserResponse.fromBuffer(value));
+  static final _$sendUserInvite =
+      $grpc.ClientMethod<$0.UserInviteRequest, $0.UserInviteResponse>(
+          '/chat.Chat/SendUserInvite',
+          ($0.UserInviteRequest value) => value.writeToBuffer(),
+          ($core.List<$core.int> value) =>
+              $0.UserInviteResponse.fromBuffer(value));
 
   ChatClient($grpc.ClientChannel channel,
       {$grpc.CallOptions options,
@@ -135,6 +141,12 @@ class ChatClient extends $grpc.Client {
       $0.SearchUserRequest request,
       {$grpc.CallOptions options}) {
     return $createUnaryCall(_$searchUser, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.UserInviteResponse> sendUserInvite(
+      $0.UserInviteRequest request,
+      {$grpc.CallOptions options}) {
+    return $createUnaryCall(_$sendUserInvite, request, options: options);
   }
 }
 
@@ -218,6 +230,13 @@ abstract class ChatServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.SearchUserRequest.fromBuffer(value),
         ($0.SearchUserResponse value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.UserInviteRequest, $0.UserInviteResponse>(
+        'SendUserInvite',
+        sendUserInvite_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.UserInviteRequest.fromBuffer(value),
+        ($0.UserInviteResponse value) => value.writeToBuffer()));
   }
 
   $async.Stream<$0.JoinResponse> join_Pre(
@@ -273,6 +292,12 @@ abstract class ChatServiceBase extends $grpc.Service {
     return searchUser(call, await request);
   }
 
+  $async.Future<$0.UserInviteResponse> sendUserInvite_Pre(
+      $grpc.ServiceCall call,
+      $async.Future<$0.UserInviteRequest> request) async {
+    return sendUserInvite(call, await request);
+  }
+
   $async.Stream<$0.JoinResponse> join(
       $grpc.ServiceCall call, $0.JoinRequest request);
   $async.Future<$0.GetRoomsResponse> getRooms(
@@ -293,4 +318,6 @@ abstract class ChatServiceBase extends $grpc.Service {
       $grpc.ServiceCall call, $0.PeerConnectionCloseRequest request);
   $async.Future<$0.SearchUserResponse> searchUser(
       $grpc.ServiceCall call, $0.SearchUserRequest request);
+  $async.Future<$0.UserInviteResponse> sendUserInvite(
+      $grpc.ServiceCall call, $0.UserInviteRequest request);
 }

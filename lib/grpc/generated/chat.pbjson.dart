@@ -289,3 +289,17 @@ const User$json = const {
   ],
 };
 
+const UserInviteRequest$json = const {
+  '1': 'UserInviteRequest',
+  '2': const [
+    const {'1': 'user_id', '3': 1, '4': 1, '5': 9, '10': 'userId'},
+  ],
+};
+
+const UserInviteResponse$json = const {
+  '1': 'UserInviteResponse',
+  '2': const [
+    const {'1': 'room', '3': 1, '4': 1, '5': 11, '6': '.chat.Room', '10': 'room'},
+  ],
+};
+

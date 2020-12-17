@@ -191,10 +191,15 @@ class ChatService {
     }
 
     var response = await _client.getRoom(request);
-    if (response.roomStatus == RoomStatus.RoomNotExisting) {
-      return null;
-    } else {
-      return response.room;
-    }
+    return response.room;
+  }
+
+  Future<Room> sendUserInvite(String userId) async {
+    var request = UserInviteRequest();
+
+    request.userId = userId;
+    var response = await _client.sendUserInvite(request);
+
+    return response?.room;
   }
 }

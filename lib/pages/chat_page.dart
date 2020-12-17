@@ -5,9 +5,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:vc_video_call/blocs/call_initiate/call_initiate_bloc.dart';
 import 'package:vc_video_call/blocs/call_initiate/call_initiate_state.dart';
 import 'package:vc_video_call/blocs/get_messages/get_messages_bloc.dart';
-import 'package:vc_video_call/blocs/get_messages/get_messages_state.dart';
 import 'package:vc_video_call/blocs/get_room/get_room_bloc.dart';
 import 'package:vc_video_call/blocs/get_room/get_room_state.dart';
+import 'package:vc_video_call/blocs/send_user_invite/send_user_invite_bloc.dart';
+import 'package:vc_video_call/blocs/send_user_invite/send_user_invite_state.dart';
 import 'package:vc_video_call/components/connection_status_indicator.dart';
 import 'package:vc_video_call/components/decline_button_component.dart';
 import 'package:vc_video_call/components/default_circle_avatar.dart';
@@ -76,14 +77,31 @@ class _ChatPageState extends State<ChatPage> {
               setState(() {
                 this.room = state.room;
               });
-              context.read<GetMessagesBloc>().startGetMessages(room.id);
+              if (room != null) {
+                context.read<GetMessagesBloc>().startGetMessages(room.id);
+              }
+            }
+          },
+        ),
+        BlocListener<SendUserInviteBloc, SendUserInviteState>(
+          listener: (context, state) {
+            if (state.status == SendUserInviteStatus.success) {
+              setState(() {
+                this.room = state.room;
+              });
+              if (room != null) {
+                context.read<GetMessagesBloc>().startGetMessages(room.id);
+              }
             }
           },
         ),
       ],
-      child: room != null
-          ? buildScaffold(context)
-          : Scaffold(body: DefaultProgressIndicator()),
+      child: BlocBuilder<GetRoomBloc, GetRoomState>(builder: (context, state) {
+        if (state.status == GetRoomStatus.success) {
+          return buildScaffold(context);
+        }
+        return Scaffold(body: DefaultProgressIndicator());
+      }),
     );
   }
 
@@ -150,24 +168,32 @@ class _ChatPageState extends State<ChatPage> {
           ],
         ),
       ),
-      body: Column(
-        children: [
-          ConnectionStatusIndicatorComponent(),
-          GetMessagesIndicatorComponent(),
-          _buildInviteButtons(),
-          MessagesComponent(room: room, messages: _messages),
-          MessageSenderComponent(roomId: room.id),
-        ],
-      ),
+      body: buildBody(context),
     );
   }
 
-  Widget _buildInviteButtons() {
+  Column buildBody(BuildContext context) {
+    return Column(
+      children: [
+        ConnectionStatusIndicatorComponent(),
+        GetMessagesIndicatorComponent(),
+        _buildInviteButtons(context),
+        Expanded(child: MessagesComponent(room: room, messages: _messages)),
+        MessageSenderComponent(room: room),
+      ],
+    );
+  }
+
+  Widget _buildInviteButtons(BuildContext context) {
     Widget inviteButtons = Container();
     if (room.status == RoomStatus.RoomNotExisting) {
       inviteButtons = Padding(
         padding: const EdgeInsets.all(8.0),
-        child: InviteButtonComponent(),
+        child: InviteButtonComponent(
+          onPressed: () {
+            _doInviteUser(context);
+          },
+        ),
       );
     } else if (room.status == RoomStatus.RoomAcceptPending) {
       inviteButtons = Padding(
@@ -183,7 +209,7 @@ class _ChatPageState extends State<ChatPage> {
           ),
         ),
       );
-    } else if (room.status == RoomStatus.RoomAcceptPending) {
+    } else if (room.status == RoomStatus.RoomInvitePending) {
       inviteButtons = Padding(
         padding: const EdgeInsets.all(8.0),
         child: Padding(
@@ -194,5 +220,9 @@ class _ChatPageState extends State<ChatPage> {
     }
 
     return inviteButtons;
+  }
+
+  void _doInviteUser(BuildContext context) {
+    context.read<SendUserInviteBloc>().startSendUserInvite(widget.userId);
   }
 }

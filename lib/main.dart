@@ -20,6 +20,7 @@ import 'package:vc_video_call/blocs/join/join_state.dart';
 import 'package:vc_video_call/blocs/profilepic/profilepic_bloc.dart';
 import 'package:vc_video_call/blocs/search_user/search_user_bloc.dart';
 import 'package:vc_video_call/blocs/send_message_bloc/send_message_bloc.dart';
+import 'package:vc_video_call/blocs/send_user_invite/send_user_invite_bloc.dart';
 import 'package:vc_video_call/environment_config.dart';
 import 'package:vc_video_call/services/authentication_service.dart';
 import 'package:vc_video_call/blocs/authentication/authentication_bloc.dart';
@@ -151,6 +152,11 @@ class _MyAppState extends State<MyApp> {
           ),
           BlocProvider<GetRoomBloc>(
             create: (BuildContext context) => GetRoomBloc(
+              context.read<ChatService>(),
+            ),
+          ),
+          BlocProvider<SendUserInviteBloc>(
+            create: (BuildContext context) => SendUserInviteBloc(
               context.read<ChatService>(),
             ),
           ),
