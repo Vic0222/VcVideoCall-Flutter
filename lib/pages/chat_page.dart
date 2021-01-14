@@ -7,6 +7,7 @@ import 'package:vc_video_call/blocs/call_initiate/call_initiate_state.dart';
 import 'package:vc_video_call/blocs/get_messages/get_messages_bloc.dart';
 import 'package:vc_video_call/blocs/get_room/get_room_bloc.dart';
 import 'package:vc_video_call/blocs/get_room/get_room_state.dart';
+import 'package:vc_video_call/blocs/send_invite_accept/send_user_invite_bloc.dart';
 import 'package:vc_video_call/blocs/send_user_invite/send_user_invite_bloc.dart';
 import 'package:vc_video_call/blocs/send_user_invite/send_user_invite_state.dart';
 import 'package:vc_video_call/components/connection_status_indicator.dart';
@@ -203,7 +204,9 @@ class _ChatPageState extends State<ChatPage> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              AcceptButtonComponent(),
+              AcceptButtonComponent(
+                onPressed: () {},
+              ),
               DeclineButtonComponent(),
             ],
           ),
@@ -224,5 +227,9 @@ class _ChatPageState extends State<ChatPage> {
 
   void _doInviteUser(BuildContext context) {
     context.read<SendUserInviteBloc>().startSendUserInvite(widget.userId);
+  }
+
+  void _doAcceptInvite(BuildContext context) {
+    context.read<SendInviteAcceptBloc>().startSendInviteAccept(widget.userId);
   }
 }

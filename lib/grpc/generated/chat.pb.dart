@@ -1590,3 +1590,83 @@ class UserInviteResponse extends $pb.GeneratedMessage {
   Room ensureRoom() => $_ensure(0);
 }
 
+class UserAcceptRequest extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserAcceptRequest', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..aOS(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'roomId')
+    ..hasRequiredFields = false
+  ;
+
+  UserAcceptRequest._() : super();
+  factory UserAcceptRequest() => create();
+  factory UserAcceptRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UserAcceptRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UserAcceptRequest clone() => UserAcceptRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UserAcceptRequest copyWith(void Function(UserAcceptRequest) updates) => super.copyWith((message) => updates(message as UserAcceptRequest)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static UserAcceptRequest create() => UserAcceptRequest._();
+  UserAcceptRequest createEmptyInstance() => create();
+  static $pb.PbList<UserAcceptRequest> createRepeated() => $pb.PbList<UserAcceptRequest>();
+  @$core.pragma('dart2js:noInline')
+  static UserAcceptRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserAcceptRequest>(create);
+  static UserAcceptRequest _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get roomId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set roomId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoomId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoomId() => clearField(1);
+}
+
+class UserAcceptResponse extends $pb.GeneratedMessage {
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'UserAcceptResponse', package: const $pb.PackageName(const $core.bool.fromEnvironment('protobuf.omit_message_names') ? '' : 'chat'), createEmptyInstance: create)
+    ..aOM<Room>(1, const $core.bool.fromEnvironment('protobuf.omit_field_names') ? '' : 'room', subBuilder: Room.create)
+    ..hasRequiredFields = false
+  ;
+
+  UserAcceptResponse._() : super();
+  factory UserAcceptResponse() => create();
+  factory UserAcceptResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory UserAcceptResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  UserAcceptResponse clone() => UserAcceptResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  UserAcceptResponse copyWith(void Function(UserAcceptResponse) updates) => super.copyWith((message) => updates(message as UserAcceptResponse)); // ignore: deprecated_member_use
+  $pb.BuilderInfo get info_ => _i;
+  @$core.pragma('dart2js:noInline')
+  static UserAcceptResponse create() => UserAcceptResponse._();
+  UserAcceptResponse createEmptyInstance() => create();
+  static $pb.PbList<UserAcceptResponse> createRepeated() => $pb.PbList<UserAcceptResponse>();
+  @$core.pragma('dart2js:noInline')
+  static UserAcceptResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<UserAcceptResponse>(create);
+  static UserAcceptResponse _defaultInstance;
+
+  @$pb.TagNumber(1)
+  Room get room => $_getN(0);
+  @$pb.TagNumber(1)
+  set room(Room v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasRoom() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearRoom() => clearField(1);
+  @$pb.TagNumber(1)
+  Room ensureRoom() => $_ensure(0);
+}
+

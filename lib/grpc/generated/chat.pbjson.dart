@@ -303,3 +303,17 @@ const UserInviteResponse$json = const {
   ],
 };
 
+const UserAcceptRequest$json = const {
+  '1': 'UserAcceptRequest',
+  '2': const [
+    const {'1': 'room_id', '3': 1, '4': 1, '5': 9, '10': 'roomId'},
+  ],
+};
+
+const UserAcceptResponse$json = const {
+  '1': 'UserAcceptResponse',
+  '2': const [
+    const {'1': 'room', '3': 1, '4': 1, '5': 11, '6': '.chat.Room', '10': 'room'},
+  ],
+};
+

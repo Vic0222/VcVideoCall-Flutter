@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
 class AcceptButtonComponent extends StatelessWidget {
+  final VoidCallback onPressed;
+
   const AcceptButtonComponent({
     Key key,
+    @required this.onPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: FlatButton(
-        onPressed: () {},
+        onPressed: onPressed,
         child: Text(
           "Accept",
           style: Theme.of(context).textTheme.button.copyWith(

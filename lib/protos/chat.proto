@@ -18,6 +18,7 @@ service Chat {
   rpc SendPeerConnectionClose(PeerConnectionCloseRequest) returns (PeerConnectionCloseResponse);
   rpc SearchUser(SearchUserRequest) returns (SearchUserResponse);
   rpc SendUserInvite(UserInviteRequest) returns (UserInviteResponse);
+  rpc SendUserAccept(UserAcceptRequest) returns (UserAcceptResponse);
 }
 
 message PeerConnectionCloseRequest {
@@ -222,5 +223,13 @@ message UserInviteRequest {
 }
 
 message UserInviteResponse{
+  Room room = 1;
+}
+
+message UserAcceptRequest {
+  string room_id = 1;
+}
+
+message UserAcceptResponse{
   Room room = 1;
 }

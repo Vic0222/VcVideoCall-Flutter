@@ -202,4 +202,13 @@ class ChatService {
 
     return response?.room;
   }
+
+  Future<Room> sendUserAccept(String roomId) async {
+    var request = UserAcceptRequest();
+
+    request.roomId = roomId;
+    var response = await _client.sendUserAccept(request);
+
+    return response?.room;
+  }
 }
